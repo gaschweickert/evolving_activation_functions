@@ -25,7 +25,11 @@ class CNN:
         self.y_train = None
         self.y_test = None
 
-        self.unary_units = [0, 1, 
+        self.err = 0.000001
+
+        self.unary_units = [
+        0,
+        1, 
         lambda x:x, 
         lambda x:(-x), 
         lambda x:K.abs(x), 
@@ -35,7 +39,7 @@ class CNN:
         lambda x:K.exp(x),  
         lambda x:K.exp(-x^2),
         lambda x:K.log(1+K.exp(x)), 
-        lambda x:K.log(K.abs(x + 1)), 
+        lambda x:K.log(K.abs(x + self.err)), 
         lambda x:K.sin(x), 
         lambda x:tf.math.sinh(x), 
         lambda x:tf.math.asinh(x),
@@ -47,13 +51,13 @@ class CNN:
         lambda x:K.minimum(x, 0),
         lambda x:(1/(1 + K.exp(-x))), 
         lambda x:tf.math.erf(x), 
-        lambda x:K.sinc(x)]
+        lambda x:K.sin(x)/(x+self.err)] #sinc
 
         self.binary_units = [
         lambda x1, x2:x1+x2, 
         lambda x1, x2:x1-x2, 
         lambda x1, x2:x1*x2, 
-        lambda x1, x2:x1/(x2+1), 
+        lambda x1, x2:x1/(x2+ self.err), 
         lambda x1, x2:K.maximum(x1,x2), 
         lambda x1, x2:K.min(x1,x2)]
 

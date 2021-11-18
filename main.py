@@ -3,7 +3,7 @@ from CNN_MNIST import CNN
 
 def main():
     evolve = GA()
-    evolve.population_initializer(N=1)
+    evolve.population_initializer(N=1, C=2) # N is population size, C is solution complexity i.e. number of custom af
     print(evolve.get_population())
 
     for sol in evolve.get_encoded_population():
