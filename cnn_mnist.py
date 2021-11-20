@@ -42,15 +42,16 @@ class CNN:
     def set_custom_activation(self, custom_activation_functions):
         self.custom_activation_functions = custom_activation_functions
 
-    def build_and_compile(self):
-        for i, custom_af in enumerate(self.custom_activation_functions):
-            get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
+    def build_and_compile(self, custom):
+        if custom:
+            for i, custom_af in enumerate(self.custom_activation_functions):
+                get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
 
         #create model
         self.model = Sequential()
         #add model layers
-        self.model.add(Conv2D(64, kernel_size=3, activation='custom0', input_shape=(28,28,1)))
-        self.model.add(Conv2D(32, kernel_size=3, activation='custom1'))
+        self.model.add(Conv2D(64, kernel_size=3, activation= 'custom0' if custom else 'relu', input_shape=(28,28,1)))
+        self.model.add(Conv2D(32, kernel_size=3, activation='custom1' if custom else 'relu'))
         self.model.add(Flatten())
         self.model.add(Dense(10, activation='softmax'))
 

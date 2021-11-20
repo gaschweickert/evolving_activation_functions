@@ -1,36 +1,57 @@
 from genetic_algorithm import GA
 from cnn_mnist import CNN
+import csv
 
 def main():
+
+    save_file = True
     
     ga = GA()
-    ga.initialize_population(N=10, C=2) # N is population size, C is solution complexity i.e. number of custom af (must change layer set up in CNN)
+    generations = 10
+    N = 50 # population size (>2 for crossover)
+    C = 2 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
+    m = 10 # number of new candidates per generation
+    ga.initialize(N, C, m) 
 
     model = CNN()
     model.load_and_prep_data()
-    
-    for gen in generations:
-        candidates_fitness = []
-        for i, candidate in N: #N times
-            ga.evaluate(i, model)
-        ga.update_fitness(candidates_fitness)
-        
-        
+
+    gen_best_candidates = []
+    for gen in range(1, generations + 1):
+        for candidate_idx in range(N):
+            evaluated_candidate = ga.evaluate_candidate(candidate_idx, model, custom=True)
+            print("Generation #" + str(gen) + " : Candidate #" + str(candidate_idx))
+            ga.print_candidate_solution(evaluated_candidate)
+        print("Generation #" + str(gen) + ' : Best Candidate:')
+        gen_best_candidate = ga.get_population_best_candidate()
+        ga.print_candidate_solution(gen_best_candidate)
+        gen_best_candidates.append(gen_best_candidate)
+        if (gen != generations): ga.evolve() # do not evolve final generation
+
+    print("Final best solution:")
+    final_best_candidate = ga.get_population_best_candidate()
+    ga.print_candidate_solution(final_best_candidate)
+
+    relu_benchmark = ga.evaluate_candidate(None, model, custom=False)
+    print("Relu benchmark accuracy:")
+    print(relu_benchmark)
+
+    # field names 
+    fields = ['Gen', 'Candidate', 'Acc']
 
 
+    if save_file:
+        with open('CNN_MNIST_N=' + str(N) + '_C=' + str(C) + '_G=' + str(generations) + '_m=' + str(m), 'w') as f:
+            
+            # using csv.writer method from CSV package
+            write = csv.writer(f)
+            
+            write.writerow(fields)
+            for gen, candidate in enumerate(gen_best_candidates): 
+                candidate_name = str(';'.join([cu.get_name() for cu in candidate[0]]))
+                write.writerow([gen, candidate_name, candidate[1]])
+            write.writerow([999, relu_benchmark[0], relu_benchmark[1]])
 
-    model = CNN()
-    model.load_and_prep_data()
-    for i, sol in enumerate(evolve.get_population()):
-        model.set_custom_activation(sol)
-        print('Candidate Solution #', i)
-        for j, af in enumerate(sol):
-            print(' Custom AF' + str(j) + ': ' + af.get_name())
-        model.build_and_compile()
-        model.summary()
-        model.train_and_validate()
-        results = model.evaluate()
-        print("test loss, test acc:", results)
 
 
 
