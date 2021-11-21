@@ -7,10 +7,11 @@ def main():
     save_file = True
     
     ga = GA()
-    generations = 10
-    N = 50 # population size (>2 for crossover)
+    generations = 1
+    k = 2 # number of folds for crossvalidation
+    N = 2 # population size (>2 for crossover)
     C = 2 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
-    m = 10 # number of new candidates per generation
+    m = 0 # number of new candidates per generation
     ga.initialize(N, C, m) 
 
     model = CNN()
@@ -19,21 +20,21 @@ def main():
     gen_best_candidates = []
     for gen in range(1, generations + 1):
         for candidate_idx in range(N):
-            evaluated_candidate = ga.evaluate_candidate(candidate_idx, model, custom=True)
-            print("Generation #" + str(gen) + " : Candidate #" + str(candidate_idx))
+            print("\nGeneration #" + str(gen) + " : Candidate #" + str(candidate_idx))
+            evaluated_candidate = ga.evaluate_candidate(k, candidate_idx, model, custom=True, verbosity=1)
             ga.print_candidate_solution(evaluated_candidate)
-        print("Generation #" + str(gen) + ' : Best Candidate:')
+        print("\nGeneration #" + str(gen) + ' : Best Candidate')
         gen_best_candidate = ga.get_population_best_candidate()
         ga.print_candidate_solution(gen_best_candidate)
         gen_best_candidates.append(gen_best_candidate)
         if (gen != generations): ga.evolve() # do not evolve final generation
 
-    print("Final best solution:")
+    print("\nFinal best generated solution:")
     final_best_candidate = ga.get_population_best_candidate()
     ga.print_candidate_solution(final_best_candidate)
 
-    relu_benchmark = ga.evaluate_candidate(None, model, custom=False)
-    print("Relu benchmark accuracy:")
+    relu_benchmark = ga.evaluate_candidate(k, None, model, custom=False)
+    print("\nRelu benchmark accuracy:")
     print(relu_benchmark)
 
     # field names 

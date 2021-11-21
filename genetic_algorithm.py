@@ -61,7 +61,7 @@ class GA:
     def print_candidate_solution(self, sol):
         for i in range(len(sol[0])):
             print(sol[0][i].get_name())
-        print('Accuracy:' + str(sol[1]))
+        print('Accuracy: ' + str(sol[1]) + '\n')
 
     def get_population_best_candidate(self):
         best_candidate = ['NONE', 0]
@@ -70,14 +70,14 @@ class GA:
                 best_candidate = candidate
         return best_candidate
 
-    def evaluate_candidate(self, candidate_idx, model, custom):
+    def evaluate_candidate(self, k, candidate_idx, model, custom, verbosity=0):
         if custom: model.set_custom_activation(self.population[candidate_idx][0])
-        model.build_and_compile(custom)
-        #model.summary()
-        model.train_and_validate()
-        results = model.evaluate()
-        if custom: self.population[candidate_idx][1] = results[1] #uses accuracy for absolute fitness update
-        return self.population[candidate_idx] if custom else ['Relu', results[1]]
+        average_acc = model.k_fold_crossvalidation_evaluation(k, model, custom, verbosity)
+        if custom:
+            self.population[candidate_idx][1] = average_acc #uses average accuracy for absolute fitness update
+            return self.population[candidate_idx]
+        else:
+            return ['Relu', average_acc]
 
     '''
     Softmax operation turning absolute fitness into sampling probabilities. Sampling 2(N-m)
@@ -187,6 +187,7 @@ class GA:
      N - size of the candidate solution population
      C - complextiy of candidate solutions (i.e. number of AFs)
     '''
+    # POPULATION INITIALIZATION IS DOES NOT USE RANDOM CANDDIATE GENERATOR
     def initialize(self, N, C, m):
         # set evolution parameters
         self.N = N

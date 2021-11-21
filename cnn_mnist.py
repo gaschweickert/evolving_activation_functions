@@ -12,6 +12,8 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, Activation
 from keras.utils.generic_utils import get_custom_objects
+from sklearn.model_selection import KFold
+import numpy as np
 
 import math
 
@@ -20,24 +22,25 @@ from core_unit import CORE_UNIT
 class CNN:
     def __init__(self):
         self.model = None
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
+        self.inputs = None
+        self.targets = None
 
         self.custom_activation_functions = None
 
     def load_and_prep_data(self):
         #download mnist data and split into train and test sets
-        (self.X_train, self.y_train), (self.X_test, self.y_test) = mnist.load_data()
+        (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
         #reshape data to fit model
-        self.X_train = self.X_train.reshape(60000,28,28,1)
-        self.X_test = self.X_test.reshape(10000,28,28,1)
+        x_train = x_train.reshape(60000,28,28,1)
+        x_test = x_test.reshape(10000,28,28,1)
 
         #one-hot encode target column
-        self.y_train = to_categorical(self.y_train)
-        self.y_test = to_categorical(self.y_test)
+        y_train = to_categorical(y_train)
+        y_test = to_categorical(y_test)
+
+        self.inputs = np.concatenate((x_train, x_test), axis=0)
+        self.targets = np.concatenate((y_train, y_test), axis=0)
 
     def set_custom_activation(self, custom_activation_functions):
         self.custom_activation_functions = custom_activation_functions
@@ -61,10 +64,26 @@ class CNN:
     def summary(self):
         return self.model.summary()
 
-    def train_and_validate(self):
+    def train_and_validate(self, train_inputs, train_targets, verbosity):
         #train the model
         #self.model.fit(self.X_train, self.y_train, validation_data=(self.X_test, self.y_test), epochs=3, shuffle=True)
-        self.model.fit(self.X_train, self.y_train, epochs=3, shuffle=True)
+        self.model.fit(train_inputs, train_targets, epochs=3, shuffle=True, verbose=verbosity)
 
-    def evaluate(self):
-        return self.model.evaluate(self.X_test, self.y_test)
+    def evaluate(self, test_inputs, test_targets, verbosity):
+        return self.model.evaluate(test_inputs, test_targets, verbose=verbosity)
+
+    def k_fold_crossvalidation_evaluation(self, k, model, custom, verbosity):
+        # Define the K-fold Cross Validator
+        kfold = KFold(n_splits=k, shuffle=True)
+
+        # K-fold Cross Validation model evaluation
+        acc_per_fold = []
+        for train, test in kfold.split(self.inputs, self.targets):
+            model.build_and_compile(custom)
+            model.train_and_validate(self.inputs[train], self.targets[train], verbosity)
+            results = model.evaluate(self.inputs[test], self.targets[test], verbosity)
+            acc_per_fold.append(results[1])
+        average_acc = sum(acc_per_fold)/len(acc_per_fold)
+        return average_acc
+
+
