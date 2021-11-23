@@ -34,6 +34,12 @@ class CORE_UNIT:
         unary_u2_x = unary_u2(x) if callable(unary_u2) else unary_u2
         return binary_u(unary_u1_x, unary_u2_x)
 
+    def check_validity(self):
+        binary_u, unary_u1, unary_u2 =  self.elementary_units_functions
+        if not callable(unary_u1) and not callable(unary_u2):
+            return False
+        return True
+
 
 
 

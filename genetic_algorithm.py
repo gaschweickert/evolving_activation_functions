@@ -54,13 +54,23 @@ class GA:
 
         }
 
+    def get_candidate(self, candidate_idx):
+        return self.population[candidate_idx]
+
 
     def print_population(self):
         print(self.population)
 
-    def print_candidate_solution(self, sol):
+    def print_candidate_name_and_accuracy(self, sol):
+        self.print_candidate_name(sol)
+        self.print_candidate_accuracy(sol)
+
+
+    def print_candidate_name(self, sol):
         for i in range(len(sol[0])):
             print(sol[0][i].get_name())
+
+    def print_candidate_accuracy(self, sol):
         print('Accuracy: ' + str(sol[1]) + '\n')
 
     def get_population_best_candidate(self):
@@ -170,14 +180,17 @@ class GA:
     '''
     def generate_random_new_candidate_solution(self):
         candidate_solution = []
-        for af in range(self.C):
+        i = 0
+        while (self.C - i):
             binary_unit_key = random.sample(list(self.binary_units), 1)[0]
             unary_unit1_key = random.sample(list(self.unary_units), 1)[0]
             unary_unit2_key = random.sample(list(self.unary_units), 1)[0]
             elementary_units_keys = [binary_unit_key, unary_unit1_key, unary_unit2_key]
             elementary_units_functions = [self.binary_units[binary_unit_key], self.unary_units[unary_unit1_key], self.unary_units[unary_unit2_key]]
             core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
-            candidate_solution.append(core_unit)
+            if core_unit.check_validity():
+                candidate_solution.append(core_unit)
+                i = i + 1
         fitness = 0
         return [candidate_solution, fitness]
 
@@ -186,7 +199,6 @@ class GA:
     params:
      N - size of the candidate solution population
      C - complextiy of candidate solutions (i.e. number of AFs)
-    '''
     # POPULATION INITIALIZATION IS DOES NOT USE RANDOM CANDDIATE GENERATOR
     def initialize(self, N, C, m):
         # set evolution parameters
@@ -214,6 +226,26 @@ class GA:
             if ((i+1)%C == 0):
                 self.population.append([candidate_solution, fitness])
                 candidate_solution = []
+        '''
+
+    '''
+    Parameter and initial population inititializer, done on the basis on random generation.
+
+    params:
+     N - size of the candidate solution population
+     C - complextiy of candidate solutions (i.e. number of AFs)
+     m - number of candidate solutions added each generation
+    '''
+    def initialize(self, N, C, m):
+        # set evolution parameters
+        self.N = N
+        self.C = C
+        self.m = m
+
+        # creating population from candidate solutons
+        self.population = []
+        for i in range(N):
+            self.population.append(self.generate_random_new_candidate_solution())
 
 
     
