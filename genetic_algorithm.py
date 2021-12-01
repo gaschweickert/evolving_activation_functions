@@ -2,8 +2,9 @@ import math
 import itertools
 import random
 from core_unit import CORE_UNIT
-import tensorflow.keras.backend as K
 import tensorflow as tf
+print(tf. __version__) 
+import tensorflow.keras.backend as K
 
 # seed random number generator
 #seed(1)
