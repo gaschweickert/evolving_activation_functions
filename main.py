@@ -1,28 +1,33 @@
 from genetic_algorithm import GA
-from cnn_mnist import CNN
+from cnn import CNN
 import csv
 
 def main():
 
-    save_file = True
+    save_file = False
     
-    ga = GA()
     generations = 10
-    k = 5 # number of folds for crossvalidation
+    k = 2 # number of folds for crossvalidation
     N = 50 # population size (>2 for crossover)
-    C = 2 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
+    C = 1 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
     m = 10 # number of new candidates per generation
-    ga.initialize(N, C, m) 
+
+    dataset = "cifar10" # cifar10, cifar100
+    mode = 1 # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
+    number_of_blocks = 1 # number of layers = number of blocks * 2 + 1
+
+    ga = GA(N, C, m)
+    ga.initialize() 
 
     model = CNN()
-    model.load_and_prep_data()
+    model.load_and_prep_data(dataset)
 
     gen_best_candidates = []
     for gen in range(1, generations + 1):
         for candidate_idx in range(N):
             print("\nGeneration #" + str(gen) + " : Candidate #" + str(candidate_idx))
             ga.print_candidate_name(ga.get_candidate(candidate_idx))
-            evaluated_candidate = ga.evaluate_candidate(k, candidate_idx, model, custom=True, verbosity=0)
+            evaluated_candidate = ga.evaluate_candidate(k, candidate_idx, model, mode, number_of_blocks, verbosity=1)
             ga.print_candidate_accuracy(evaluated_candidate)
         print("\nGeneration #" + str(gen) + ' : Best Candidate')
         gen_best_candidate = ga.get_population_best_candidate()

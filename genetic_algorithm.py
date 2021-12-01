@@ -9,11 +9,11 @@ import tensorflow as tf
 #seed(1)
 
 class GA:
-    def __init__(self):
+    def __init__(self, N, C, m):
         self.population = []
-        self.N = None
-        self.C = None
-        self.m = None
+        self.N = N
+        self.C = C
+        self.m = m
 
         self.err = 0.000001
 
@@ -80,10 +80,11 @@ class GA:
                 best_candidate = candidate
         return best_candidate
 
-    def evaluate_candidate(self, k, candidate_idx, model, custom, verbosity=0):
-        if custom: model.set_custom_activation(self.population[candidate_idx][0])
-        average_acc = model.k_fold_crossvalidation_evaluation(k, model, custom, verbosity)
-        if custom:
+    # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
+    def evaluate_candidate(self, k, candidate_idx, model, mode, num_of_blocks, verbosity=0):
+        if mode: model.set_custom_activation(self.population[candidate_idx][0])
+        average_acc = model.k_fold_crossvalidation_evaluation(k, model, mode, num_of_blocks, verbosity)
+        if mode: # custom
             self.population[candidate_idx][1] = average_acc #uses average accuracy for absolute fitness update
             return self.population[candidate_idx]
         else:
@@ -236,15 +237,10 @@ class GA:
      C - complextiy of candidate solutions (i.e. number of AFs)
      m - number of candidate solutions added each generation
     '''
-    def initialize(self, N, C, m):
-        # set evolution parameters
-        self.N = N
-        self.C = C
-        self.m = m
-
+    def initialize(self):
         # creating population from candidate solutons
         self.population = []
-        for i in range(N):
+        for i in range(self.N):
             self.population.append(self.generate_random_new_candidate_solution())
 
 
