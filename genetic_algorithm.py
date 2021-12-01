@@ -3,20 +3,21 @@ import itertools
 import random
 from core_unit import CORE_UNIT
 import tensorflow as tf
-print(tf. __version__) 
 import tensorflow.keras.backend as K
+from operator import itemgetter
 
 # seed random number generator
 #seed(1)
 
 class GA:
-    def __init__(self, N, C, m):
+    def __init__(self, N, C, m, b):
         self.population = []
         self.N = N
         self.C = C
         self.m = m
+        self.b = b
 
-        self.err = 0.000001
+        self.err = 0.0000000000000000000000000001
 
         self.unary_units = {
             '0': 0.0, 
@@ -96,7 +97,15 @@ class GA:
     Selecting parents
     '''
     def evolve(self):
-        assert self.N >= 2
+        assert self.N - self.m - self.b >= 2, "Not enough parents for crossover!"
+
+        new_population = []
+        # selecting top b candidates to keep in population without mutation or crossover
+        ordered_population = sorted(self.population, key=itemgetter(1), reverse=True)
+        best_candidates = ordered_population[:self.b]
+        for candidate in best_candidates:
+            candidate[1] = 0.0
+            new_population.append(candidate)
 
         # determining selection prob based on fitness
         fit_sum = 0
@@ -109,10 +118,9 @@ class GA:
 
         # selecting parents 2*(N-m)
         parents = []
-        for i in range(2*(self.N-self.m)):
+        for i in range(2*(self.N-self.m-self.b)):
             parents.append(random.choices(self.population, selection_probabilities)[0])
 
-        new_population = []
         # crossover and mutation
         for i in range(0, len(parents), 2):
             mutated_child = self.crossover_and_mutate(parents[i], parents[i+1])
@@ -123,34 +131,57 @@ class GA:
             new_population.append(self.generate_random_new_candidate_solution())
 
         assert (len(self.population) == len(new_population))
+        
+        for candidate in new_population:
+            assert candidate[1] == 0.0
 
         self.population = new_population
         
 
-    # CROSSOVER IS WEIRD!!
+    # Two methods of crossover
     def crossover_and_mutate(self, parent1, parent2):
-        parent1_gene = parent1[0] #[core unit, core unit]
+        crossover_anywhere = False # if False crossover only happens between core units
+
+        parent1_gene = parent1[0] #eg. [core unit, core unit]
         parent2_gene = parent2[0] 
         assert len(parent1_gene) == len(parent2_gene)
-        parent1_elem_units_keys = []
-        parent2_elem_units_keys = []
-        # getting all keys of elementary units of parent genes
-        for i in range(len(parent1_gene)):
-            parent1_elem_units_keys.append(parent1_gene[i].get_elementary_units_keys())
-            parent2_elem_units_keys.append(parent2_gene[i].get_elementary_units_keys())
-        
-        # detemining random gene crossover point
-        length_of_gene = len(parent1_gene) * len(parent1_gene[0].get_elementary_units_keys())
-        gene_crossover_point = random.randint(0, length_of_gene - 1)
-        #print("gene_crossover_point = " + str(gene_crossover_point))
 
-        # performing crossover (WEIRD --> CUTS ANYWHERE)
-        child_elem_units_keys = parent1_elem_units_keys
-        length_of_core_unit = len(parent1_elem_units_keys[0]) #3
-        for i in range(len(parent1_elem_units_keys)):
-            for j in range(length_of_core_unit):
-                if (j + i * length_of_core_unit >= gene_crossover_point):
-                    child_elem_units_keys[i][j] = parent2_elem_units_keys[i][j]
+        length_of_core_unit = len(parent1_gene[0].get_elementary_units_keys())
+
+        if crossover_anywhere:
+            parent1_elem_units_keys = []
+            parent2_elem_units_keys = []
+            # getting all keys of elementary units of parent genes
+            for i in range(len(parent1_gene)):
+                parent1_elem_units_keys.append(parent1_gene[i].get_elementary_units_keys())
+                parent2_elem_units_keys.append(parent2_gene[i].get_elementary_units_keys())
+            
+            # detemining random gene crossover point
+            length_of_gene = len(parent1_gene) * len(parent1_gene[0].get_elementary_units_keys())
+            gene_crossover_point = random.randint(0, length_of_gene - 1)
+
+            # performing crossover (CUTS ANYWHERE)
+            child_elem_units_keys = parent1_elem_units_keys
+            length_of_core_unit = len(parent1_elem_units_keys[0]) #3
+            for i in range(len(parent1_elem_units_keys)):
+                for j in range(length_of_core_unit):
+                    if (j + i * length_of_core_unit >= gene_crossover_point):
+                        child_elem_units_keys[i][j] = parent2_elem_units_keys[i][j]
+        else: # Only cross over between core_units
+            assert self.C > 1, "Not enough core_units to perform cross over between core_units (C > 1)"
+            gene_crossover_point = random.randint(0, len(parent1_gene) - 1)
+            child_gene = parent1_gene[:gene_crossover_point] + parent2_gene[gene_crossover_point:]
+            assert len(parent1_gene) == len(child_gene)
+            child_elem_units_keys = [core_unit.get_elementary_units_keys() for core_unit in child_gene]
+            length_of_gene = len(child_elem_units_keys)
+            """
+            print(parent1_gene)
+            print(parent2_gene)
+            print(gene_crossover_point)
+            print(child_gene)
+            print(child_elem_units_keys)
+            print()
+            """
 
         # determining random gene mutation point
         gene_mutation_point = random.randint(0, length_of_gene - 1) 
@@ -173,7 +204,7 @@ class GA:
             child_gene.append(core_unit)
 
         # set fitness to 0
-        fitness = 0
+        fitness = 0.0
         
         return [child_gene, fitness]
 
@@ -193,7 +224,7 @@ class GA:
             if core_unit.check_validity():
                 candidate_solution.append(core_unit)
                 i = i + 1
-        fitness = 0
+        fitness = 0.0
         return [candidate_solution, fitness]
 
 
