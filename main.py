@@ -9,13 +9,13 @@ def main():
     generations = 3
     k = 2 # number of folds for crossvalidation
     N = 5 # population size (N-m-b>2 for crossover)
-    C = 2 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
+    C = 4 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
     m = 1 # number of new candidates per generation
     b = 1 # number of preserved best candidates per generation
 
     dataset = "cifar100" # cifar10, cifar100
     mode = 3 # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    number_of_blocks = 2 # number of layers = number of blocks * 2 (+ 1)
+    number_of_blocks = 4 # number of layers = number of blocks * 2 (+ 1)
 
     ga = GA(N, C, m, b)
     ga.initialize() 

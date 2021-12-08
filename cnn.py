@@ -1,8 +1,8 @@
 import sys
 
 import tensorflow as tf
-'''
 print(tf.version.VERSION)
+'''
 tf.config.list_physical_devices("GPU")
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
@@ -18,11 +18,12 @@ if gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
         logical_gpus = tf.config.experimental.list_logical_devices('GPU')
         print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+        mirrored_strategy = tf.distribute.MirroredStrategy()
+        #options = tf.data.Options()
+        #options.experimental_distribute.auto_shard_policy = AutoShardPolicy.DATA
     except RuntimeError as e:
     # Memory growth must be set before GPUs have been initialized
         print(e)
-
-mirrored_strategy = tf.distribute.MirroredStrategy()
 
 import matplotlib.pyplot as plt
 from keras_visualizer import visualizer
@@ -59,15 +60,15 @@ class CNN:
             (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 
         #normalizing inputs from 0-255 to 0.0-1.0 
-        x_train = x_train.astype('float32') 
-        x_test = x_test.astype('float32') 
-        self.x_train = x_train / 255.0 
-        self.x_test = x_test / 255.0
+        x_train = x_train.astype('float32') / 255.0 
+        x_test = x_test.astype('float32') / 255.0  
 
-        # one hot encoding happens after k-split
+        self.x_train = x_train  
+        self.x_test = x_test
         self.y_train = y_train
         self.y_test = y_test
 
+        # one hot encoding happens after k-split
         #self.inputs = np.concatenate((x_train, x_test), axis=0)
         #self.targets = np.concatenate((y_train, y_test), axis=0)
 
