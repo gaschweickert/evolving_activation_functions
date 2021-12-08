@@ -1,17 +1,14 @@
 import sys
 
 import tensorflow as tf
-
+'''
 print(tf.version.VERSION)
 tf.config.list_physical_devices("GPU")
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
 config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-
 '''
-
-import tensorflow as tf
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
   try:
@@ -23,7 +20,6 @@ if gpus:
   except RuntimeError as e:
     # Memory growth must be set before GPUs have been initialized
     print(e)
-'''
 
 
 import matplotlib.pyplot as plt
