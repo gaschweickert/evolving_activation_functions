@@ -13,9 +13,9 @@ def main():
     m = 1 # number of new candidates per generation
     b = 1 # number of preserved best candidates per generation
 
-    dataset = "cifar10" # cifar10, cifar100
-    mode = 2 # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    number_of_blocks = 1 # number of layers = number of blocks * 2 (+ 1)
+    dataset = "cifar100" # cifar10, cifar100
+    mode = 3 # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
+    number_of_blocks = 2 # number of layers = number of blocks * 2 (+ 1)
 
     ga = GA(N, C, m, b)
     ga.initialize() 

@@ -11,16 +11,18 @@ config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
 '''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
-  try:
-    # Currently, memory growth needs to be the same across GPUs
-    for gpu in gpus:
-      tf.config.experimental.set_memory_growth(gpu, True)
-    logical_gpus = tf.config.experimental.list_logical_devices('GPU')
-    print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-  except RuntimeError as e:
+    number_of_gpus = len(gpus)
+    try:
+        # Currently, memory growth needs to be the same across GPUs
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+    except RuntimeError as e:
     # Memory growth must be set before GPUs have been initialized
-    print(e)
+        print(e)
 
+mirrored_strategy = tf.distribute.MirroredStrategy()
 
 import matplotlib.pyplot as plt
 from keras_visualizer import visualizer
@@ -72,27 +74,6 @@ class CNN:
     def set_custom_activation(self, custom_activation_functions):
         self.custom_activation_functions = custom_activation_functions
 
-
-    '''
-    def build_and_compile(self, custom):
-        if custom:
-            for i, custom_af in enumerate(self.custom_activation_functions):
-                get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
-
-        #create model
-        self.model = Sequential()
-        #add model layers
-        self.model.add(Conv2D(64, kernel_size=3, activation= 'custom0' if custom else 'relu', input_shape=(28,28,1)))
-        self.model.add(Conv2D(32, kernel_size=3, activation='custom0' if custom else 'relu'))
-        self.model.add(Flatten())
-        self.model.add(Dense(10, activation='softmax'))
-
-        #compile model using accuracy to measure model performance
-        opt = optimizers.Adam(learning_rate=0.0001)
-        self.model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
-
-    '''
-
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     def build_and_compile(self, mode, num_of_blocks): 
         if mode == 1:
@@ -106,38 +87,38 @@ class CNN:
             for i, custom_af in enumerate(self.custom_activation_functions):
                 get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
         
+        with mirrored_strategy.scope():
+            model = Sequential()
+            layer_num = 0
 
-        model = Sequential()
-        layer_num = 0
+            #num_block = len(self.custom_activation_functions) if per_block else 
 
-        #num_block = len(self.custom_activation_functions) if per_block else 
-
-        for block_num in range(1, num_of_blocks + 1):
-            af = self.activation_setter(mode, block_num, layer_num)
-            if block_num == 1:
-                model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
-            else:
+            for block_num in range(1, num_of_blocks + 1):
+                af = self.activation_setter(mode, block_num, layer_num)
+                if block_num == 1:
+                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
+                else:
+                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
+                layer_num = layer_num + 1
+                model.add(BatchNormalization())
                 model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-            layer_num = layer_num + 1
-            model.add(BatchNormalization())
-            model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-            layer_num = layer_num + 1
-            model.add(BatchNormalization())
-            model.add(MaxPooling2D((2, 2)))
-            model.add(Dropout(0.1 + 0.1 * block_num))
+                layer_num = layer_num + 1
+                model.add(BatchNormalization())
+                model.add(MaxPooling2D((2, 2)))
+                model.add(Dropout(0.1 + 0.1 * block_num))
 
-        model.add(Flatten())
-        model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
-        if self.dataset_id == "cifar10":
-            model.add(Dense(10, activation='softmax'))
-        elif self.dataset_id == "cifar100":
-            model.add(Dense(100, activation='softmax'))
+            model.add(Flatten())
+            model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
+            if self.dataset_id == "cifar10":
+                model.add(Dense(10, activation='softmax'))
+            elif self.dataset_id == "cifar100":
+                model.add(Dense(100, activation='softmax'))
 
-        # compile model
-        opt = optimizers.SGD(learning_rate=0.001, momentum=0.9)
-        model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+            # compile model
+            opt = optimizers.SGD(learning_rate=0.001*number_of_gpus, momentum=0.9)
+            model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
         self.model = model
 
@@ -164,15 +145,17 @@ class CNN:
     def train(self, train_inputs, train_targets, num_epochs, verbosity):
         #one-hot encode target column
         train_targets = to_categorical(train_targets)
-
+        # 64 for 1 gpu, 128 for 2 gpus...
+        batch_size = 64 * number_of_gpus
         #train the model
-        self.model.fit(train_inputs, train_targets, epochs=num_epochs, shuffle=True, verbose=verbosity)
+        self.model.fit(train_inputs, train_targets, batch_size, epochs=num_epochs, shuffle=True, verbose=verbosity)
 
     def evaluate(self, test_inputs, test_targets, verbosity):
         #one-hot encode target column
         test_targets = to_categorical(test_targets)
-
-        return self.model.evaluate(test_inputs, test_targets, verbose=verbosity)
+        # 64 for 1 gpu, 128 for 2 gpus...
+        batch_size = 64 * number_of_gpus
+        return self.model.evaluate(test_inputs, test_targets, batch_size, verbose=verbosity)
 
     def k_fold_crossvalidation_evaluation(self, k, cnn, mode, num_of_blocks, verbosity):
         # Define the K-fold Cross Validator
@@ -182,7 +165,7 @@ class CNN:
         val_acc_per_fold = []
         for train, val in kfold.split(self.x_train, self.y_train):
             cnn.build_and_compile(mode, num_of_blocks)
-            cnn.train(self.x_train[train], self.y_train[train], 1, verbosity)
+            cnn.train(self.x_train[train], self.y_train[train], 50, verbosity)
             val_results = cnn.evaluate(self.x_train[val], self.y_train[val], verbosity)
             val_acc_per_fold.append(val_results[1])
         #cnn.visualize()
