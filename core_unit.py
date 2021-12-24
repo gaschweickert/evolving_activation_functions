@@ -1,6 +1,4 @@
 
-
-
 class CORE_UNIT:
     def __init__(self, elementary_units_keys, elementary_units_functions):
 

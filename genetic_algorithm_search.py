@@ -1,5 +1,5 @@
+from search import SEARCH
 import math
-import itertools
 import random
 import numpy as np
 from core_unit import CORE_UNIT
@@ -10,107 +10,47 @@ from operator import itemgetter
 # seed random number generator
 #seed(1)
 
-class GA:
-    def __init__(self, N, C, m, b):
-        self.population = []
-        self.N = N
-        self.C = C
+class GAS(SEARCH):
+    def __init__(self, generations, N, C, m, b, fitness_metric):
+        super().__init__("GA SEARCH", generations, N, C)
+        self.fitness_metric = fitness_metric
         self.m = m
         self.b = b
 
-        self.err = 0.0000000000000000000000000001
+    def run(self, k, train_epochs, cnn, mode, number_of_blocks):
+        self.generate_N_candidates() 
+        gen_best_candidates = []
+        for gen in range(1, self.generations + 1):
+            print(self.search_type)
+            for candidate_idx in range(self.N):
+                print("\nGeneration #" + str(gen) + " : Candidate #" + str(candidate_idx + 1))
+                self.print_candidate_name(self.get_candidate(candidate_idx))
+                evaluated_candidate = self.evaluate_candidate(candidate_idx, k, train_epochs, cnn, mode, number_of_blocks, verbosity=1)
+                self.print_candidate_results(evaluated_candidate)
+            print("\nGeneration #" + str(gen) + ' : Best Candidate')
+            gen_best_candidate = self.get_population_best_candidate(evaluation_metric=2) # best accuracy wise
+            self.print_candidate_name_and_results(gen_best_candidate)
+            gen_best_candidates.append(gen_best_candidate)
+            #self.print_population()
+            if (gen != self.generations): self.evolve(self.fitness_metric) # do not evolve final generation
 
-        self.unary_units = {
-            '0': 0.0, 
-            '1': 1.0, 
-            'x' : lambda x:x, 
-            '(-x)' : lambda x:(-x), 
-            'abs(x)' : lambda x:K.abs(x),
-            'x**2' : lambda x:x**2, 
-            'x**3' : lambda x:x**3,
-            'sqrt(x)' : lambda x:K.sqrt(x), 
-            'exp(x)' : lambda x:K.exp(x),  
-            'exp(-x^2)' : lambda x:K.exp(-x**2),
-            'log(1 + exp(x))' : lambda x:K.log(1+K.exp(x)), 
-            'log(abs(x + err))' : lambda x:K.log(K.abs(x + self.err)), 
-            'sin(x)' : lambda x:K.sin(x), 
-            'sinh(x)' : lambda x:tf.math.sinh(x), 
-            'asinh(x)' : lambda x:tf.math.asinh(x),
-            'cos(x)' : lambda x:K.cos(x),
-            'cosh(x)' : lambda x:tf.math.cosh(x), 
-            'tanh(x)' : lambda x:tf.math.tanh(x), 
-            'atanh(x)' : lambda x:tf.math.atanh(x), 
-            'max(x, 0)' : lambda x:K.maximum(x, 0.0), 
-            'min(x, 0)' : lambda x:K.minimum(x, 0.0),
-            '(1/(1 + exp(-x)))' : lambda x:(1/(1 + K.exp(-x))), 
-            'erf(x)' : lambda x:tf.math.erf(x), 
-            'sinc(x)' : lambda x:K.sin(x)/(x + self.err) #sinc
-        }
-
-        self.binary_units = {
-            'x1 + x2' : lambda x1, x2:x1 + x2, 
-            'x1 - x2' : lambda x1, x2:x1 - x2, 
-            'x1 * x2' : lambda x1, x2:x1 * x2, 
-            'x1 / (x2 + err)' : lambda x1, x2:x1/(x2 + self.err), 
-            'max(x1, x2)' : lambda x1, x2:K.maximum(x1,x2), 
-            'min(x1, x2)' : lambda x1, x2:K.minimum(x1,x2)
-
-        }
-
-    def get_candidate(self, candidate_idx):
-        return self.population[candidate_idx]
-
-    def print_population(self):
-        print("Entire Population:\n")
-        for can in self.population:
+        print('Every generation best:')
+        for i, can in enumerate(gen_best_candidates):
+            print("\nGeneration #" + str(i + 1))
             self.print_candidate_name_and_results(can)
-
-    def print_candidate_name_and_results(self, sol):
-        self.print_candidate_name(sol)
-        self.print_candidate_results(sol)
-
-
-    def print_candidate_name(self, sol):
-        for i in range(len(sol[0])):
-            print(sol[0][i].get_name())
-
-    def print_candidate_results(self, sol):
-        print('Loss: ' + str(sol[1]) + '; Accuracy: ' + str(sol[2]) + '\n')
-
-    def get_population_best_candidate(self, evaluation_metric):
-        valence = -1 if evaluation_metric == 1 else 1 
-        best_candidate = self.population[0]
-        for candidate in self.population:
-            if candidate[valence * evaluation_metric] > best_candidate[valence * evaluation_metric]:
-                best_candidate = candidate
-        return best_candidate
-
-    # fitness_base = 0 (loss-based), 1 (accuracy_based)
-    # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    def evaluate_candidate(self, candidate_idx, k, train_epochs, model, mode, num_of_blocks, verbosity=0):
-        if mode: model.set_custom_activation(self.population[candidate_idx][0])
-        average_val_results = model.k_fold_crossvalidation_evaluation(k, train_epochs, model, mode, num_of_blocks, verbosity)
-        if mode: # custom
-            self.population[candidate_idx][1] = average_val_results[0] # average loss
-            self.population[candidate_idx][2] = average_val_results[1] # average accuracy
-            return self.population[candidate_idx]
-        else:
-            return ['Relu', average_val_results[0], average_val_results[1]]
-
-    #def final_test(self):
 
 
     '''
     Softmax operation turning absolute fitness into sampling probabilities. Sampling 2(N-m)
     Selecting parents
     '''
-    def evolve(self, evaluation_metric):
+    def evolve(self, fitness_metric):
         assert self.N - self.m - self.b >= 2, "Not enough parents for crossover!"
-        assert evaluation_metric == 1 or 2, "Invalid fitness metric should be 1 (loss) or 2 (accuracy)"
+        assert fitness_metric == 1 or 2, "Invalid fitness metric should be 1 (loss) or 2 (accuracy)"
 
         new_population = []
         # selecting top b candidates to keep in population without mutation or crossover
-        ordered_population = sorted(self.population, key=itemgetter(evaluation_metric), reverse=False if evaluation_metric == 1 else True)
+        ordered_population = sorted(self.population, key=itemgetter(fitness_metric), reverse=False if fitness_metric == 1 else True)
         best_candidates = ordered_population[:self.b]
         for candidate in best_candidates:
             new_population.append(candidate)
@@ -118,14 +58,14 @@ class GA:
         # determining selection prob based on fitness
         fitness_exp_sum  = 0
         for candidate in self.population:
-            if not math.isnan(candidate[evaluation_metric]):
-                fitness_exp_sum += K.exp(candidate[evaluation_metric])
+            if not math.isnan(candidate[fitness_metric]):
+                fitness_exp_sum += K.exp(candidate[fitness_metric])
         
         selection_probabilities = []
-        valence = -1 if evaluation_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss
+        valence = -1 if fitness_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss
         for candidate in self.population: 
-            if not math.isnan(candidate[evaluation_metric]):
-                selection_probabilities.append(K.exp(valence * candidate[evaluation_metric])/fitness_exp_sum)
+            if not math.isnan(candidate[fitness_metric]):
+                selection_probabilities.append(K.exp(valence * candidate[fitness_metric])/fitness_exp_sum)
             else:
                 selection_probabilities.append(0.0) # if solution results in NaN loss give 0 change of reproducting
 
@@ -211,26 +151,6 @@ class GA:
         
         return [child_gene, loss, accuracy]
 
-    '''
-    Generates random candidate solution of complexity C
-    '''
-    def generate_random_new_candidate_solution(self):
-        candidate_solution = []
-        i = 0
-        while (self.C - i):
-            binary_unit_key = random.sample(list(self.binary_units), 1)[0]
-            unary_unit1_key = random.sample(list(self.unary_units), 1)[0]
-            unary_unit2_key = random.sample(list(self.unary_units), 1)[0]
-            elementary_units_keys = [unary_unit1_key, binary_unit_key, unary_unit2_key]
-            elementary_units_functions = [self.unary_units[unary_unit1_key], self.binary_units[binary_unit_key], self.unary_units[unary_unit2_key]]
-            core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
-            if core_unit.check_validity():
-                candidate_solution.append(core_unit)
-                i = i + 1
-        accuracy = 0.0
-        loss = 0.0
-        return [candidate_solution, loss, accuracy]
-
 
     '''
     params:
@@ -266,19 +186,7 @@ class GA:
                 candidate_solution = []
         '''
 
-    '''
-    Parameter and initial population inititializer, done on the basis on random generation.
-
-    params:
-     N - size of the candidate solution population
-     C - complextiy of candidate solutions (i.e. number of AFs)
-     m - number of candidate solutions added each generation
-    '''
-    def initialize(self):
-        # creating population from candidate solutons
-        self.population = []
-        for i in range(self.N):
-            self.population.append(self.generate_random_new_candidate_solution())
+    
 
 
     

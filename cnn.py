@@ -39,7 +39,7 @@ from tensorflow.keras.utils import to_categorical
 
 
 class CNN:
-    def __init__(self):
+    def __init__(self, dataset):
         self.model = None
         self.dataset_id = None
         self.x_train = None
@@ -48,6 +48,8 @@ class CNN:
         self.y_test = None
 
         self.custom_activation_functions = None
+
+        self.load_and_prep_data(dataset)
 
     def load_and_prep_data(self, dataset_id):
         assert dataset_id == "cifar10" or dataset_id == "cifar100", "Invalid dataset, check dataset_id"
