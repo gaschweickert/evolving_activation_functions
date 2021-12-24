@@ -88,38 +88,36 @@ class CNN:
             for i, custom_af in enumerate(self.custom_activation_functions):
                 get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
         
-        with mirrored_strategy.scope():
-            model = Sequential()
-            layer_num = 0
+        #with mirrored_strategy.scope():
+        model = Sequential()
+        layer_num = 0
 
-            #num_block = len(self.custom_activation_functions) if per_block else 
-
-            for block_num in range(1, num_of_blocks + 1):
-                af = self.activation_setter(mode, block_num, layer_num)
-                if block_num == 1:
-                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
-                else:
-                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-                layer_num = layer_num + 1
-                model.add(BatchNormalization())
+        for block_num in range(1, num_of_blocks + 1):
+            af = self.activation_setter(mode, block_num, layer_num)
+            if block_num == 1:
+                model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
+            else:
                 model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-                layer_num = layer_num + 1
-                model.add(BatchNormalization())
-                model.add(MaxPooling2D((2, 2)))
-                model.add(Dropout(0.1 + 0.1 * block_num))
-
-            model.add(Flatten())
-            model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
+            layer_num = layer_num + 1
             model.add(BatchNormalization())
-            model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
-            if self.dataset_id == "cifar10":
-                model.add(Dense(10, activation='softmax'))
-            elif self.dataset_id == "cifar100":
-                model.add(Dense(100, activation='softmax'))
+            model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
+            layer_num = layer_num + 1
+            model.add(BatchNormalization())
+            model.add(MaxPooling2D((2, 2)))
+            model.add(Dropout(0.1 + 0.1 * block_num))
 
-            # compile model
-            opt = optimizers.SGD(learning_rate=0.001*number_of_gpus, momentum=0.9)
-            model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+        model.add(Flatten())
+        model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
+        if self.dataset_id == "cifar10":
+            model.add(Dense(10, activation='softmax'))
+        elif self.dataset_id == "cifar100":
+            model.add(Dense(100, activation='softmax'))
+
+        # compile model
+        opt = optimizers.SGD(learning_rate=0.001*number_of_gpus, momentum=0.9)
+        model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
         self.model = model
 
@@ -144,12 +142,17 @@ class CNN:
         visualizer(self.model, format='png', view=True)
 
     def train(self, train_inputs, train_targets, num_epochs, verbosity):
+        # This callback will stop the training when there is no improvement in
+        # the loss for three consecutive epochs.
+        callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+        callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.005, patience=3, mode='max')
         #one-hot encode target column
         train_targets = to_categorical(train_targets)
         # 64 for 1 gpu, 128 for 2 gpus...
         batch_size = 64 * number_of_gpus
         #train the model
-        self.model.fit(train_inputs, train_targets, batch_size, epochs=num_epochs, shuffle=True, verbose=verbosity)
+        history = self.model.fit(train_inputs, train_targets, epochs=num_epochs, batch_size=batch_size, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
+        if (len(history.history['loss']) < num_epochs): print('EARLY STOPPAGE') 
 
     def evaluate(self, test_inputs, test_targets, verbosity):
         #one-hot encode target column
@@ -158,21 +161,23 @@ class CNN:
         batch_size = 64 * number_of_gpus
         return self.model.evaluate(test_inputs, test_targets, batch_size, verbose=verbosity)
 
-    def k_fold_crossvalidation_evaluation(self, k, cnn, mode, num_of_blocks, verbosity):
+    def k_fold_crossvalidation_evaluation(self, k, train_epochs, cnn, mode, num_of_blocks, verbose):
         # Define the K-fold Cross Validator
         kfold = StratifiedKFold(n_splits=k, shuffle=True, random_state=None) # Should random state be none
 
         # K-fold Cross Validation model evaluation
-        val_acc_per_fold = []
+        val_results_per_fold = []
         for train, val in kfold.split(self.x_train, self.y_train):
             cnn.build_and_compile(mode, num_of_blocks)
-            cnn.train(self.x_train[train], self.y_train[train], 50, verbosity)
-            val_results = cnn.evaluate(self.x_train[val], self.y_train[val], verbosity)
-            val_acc_per_fold.append(val_results[1])
+            if verbose: print('Training:')
+            cnn.train(self.x_train[train], self.y_train[train], train_epochs, verbose)
+            if verbose: print('Validation:')
+            val_results = cnn.evaluate(self.x_train[val], self.y_train[val], verbose)
+            val_results_per_fold.append(val_results)
         #cnn.visualize()
         #cnn.summary()
-        average_val_acc = sum(val_acc_per_fold)/len(val_acc_per_fold)
-        return average_val_acc
+        average_val_results = np.mean(val_results_per_fold, axis=0) 
+        return average_val_results
 
 
 
