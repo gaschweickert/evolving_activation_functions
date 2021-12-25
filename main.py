@@ -2,6 +2,8 @@ from genetic_algorithm_search import GAS
 from random_search import RS
 from cnn import CNN
 import csv
+import time
+from search import SEARCH
 
 def experiment1():
     generations = 10
@@ -27,15 +29,16 @@ def experiment1():
 
 
 def main():
+    t0 = time.time()
 
     save_file = False
     
-    generations = 5
+    generations = 10
     k = 2 # number of folds for crossvalidation
-    N = 4 # population size (N-m-b>=2 for crossover)
+    N = 2 # population size (N-m-b>=2 for crossover)
     C = 1 # search space complexity i.e. number of custom af (note: must change layer set up in CNN)
-    m = 1 # number of new candidates per generation
-    b = 1 # number of preserved best candidates per generation
+    m = 0 # number of new candidates per generation
+    b = 0 # number of preserved best candidates per generation
     fitness_metric = 1 # 1 (loss) or 2 (accuracy) for fitness base metric
 
     dataset = "cifar10" # 'cifar10' or 'cifar100'
@@ -45,25 +48,29 @@ def main():
 
     cnn = CNN(dataset)
 
-    rs = RS(generations, N, C)
-    rs.run(k, train_epochs, cnn, mode, number_of_blocks)
+    print("\nAccuracy:")
+    print()
+    test_results = cnn.test(mode, 'relu', number_of_blocks, 2, verbose=1)
 
-    gas = GAS(generations, N, C, m, b, fitness_metric)
-    gas.run(k, train_epochs, cnn, mode, number_of_blocks)
+    #rs = RS(generations, N, C)
+    #rs.run(k, train_epochs, cnn, mode, number_of_blocks)
+
+    #gas = GAS(generations, N, C, m, b, fitness_metric)
+    #gas.run(k, train_epochs, cnn, mode, number_of_blocks)
     
-    relu_benchmark = gas.evaluate_candidate(k, None, cnn, 0, number_of_blocks, verbosity=1)
-    print("\nRelu benchmark accuracy:")
-    print(relu_benchmark)
+    t1 = time.time()
+    total_time = t1-t0
+    print("Time taken: " + str(total_time))
 
 
     #print("\nFinal best generated solution: (highest accuracy from all generations)")
     #final_best_candidate = max(ga.get_population_best_candidate(evaluation_metric))
     #ga.print_candidate_name_and_results(final_best_candidate)
 
+    '''
     # field names 
     fields = ['Gen', 'Candidate', 'Loss', 'Acc']
 
-    '''
     if save_file:
         with open('CNN_MNIST'+ '_' + dataset + '_N=' + str(N) + '_C=' + str(C) + '_G=' + str(generations) + '_m=' + str(m) + '_b=' + str(b), 'w') as f:
             

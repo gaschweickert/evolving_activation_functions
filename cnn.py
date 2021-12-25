@@ -49,10 +49,14 @@ class CNN:
 
         self.custom_activation_functions = None
 
+        # set batch size for models
+        # 64 for 1 gpu, 128 for 2 gpus...
+        self.batch_size = 64 * number_of_gpus
+
         self.load_and_prep_data(dataset)
 
     def load_and_prep_data(self, dataset_id):
-        assert dataset_id == "cifar10" or dataset_id == "cifar100", "Invalid dataset, check dataset_id"
+        assert dataset_id in ("cifar10", "cifar100"), "Invalid dataset, check dataset_id"
         self.dataset_id = dataset_id
         if dataset_id == "cifar10":
             #load cifar 10 dataset
@@ -71,31 +75,30 @@ class CNN:
         self.y_test = y_test
 
         # one hot encoding happens after k-split
-        #self.inputs = np.concatenate((x_train, x_test), axis=0)
-        #self.targets = np.concatenate((y_train, y_test), axis=0)
-
-    def set_custom_activation(self, custom_activation_functions):
-        self.custom_activation_functions = custom_activation_functions
 
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    def build_and_compile(self, mode, num_of_blocks): 
-        if mode == 1:
-            assert len(self.custom_activation_functions) == 1, "Warning: Invalid number of custom activations for homogenous custom"
+    def build_and_compile(self, mode, activation, num_of_blocks): 
+        assert mode in (1,2,3), "Invalid mode, choose 1, 2, or 3"
+        if type(activation) == str:
+            assert mode == 1, "Invalid standard activation functions can only operate in mode 1"
+            assert activation in ('relu', 'swish'), "Invalid activation function; try 'relu' or 'swish'"
+        elif mode == 1 and not type(activation) == str:
+            assert len(activation) == 1, "Warning: Invalid number of custom activations for homogenous custom"
         elif mode == 2:
-            assert len(self.custom_activation_functions) == num_of_blocks * 2, "Warning: Number of custom activations does not match network number of layers!"
+            assert len(activation) == num_of_blocks * 2, "Warning: Number of custom activations does not match network number of layers!"
         elif mode == 3:
-            assert len(self.custom_activation_functions) == num_of_blocks, "Warning: Number of custom activations does not match network number of blocks!"
-
-        if not mode == 0: # custom
-            for i, custom_af in enumerate(self.custom_activation_functions):
-                get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
+            assert len(activation) == num_of_blocks, "Warning: Number of custom activations does not match network number of blocks!"
         
+        if not type(activation) == str:
+            for i, custom_af in enumerate(activation):
+                get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
+
         #with mirrored_strategy.scope():
         model = Sequential()
         layer_num = 0
 
         for block_num in range(1, num_of_blocks + 1):
-            af = self.activation_setter(mode, block_num, layer_num)
+            af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
             if block_num == 1:
                 model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
             else:
@@ -125,10 +128,8 @@ class CNN:
 
 
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    def activation_setter(self, mode, block_num, layer_num):
-        if mode == 0:
-            return "relu"
-        elif mode == 1:
+    def get_custom_activation_function(self, mode, block_num, layer_num):
+        if mode == 1:
             return "custom0"
         elif mode == 2:
             return "custom"+ str(layer_num)
@@ -144,42 +145,43 @@ class CNN:
         visualizer(self.model, format='png', view=True)
 
     def train(self, train_inputs, train_targets, num_epochs, verbosity):
-        # This callback will stop the training when there is no improvement in
-        # the loss for three consecutive epochs.
+        # These callback will stop the training when there is no improvement in
+        # the loss or accuracy for three consecutive epochs.
         callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
         callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.005, patience=3, mode='max')
         #one-hot encode target column
         train_targets = to_categorical(train_targets)
-        # 64 for 1 gpu, 128 for 2 gpus...
-        batch_size = 64 * number_of_gpus
         #train the model
-        history = self.model.fit(train_inputs, train_targets, epochs=num_epochs, batch_size=batch_size, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
-        if (len(history.history['loss']) < num_epochs): print('EARLY STOPPAGE') 
+        history = self.model.fit(train_inputs, train_targets, epochs=num_epochs, batch_size=self.batch_size, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
+        if (len(history.history['loss']) < num_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(num_epochs)) 
 
-    def evaluate(self, test_inputs, test_targets, verbosity):
+    def assess(self, inputs, targets, verbosity):
         #one-hot encode target column
-        test_targets = to_categorical(test_targets)
-        # 64 for 1 gpu, 128 for 2 gpus...
-        batch_size = 64 * number_of_gpus
-        return self.model.evaluate(test_inputs, test_targets, batch_size, verbose=verbosity)
+        targets = to_categorical(targets)
+        return self.model.evaluate(inputs, targets, self.batch_size, verbose=verbosity)
 
-    def k_fold_crossvalidation_evaluation(self, k, train_epochs, cnn, mode, num_of_blocks, verbose):
+    def k_fold_crossvalidation(self, activation, k, train_epochs, mode, num_of_blocks, verbose):
         # Define the K-fold Cross Validator
         kfold = StratifiedKFold(n_splits=k, shuffle=True, random_state=None) # Should random state be none
-
         # K-fold Cross Validation model evaluation
         val_results_per_fold = []
         for train, val in kfold.split(self.x_train, self.y_train):
-            cnn.build_and_compile(mode, num_of_blocks)
+            self.build_and_compile(mode, activation, num_of_blocks)
             if verbose: print('Training:')
-            cnn.train(self.x_train[train], self.y_train[train], train_epochs, verbose)
+            self.train(self.x_train[train], self.y_train[train], train_epochs, verbose)
             if verbose: print('Validation:')
-            val_results = cnn.evaluate(self.x_train[val], self.y_train[val], verbose)
+            val_results = self.assess(self.x_train[val], self.y_train[val], verbose)
             val_results_per_fold.append(val_results)
-        #cnn.visualize()
         #cnn.summary()
         average_val_results = np.mean(val_results_per_fold, axis=0) 
         return average_val_results
+
+    def test(self, mode, activation, num_of_blocks, num_epochs, verbose):
+        self.build_and_compile(mode, activation, num_of_blocks)
+        self.train(self.x_train, self.y_train, num_epochs, verbose)
+        return self.assess(self.x_test, self.y_test, verbose)
+
+
 
 
 

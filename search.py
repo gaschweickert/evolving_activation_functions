@@ -79,17 +79,17 @@ class SEARCH:
                 best_candidate = candidate
         return best_candidate
 
-    # fitness_base = 0 (loss-based), 1 (accuracy_based)
-    # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    def evaluate_candidate(self, candidate_idx, k, train_epochs, model, mode, num_of_blocks, verbosity=0):
-        if mode: model.set_custom_activation(self.population[candidate_idx][0])
-        average_val_results = model.k_fold_crossvalidation_evaluation(k, train_epochs, model, mode, num_of_blocks, verbosity)
-        if mode: # custom
-            self.population[candidate_idx][1] = average_val_results[0] # average loss
-            self.population[candidate_idx][2] = average_val_results[1] # average accuracy
-            return self.population[candidate_idx]
-        else:
-            return ['Relu', average_val_results[0], average_val_results[1]]
+    '''
+    Evaluates the candidate at given index through k-fold crossvalidation
+    fitness_base = 0 (loss-based), 1 (accuracy_based)
+    mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
+    '''
+    def evaluate_candidate(self, candidate, k, train_epochs, model, mode, num_of_blocks, verbosity=0):
+        average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, num_of_blocks, verbosity)
+        candidate[1] = average_val_results[0] # average loss
+        candidate[2] = average_val_results[1] # average accuracy
+        return candidate
+            
         
     '''
     Generates random candidate solution of complexity C
