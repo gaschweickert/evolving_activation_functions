@@ -4,6 +4,7 @@ import random
 from core_unit import CORE_UNIT
 
 class SEARCH:
+
     def __init__(self, search_type, generations, N, C):
         self.search_type = search_type
         self.generations = generations
@@ -65,8 +66,11 @@ class SEARCH:
 
 
     def print_candidate_name(self, sol):
-        for i in range(len(sol[0])):
-            print(sol[0][i].get_name())
+        if sol[0] == str: 
+            print(sol[0])
+        else:
+            for i in range(len(sol[0])):
+                print(sol[0][i].get_name())
 
     def print_candidate_results(self, sol):
         print('Loss: ' + str(sol[1]) + '; Accuracy: ' + str(sol[2]) + '\n')
@@ -88,7 +92,22 @@ class SEARCH:
         average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, num_of_blocks, verbosity)
         candidate[1] = average_val_results[0] # average loss
         candidate[2] = average_val_results[1] # average accuracy
-        return candidate
+        return 
+
+    # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
+    def generate_candidate_solution_from_keys(self, list_of_keys):
+        candidate_solution = []
+        for keys in list_of_keys:
+            unary_unit1_key, binary_unit_key, unary_unit2_key = keys
+            elementary_units_keys = keys
+            elementary_units_functions = [self.unary_units[unary_unit1_key], self.binary_units[binary_unit_key], self.unary_units[unary_unit2_key]]
+            core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
+            assert core_unit.check_validity(), "Invalid unit keys provided for candidate solution generation"
+            candidate_solution.append(core_unit)
+        accuracy = 0.0
+        loss = 0.0
+        return [candidate_solution, loss, accuracy]
+
             
         
     '''
@@ -96,8 +115,8 @@ class SEARCH:
     '''
     def generate_random_new_candidate_solution(self):
         candidate_solution = []
-        i = 0
-        while (self.C - i):
+        i = self.C
+        while (i):
             binary_unit_key = random.sample(list(self.binary_units), 1)[0]
             unary_unit1_key = random.sample(list(self.unary_units), 1)[0]
             unary_unit2_key = random.sample(list(self.unary_units), 1)[0]
@@ -106,7 +125,7 @@ class SEARCH:
             core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
             if core_unit.check_validity():
                 candidate_solution.append(core_unit)
-                i = i + 1
+                i = i - 1
         accuracy = 0.0
         loss = 0.0
         return [candidate_solution, loss, accuracy]
