@@ -51,7 +51,7 @@ class CNN:
 
         # set batch size for models
         # 64 for 1 gpu, 128 for 2 gpus...
-        self.batch_size = 64 * number_of_gpus
+        self.batch_size = 128 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 
