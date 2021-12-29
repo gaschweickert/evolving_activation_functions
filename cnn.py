@@ -93,36 +93,36 @@ class CNN:
             for i, custom_af in enumerate(activation):
                 get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
 
-        #with mirrored_strategy.scope():
-        model = Sequential()
-        layer_num = 0
+        with mirrored_strategy.scope():
+            model = Sequential()
+            layer_num = 0
 
-        for block_num in range(1, num_of_blocks + 1):
-            af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
-            if block_num == 1:
-                model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
-            else:
+            for block_num in range(1, num_of_blocks + 1):
+                af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
+                if block_num == 1:
+                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
+                else:
+                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
+                layer_num = layer_num + 1
+                model.add(BatchNormalization())
                 model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-            layer_num = layer_num + 1
-            model.add(BatchNormalization())
-            model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-            layer_num = layer_num + 1
-            model.add(BatchNormalization())
-            model.add(MaxPooling2D((2, 2)))
-            model.add(Dropout(0.1 + 0.1 * block_num))
+                layer_num = layer_num + 1
+                model.add(BatchNormalization())
+                model.add(MaxPooling2D((2, 2)))
+                model.add(Dropout(0.1 + 0.1 * block_num))
 
-        model.add(Flatten())
-        model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
-        if self.dataset_id == "cifar10":
-            model.add(Dense(10, activation='softmax'))
-        elif self.dataset_id == "cifar100":
-            model.add(Dense(100, activation='softmax'))
+            model.add(Flatten())
+            model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
+            if self.dataset_id == "cifar10":
+                model.add(Dense(10, activation='softmax'))
+            elif self.dataset_id == "cifar100":
+                model.add(Dense(100, activation='softmax'))
 
-        # compile model
-        opt = optimizers.SGD(learning_rate=0.001*number_of_gpus, momentum=0.9)
-        model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+            # compile model
+            opt = optimizers.SGD(learning_rate=0.001*number_of_gpus, momentum=0.9)
+            model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
         self.model = model
 
