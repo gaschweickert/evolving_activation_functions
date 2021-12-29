@@ -1,7 +1,11 @@
 import tensorflow.keras.backend as K
 import tensorflow as tf
 import random
+import itertools
 from core_unit import CORE_UNIT
+import csv
+from operator import itemgetter
+import os
 
 class SEARCH:
 
@@ -52,6 +56,10 @@ class SEARCH:
 
         }
 
+        self.all_evaluated_candidate_solutions = []
+
+
+
     def get_candidate(self, candidate_idx):
         return self.population[candidate_idx]
 
@@ -63,7 +71,6 @@ class SEARCH:
     def print_candidate_name_and_results(self, sol):
         self.print_candidate_name(sol)
         self.print_candidate_results(sol)
-
 
     def print_candidate_name(self, sol):
         if sol[0] == str: 
@@ -83,6 +90,7 @@ class SEARCH:
                 best_candidate = candidate
         return best_candidate
 
+
     '''
     Evaluates the candidate at given index through k-fold crossvalidation
     fitness_base = 0 (loss-based), 1 (accuracy_based)
@@ -92,7 +100,6 @@ class SEARCH:
         average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, num_of_blocks, verbosity)
         candidate[1] = average_val_results[0] # average loss
         candidate[2] = average_val_results[1] # average accuracy
-        return 
 
     # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
     def generate_candidate_solution_from_keys(self, list_of_keys):
@@ -108,7 +115,6 @@ class SEARCH:
         loss = 0.0
         return [candidate_solution, loss, accuracy]
 
-            
         
     '''
     Generates random candidate solution of complexity C
@@ -134,7 +140,47 @@ class SEARCH:
     N-sized population generator of complexity C, done on the basis on random generation.
     '''
     def generate_N_candidates(self):
-        # creating population from candidate solutons
+        # creating population from random candidate solutons
         self.population = []
         for i in range(self.N):
             self.population.append(self.generate_random_new_candidate_solution())
+
+
+    def get_search_top_candidates(self, number_of_candidates=3, evaluation_metric = 2):
+        ordered_search_candidates = sorted(self.all_evaluated_candidate_solutions, key=itemgetter(evaluation_metric), reverse=False if evaluation_metric == 1 else True)
+        return ordered_search_candidates[:number_of_candidates]
+
+    def save_data_log(self, save_file_name, time_taken=0):
+        assert self.all_evaluated_candidate_solutions, "Evaluated candidate solutions list is empty"
+        fields = ['Gen']
+        for i in range(1, self.C + 1):
+            fields.append('C'+ str(i) + '_name')
+            fields.append('C'+ str(i) + '_unary1_key')
+            fields.append('C'+ str(i) + '_binary_key')
+            fields.append('C'+ str(i) + '_unary2_key')
+        fields.extend(['Loss', 'Accuracy'])
+
+        filepath = os.path.join(os.getcwd(), "search_data", save_file_name + ".csv")
+
+        with open(filepath, 'w') as f:
+            
+            # using csv.writer method from CSV package
+            write = csv.writer(f)
+            
+            write.writerow(fields)
+
+            gen = 1
+            for i, candidate in enumerate(self.all_evaluated_candidate_solutions):
+                entry = [gen]
+                for af in candidate[0]:
+                    entry.append(af.get_name())
+                    entry.extend(af.get_elementary_units_keys())
+                entry.extend([candidate[1], candidate[2]])
+                write.writerow(entry)
+                if (i)%self.N: gen = gen + 1
+
+            write.writerow(['Total time:',time_taken])
+
+
+
+ 

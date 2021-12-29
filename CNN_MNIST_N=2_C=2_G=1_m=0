@@ -1,3 +1,0 @@
-Gen,Candidate,Acc
-0,"max(min(x, 0), 0);tanh(x) * cosh(x)",0.09967143088579178
-999,Relu,0.97208571434021

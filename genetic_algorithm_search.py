@@ -7,9 +7,6 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from operator import itemgetter
 
-# seed random number generator
-#seed(1)
-
 class GAS(SEARCH):
     def __init__(self, generations, N, C, m, b, fitness_metric):
         super().__init__("GA SEARCH", generations, N, C)
@@ -19,25 +16,18 @@ class GAS(SEARCH):
 
     def run(self, k, train_epochs, cnn, mode, number_of_blocks):
         self.generate_N_candidates() 
-        gen_best_candidates = []
         for gen in range(1, self.generations + 1):
             print(self.search_type)
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
                 self.print_candidate_name(candidate)
-                evaluated_candidate = self.evaluate_candidate(candidate, k, train_epochs, cnn, mode, number_of_blocks, verbosity=1)
-                self.print_candidate_results(evaluated_candidate)
+                self.evaluate_candidate(candidate, k, train_epochs, cnn, mode, number_of_blocks, verbosity=0)
+                self.print_candidate_results(candidate)
+                self.all_evaluated_candidate_solutions.append(candidate)
             print("\nGeneration #" + str(gen) + ' : Best Candidate')
             gen_best_candidate = self.get_population_best_candidate(evaluation_metric=2) # best accuracy wise
             self.print_candidate_name_and_results(gen_best_candidate)
-            gen_best_candidates.append(gen_best_candidate)
-            #self.print_population()
             if (gen != self.generations): self.evolve(self.fitness_metric) # do not evolve final generation
-
-        print('Every generation best:')
-        for i, can in enumerate(gen_best_candidates):
-            print("\nGeneration #" + str(i + 1))
-            self.print_candidate_name_and_results(can)
 
 
     '''
@@ -152,39 +142,6 @@ class GAS(SEARCH):
         return [child_gene, loss, accuracy]
 
 
-    '''
-    params:
-     N - size of the candidate solution population
-     C - complextiy of candidate solutions (i.e. number of AFs)
-    # POPULATION INITIALIZATION IS DOES NOT USE RANDOM CANDDIATE GENERATOR
-    def initialize(self, N, C, m):
-        # set evolution parameters
-        self.N = N
-        self.C = C
-        self.m = m
-
-        # generating all possible af
-        unary_keys = list(self.unary_units)
-        binary_keys = list(self.binary_units)
-        a = list([unary_keys, binary_keys, unary_keys])
-        all_combos = list(itertools.product(*a))
-        random.shuffle(all_combos) 
-
-
-        # creating population from candidate solutons
-        self.population = []
-        candidate_solution = []
-        loss = 0.0
-        accuracy = 0.0
-        for i in range(N*C):
-            elementary_units_keys = all_combos[i]
-            elementary_units_functions = [self.unary_units[all_combos[i][0]], self.binary_units[all_combos[i][1]], self.unary_units[all_combos[i][2]]]
-            core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
-            candidate_solution.append(core_unit)
-            if ((i+1)%C == 0):
-                self.population.append([candidate_solution, loss, accuracy])
-                candidate_solution = []
-        '''
 
     
 
