@@ -58,7 +58,7 @@ def main():
     # train_epochs = number of training epochs
 
 
-    ga_search(dataset = 'cifar10', generations=5, N=2, C=2, m=0, b=0, fitness_metric=1, k=2, train_epochs=5, mode=3, number_of_blocks=2, save=True)
+    #ga_search(dataset = 'cifar10', generations=5, N=2, C=2, m=0, b=0, fitness_metric=1, k=2, train_epochs=5, mode=3, number_of_blocks=2, save=True)
     #random_search(dataset = 'cifar10', generations=2, N=2, C=1, k=2, train_epochs=2, mode=1, number_of_blocks=1, save=True)
 
 
@@ -67,17 +67,23 @@ def main():
 
 
 
-
-
-    '''
     #print("\nComparison:")
-    #ss = SEARCH('None', generations, N, C)
-    #test_epochs = 1
+    ss = SEARCH('None', 0,0,0)
+    cnn= CNN('cifar10')
+    average_acc = []
+    for i in range(5):
+        candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1'], ['abs(x)', 'x1 * x2', '1']])
+        candidate[1], candidate[2] = cnn.test(mode=3, activation=candidate[0], num_of_blocks=2, num_epochs=10, verbose=1)
+        average_acc.append(candidate[2])
+        print(i)
+        ss.print_candidate_name_and_results(candidate)
+    print(sum(average_acc)/len(average_acc))
+    for i in range(5):
+        candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1'], ['abs(x)', 'x1 * x2', '1']])
+        candidate[1], candidate[2] = cnn.test(mode=3, activation=candidate[0], num_of_blocks=2, num_epochs=100, verbose=1)
+        average_acc.append(candidate[2])
+        ss.print_candidate_name_and_results(candidate)
 
-    #candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1']])
-    candidate[1], candidate[2] = cnn.test(mode, candidate[0], number_of_blocks, test_epochs, verbose=1)
-    ss.print_candidate_name_and_results(candidate)
-    '''
 
     #benchmark = ['relu', 0.0, 0.0]
     #benchmark[1], benchmark[2] = cnn.test(mode, benchmark[0], number_of_blocks, test_epochs, verbose=1)
