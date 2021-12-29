@@ -26,7 +26,7 @@ if gpus:
         print(e)
 
 import matplotlib.pyplot as plt
-from keras_visualizer import visualizer
+#from keras_visualizer import visualizer
 import numpy as np
 from keras.utils.generic_utils import get_custom_objects
 from sklearn.model_selection import StratifiedKFold
