@@ -58,7 +58,7 @@ def main():
     # train_epochs = number of training epochs
 
 
-    ga_search(dataset = 'cifar10', generations=1, N=2, C=1, m=0, b=0, fitness_metric=1, k=2, train_epochs=1, mode=1, number_of_blocks=2, save=True)
+    #ga_search(dataset = 'cifar10', generations=1, N=2, C=1, m=0, b=0, fitness_metric=1, k=2, train_epochs=1, mode=1, number_of_blocks=2, save=True)
     #random_search(dataset = 'cifar10', generations=2, N=2, C=1, k=2, train_epochs=2, mode=1, number_of_blocks=1, save=True)
     
 
@@ -87,8 +87,8 @@ def main():
 
     ss = SEARCH('None', 0,0,0)
     cnn= CNN('cifar10')
-    candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1']])
-    candidate[1], candidate[2] = cnn.assess(mode=1, candidate_activation=candidate[0], no_blocks=3, no_epochs=200, verbose=1)
+    candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1'], ['abs(x)', 'x1 * x2', '1']])
+    candidate[1], candidate[2] = cnn.assess(mode=3, candidate_activation=candidate[0], no_blocks=2, no_epochs=200, verbosity=1, tensorboard_log=True)
     ss.print_candidate_name_and_results(candidate)
 
     """ benchmark = ['relu', 0.0, 0.0]

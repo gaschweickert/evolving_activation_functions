@@ -166,20 +166,20 @@ class CNN:
         train_data = self.format_data(train_inputs, train_targets)
  
         # These callback will stop the training when there is no improvement in
-        # the loss or accuracy for three consecutive epochs.
-        callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
-        callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.0001, patience=3, mode='max')
+        # the loss  for three consecutive epochs (NaN scenario)
+        callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.0, patience=3)
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
-        callbacks = []
+        callbacks = [callback_loss]
         if tensorboard_log: callbacks.append(callback_tensorboard)
         
         #train the model
-        history = self.model.fit(train_data, epochs=no_epochs, validation_split=0.0, callbacks=callbacks, shuffle=True, verbose=verbosity)
+        history = self.model.fit(train_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
         if (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs)) 
 
-    def test(self, inputs, targets, verbosity):
-        data = self.format_data(inputs,targets)
-        return self.model.evaluate(data, verbose=verbosity)
+
+    def validate(self, val_inputs, val_targets, verbosity):
+        val_data = self.format_data(val_inputs, val_targets)
+        return self.model.evaluate(val_data, verbose=verbosity)
 
     def k_fold_crossvalidation(self, candidate_activation, k, train_epochs, mode, no_blocks, verbosity):
         # Define the K-fold Cross Validator
@@ -187,25 +187,39 @@ class CNN:
         # K-fold Cross Validation model evaluation
         val_results_per_fold = []
         for train, val in kfold.split(self.x_train, self.y_train):
+            print(len(self.x_train[train]), len(self.y_train[train]))
+            print(len(self.x_train[val]), len(self.y_train[val]))
             self.build_and_compile(mode, candidate_activation, no_blocks)
             if verbosity: print('Training:')
             self.train(self.x_train[train], self.y_train[train], train_epochs, verbosity)
             if verbosity: print('Validation:')
-            val_results = self.test(self.x_train[val], self.y_train[val], verbosity)
+            val_results = self.validate(self.x_train[val], self.y_train[val], verbosity)
             val_results_per_fold.append(val_results)
         average_val_results = np.mean(val_results_per_fold, axis=0) 
         return average_val_results
 
-    def assess(self, mode, candidate_activation, no_blocks, no_epochs, verbose, save_model=False, visualize=False, tensorboard_log=False):
+    def assess(self, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
         self.build_and_compile(mode, candidate_activation, no_blocks)
-        #Save the model
+        
+        print(len(self.x_train), len(self.y_train))
+        print(len(self.x_test), len(self.y_test))
+
+        # Early stoppage when there is no improvement in test accuracy
+        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=3, mode='max')
+        callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
+        callbacks = [callback_test_acc]
+
+        if tensorboard_log: callbacks.append(callback_tensorboard)
         if save_model: self.model.save('architecture.h5')
         if visualize: self.visualize()
-        self.train(self.x_train, self.y_train, no_epochs, verbose, tensorboard_log)
-        return self.test(self.x_test, self.y_test, verbose)
 
+        train_data = self.format_data(self.x_train, self.y_train)
+        test_data = self.format_data(self.x_test, self.y_test)
+        
+        history = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+        if (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs))
 
-
+        return history.history['val_loss'][-1], history.history['val_accuracy'][-1]
 
 
 
