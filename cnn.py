@@ -2,13 +2,7 @@ import sys
 
 import tensorflow as tf
 print(tf.version.VERSION)
-'''
-tf.config.list_physical_devices("GPU")
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
-config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-'''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
     number_of_gpus = len(gpus)
@@ -19,8 +13,6 @@ if gpus:
         logical_gpus = tf.config.experimental.list_logical_devices('GPU')
         print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
         mirrored_strategy = tf.distribute.MirroredStrategy()
-        #options = tf.data.Options()
-        #options.experimental_distribute.auto_shard_policy = AutoShardPolicy.DATA
     except RuntimeError as e:
     # Memory growth must be set before GPUs have been initialized
         print(e)
@@ -52,7 +44,7 @@ class CNN:
         self.custom_activation_functions = None
 
         # set batch size for models depending on number of available gpus
-        self.batch_size = 128 * number_of_gpus
+        self.batch_size = 256 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 
