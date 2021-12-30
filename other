@@ -1,4 +1,4 @@
-model = Sequential()
+        model = Sequential()
         # VVG block 1
         model.add(Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
         model.add(BatchNormalization())
@@ -60,3 +60,5 @@ model = Sequential()
 
         self.batch_num = self.batch_num + 1
         assert len(self.population) == self.N, "Error in population generation"
+
+        tensorboard --logdir=./logs '''

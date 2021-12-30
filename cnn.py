@@ -36,6 +36,8 @@ from tensorflow.keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooli
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import to_categorical
 
+from tensorflow.keras.callbacks import TensorBoard
+
 
 
 class CNN:
@@ -75,7 +77,7 @@ class CNN:
 
 
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    def build_and_compile(self, mode, activation, num_of_blocks): 
+    def build_and_compile(self, mode, activation, no_blocks): 
         assert mode in (1,2,3), "Invalid mode, choose 1, 2, or 3"
         if type(activation) == str:
             assert mode == 1, "Invalid standard activation functions can only operate in mode 1"
@@ -83,36 +85,40 @@ class CNN:
         elif mode == 1 and not type(activation) == str:
             assert len(activation) == 1, "Warning: Invalid number of custom activations for homogenous custom"
         elif mode == 2:
-            assert len(activation) == num_of_blocks * 2, "Warning: Number of custom activations does not match network number of layers!"
+            assert len(activation) == no_blocks * 2, "Warning: Number of custom activations does not match network number of layers!"
         elif mode == 3:
-            assert len(activation) == num_of_blocks, "Warning: Number of custom activations does not match network number of blocks!"
+            assert len(activation) == no_blocks, "Warning: Number of custom activations does not match network number of blocks!"
         
         if not type(activation) == str:
             for i, custom_af in enumerate(activation):
-                get_custom_objects().update({'custom'+ str(i): Activation(custom_af.evaluate_function)})
+                get_custom_objects().update({'custom'+ str(i+1): Activation(custom_af.evaluate_function)})
 
         with mirrored_strategy.scope():
             model = Sequential()
             layer_num = 0
 
-            for block_num in range(1, num_of_blocks + 1):
-                af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
+            for block_num in range(1, no_blocks + 1):
+                layer_num = layer_num + 1
+                no_filters = 2**(4+block_num)
                 if block_num == 1:
-                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
+                    model.add(Conv2D(no_filters, (3, 3), activation=None, kernel_initializer='he_uniform', padding='same', input_shape=(32, 32, 3)))
                 else:
-                    model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
+                    model.add(Conv2D(no_filters, (3, 3), activation=None, kernel_initializer='he_uniform', padding='same'))
+                af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
+                model.add(Activation(af, name=af + '_B' + str(block_num) + '_L' + str(layer_num)))
                 layer_num = layer_num + 1
                 model.add(BatchNormalization())
-                model.add(Conv2D(32 * block_num, (3, 3), activation=af, kernel_initializer='he_uniform', padding='same'))
-                layer_num = layer_num + 1
+                model.add(Conv2D(no_filters, (3, 3), kernel_initializer='he_uniform', padding='same'))
+                if mode == 2: af = self.get_custom_activation_function(mode, block_num, layer_num) if not type(activation) == str else activation
+                model.add(Activation(af, name=af + '_B' + str(block_num) + '_L' + str(layer_num)))
                 model.add(BatchNormalization())
                 model.add(MaxPooling2D((2, 2)))
                 model.add(Dropout(0.1 + 0.1 * block_num))
 
             model.add(Flatten())
-            model.add(Dense(32 * num_of_blocks, activation='relu', kernel_initializer='he_uniform'))
+            model.add(Dense(no_filters, activation='relu', kernel_initializer='he_uniform'))
             model.add(BatchNormalization())
-            model.add(Dropout(0.1 + 0.1 * (num_of_blocks + 1)))
+            model.add(Dropout(0.1 + 0.1 * (no_blocks + 1)))
             if self.dataset_id == "cifar10":
                 model.add(Dense(10, activation='softmax'))
             elif self.dataset_id == "cifar100":
@@ -128,71 +134,74 @@ class CNN:
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     def get_custom_activation_function(self, mode, block_num, layer_num):
         if mode == 1:
-            return "custom0"
+            return "custom1"
         elif mode == 2:
             return "custom"+ str(layer_num)
         elif mode == 3:
-            return "custom"+ str(block_num - 1)
+            return "custom"+ str(block_num)
         else:
             return None
 
     def summary(self):
         return self.model.summary()
 
-    """ def visualize(self):
-        visualizer(self.model, format='png', view=True) """
+    def visualize(self):
+        dot_img_file = 'model_architecture.png'
+        tf.keras.utils.plot_model(self.model, to_file=dot_img_file, show_shapes=True)
 
     def format_data(self, inputs, targets):
         #one-hot encode target column
         targets = to_categorical(targets)
-
         # Wrap data in Dataset objects.
         data = tf.data.Dataset.from_tensor_slices((inputs, targets))
-
         # The batch size must now be set on the Dataset objects.
         data = data.batch(self.batch_size)
-
         # Disable AutoShard.
         options = tf.data.Options()
         options.experimental_distribute.auto_shard_policy = tf.data.experimental.AutoShardPolicy.OFF
         data = data.with_options(options)
         return data
 
-    def train(self, train_inputs, train_targets, num_epochs, verbosity):
+    def train(self, train_inputs, train_targets, no_epochs, verbosity, tensorboard_log=0):
         train_data = self.format_data(train_inputs, train_targets)
  
         # These callback will stop the training when there is no improvement in
         # the loss or accuracy for three consecutive epochs.
         callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
-        callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.005, patience=3, mode='max')
+        callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.0001, patience=3, mode='max')
+        callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
+        callbacks = []
+        if tensorboard_log: callbacks.append(callback_tensorboard)
         
         #train the model
-        history = self.model.fit(train_data, epochs=num_epochs, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
-        if (len(history.history['loss']) < num_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(num_epochs)) 
+        history = self.model.fit(train_data, epochs=no_epochs, validation_split=0.0, callbacks=callbacks, shuffle=True, verbose=verbosity)
+        if (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs)) 
 
     def test(self, inputs, targets, verbosity):
         data = self.format_data(inputs,targets)
         return self.model.evaluate(data, verbose=verbosity)
 
-    def k_fold_crossvalidation(self, activation, k, train_epochs, mode, num_of_blocks, verbose):
+    def k_fold_crossvalidation(self, candidate_activation, k, train_epochs, mode, no_blocks, verbosity):
         # Define the K-fold Cross Validator
         kfold = StratifiedKFold(n_splits=k, shuffle=True, random_state=None) # Should random state be none
         # K-fold Cross Validation model evaluation
         val_results_per_fold = []
         for train, val in kfold.split(self.x_train, self.y_train):
-            self.build_and_compile(mode, activation, num_of_blocks)
-            if verbose: print('Training:')
-            self.train(self.x_train[train], self.y_train[train], train_epochs, verbose)
-            if verbose: print('Validation:')
-            val_results = self.test(self.x_train[val], self.y_train[val], verbose)
+            self.build_and_compile(mode, candidate_activation, no_blocks)
+            if verbosity: print('Training:')
+            self.train(self.x_train[train], self.y_train[train], train_epochs, verbosity)
+            if verbosity: print('Validation:')
+            val_results = self.test(self.x_train[val], self.y_train[val], verbosity)
             val_results_per_fold.append(val_results)
-        #cnn.summary()
         average_val_results = np.mean(val_results_per_fold, axis=0) 
         return average_val_results
 
-    def assess(self, mode, activation, num_of_blocks, num_epochs, verbose):
-        self.build_and_compile(mode, activation, num_of_blocks)
-        self.train(self.x_train, self.y_train, num_epochs, verbose)
+    def assess(self, mode, candidate_activation, no_blocks, no_epochs, verbose, save_model=False, visualize=False, tensorboard_log=False):
+        self.build_and_compile(mode, candidate_activation, no_blocks)
+        #Save the model
+        if save_model: self.model.save('architecture.h5')
+        if visualize: self.visualize()
+        self.train(self.x_train, self.y_train, no_epochs, verbose, tensorboard_log)
         return self.test(self.x_test, self.y_test, verbose)
 
 

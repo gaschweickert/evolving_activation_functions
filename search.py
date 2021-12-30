@@ -73,7 +73,7 @@ class SEARCH:
         self.print_candidate_results(sol)
 
     def print_candidate_name(self, sol):
-        if sol[0] == str: 
+        if  isinstance(sol[0], str): 
             print(sol[0])
         else:
             for i in range(len(sol[0])):
@@ -96,8 +96,8 @@ class SEARCH:
     fitness_base = 0 (loss-based), 1 (accuracy_based)
     mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     '''
-    def evaluate_candidate(self, candidate, k, train_epochs, model, mode, num_of_blocks, verbosity=0):
-        average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, num_of_blocks, verbosity)
+    def evaluate_candidate(self, candidate, k, train_epochs, model, mode, no_blocks, verbosity=0):
+        average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, no_blocks, verbosity)
         candidate[1] = average_val_results[0] # average loss
         candidate[2] = average_val_results[1] # average accuracy
 
@@ -160,8 +160,7 @@ class SEARCH:
             fields.append('C'+ str(i) + '_unary2_key')
         fields.extend(['Loss', 'Accuracy'])
 
-        filepath = os.path.join(os.getcwd(), "search_data", save_file_name + ".csv")
-
+        filepath = os.path.join('./', 'search_data', save_file_name + '.csv')
         with open(filepath, 'w') as f:
             
             # using csv.writer method from CSV package

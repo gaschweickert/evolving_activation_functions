@@ -1,0 +1,4 @@
+Gen,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,Loss,Accuracy
+1,"min(x, 0) + x","min(x, 0)",x1 + x2,x,1.7174471616744995,0.39764000475406647
+1,"min(atanh(x), x)",atanh(x),"min(x1, x2)",x,nan,0.10000000149011612
+Total time:,29.3240225315094

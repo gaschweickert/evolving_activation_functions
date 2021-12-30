@@ -60,8 +60,8 @@ class GAS(SEARCH):
                 selection_probabilities.append(0.0) # if solution results in NaN loss give 0 change of reproducting
 
         # selecting parents 2*(N-m-b)
-        num_of_parents = 2*(self.N-self.m-self.b)
-        parents = random.choices(self.population, selection_probabilities, k=num_of_parents)
+        no_parents = 2*(self.N-self.m-self.b)
+        parents = random.choices(self.population, selection_probabilities, k=no_parents)
 
         # crossover and mutation
         for i in range(0, len(parents), 2):
