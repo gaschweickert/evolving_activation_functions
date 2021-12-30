@@ -58,16 +58,16 @@ def main():
     # train_epochs = number of training epochs
 
 
-    #ga_search(dataset = 'cifar10', generations=5, N=2, C=2, m=0, b=0, fitness_metric=1, k=2, train_epochs=5, mode=3, number_of_blocks=2, save=True)
+    ga_search(dataset = 'cifar10', generations=5, N=2, C=2, m=0, b=0, fitness_metric=1, k=2, train_epochs=5, mode=3, number_of_blocks=2, save=True)
     #random_search(dataset = 'cifar10', generations=2, N=2, C=1, k=2, train_epochs=2, mode=1, number_of_blocks=1, save=True)
+    
 
-
-
-
+    
 
 
 
     #print("\nComparison:")
+    '''
     ss = SEARCH('None', 0,0,0)
     cnn= CNN('cifar10')
     average_acc = []
@@ -83,6 +83,7 @@ def main():
         candidate[1], candidate[2] = cnn.test(mode=3, activation=candidate[0], num_of_blocks=2, num_epochs=100, verbose=1)
         average_acc.append(candidate[2])
         ss.print_candidate_name_and_results(candidate)
+    '''
 
 
     #benchmark = ['relu', 0.0, 0.0]

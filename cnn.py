@@ -49,9 +49,8 @@ class CNN:
 
         self.custom_activation_functions = None
 
-        # set batch size for models
-        # 64 for 1 gpu, 128 for 2 gpus...
-        self.batch_size = 256 * number_of_gpus
+        # set batch size for models depending on number of available gpus
+        self.batch_size = 128 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 
@@ -74,7 +73,6 @@ class CNN:
         self.y_train = y_train
         self.y_test = y_test
 
-        # one hot encoding happens after k-split
 
     # mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     def build_and_compile(self, mode, activation, num_of_blocks): 
@@ -141,24 +139,40 @@ class CNN:
     def summary(self):
         return self.model.summary()
 
-    def visualize(self):
-        visualizer(self.model, format='png', view=True)
+    """ def visualize(self):
+        visualizer(self.model, format='png', view=True) """
+
+    def format_data(self, inputs, targets):
+        #one-hot encode target column
+        targets = to_categorical(targets)
+
+        # Wrap data in Dataset objects.
+        data = tf.data.Dataset.from_tensor_slices((inputs, targets))
+
+        # The batch size must now be set on the Dataset objects.
+        data = data.batch(self.batch_size)
+
+        # Disable AutoShard.
+        options = tf.data.Options()
+        options.experimental_distribute.auto_shard_policy = tf.data.experimental.AutoShardPolicy.OFF
+        data = data.with_options(options)
+        return data
 
     def train(self, train_inputs, train_targets, num_epochs, verbosity):
+        train_data = self.format_data(train_inputs, train_targets)
+ 
         # These callback will stop the training when there is no improvement in
         # the loss or accuracy for three consecutive epochs.
         callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
         callback_acc = tf.keras.callbacks.EarlyStopping(monitor='accuracy', min_delta=0.005, patience=3, mode='max')
-        #one-hot encode target column
-        train_targets = to_categorical(train_targets)
+        
         #train the model
-        history = self.model.fit(train_inputs, train_targets, epochs=num_epochs, batch_size=self.batch_size, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
+        history = self.model.fit(train_data, epochs=num_epochs, callbacks=[callback_loss, callback_acc], shuffle=True, verbose=verbosity)
         if (len(history.history['loss']) < num_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(num_epochs)) 
 
-    def assess(self, inputs, targets, verbosity):
-        #one-hot encode target column
-        targets = to_categorical(targets)
-        return self.model.evaluate(inputs, targets, self.batch_size, verbose=verbosity)
+    def test(self, inputs, targets, verbosity):
+        data = self.format_data(inputs,targets)
+        return self.model.evaluate(data, verbose=verbosity)
 
     def k_fold_crossvalidation(self, activation, k, train_epochs, mode, num_of_blocks, verbose):
         # Define the K-fold Cross Validator
@@ -170,16 +184,17 @@ class CNN:
             if verbose: print('Training:')
             self.train(self.x_train[train], self.y_train[train], train_epochs, verbose)
             if verbose: print('Validation:')
-            val_results = self.assess(self.x_train[val], self.y_train[val], verbose)
+            val_results = self.test(self.x_train[val], self.y_train[val], verbose)
             val_results_per_fold.append(val_results)
         #cnn.summary()
         average_val_results = np.mean(val_results_per_fold, axis=0) 
         return average_val_results
 
-    def test(self, mode, activation, num_of_blocks, num_epochs, verbose):
+    def assess(self, mode, activation, num_of_blocks, num_epochs, verbose):
         self.build_and_compile(mode, activation, num_of_blocks)
         self.train(self.x_train, self.y_train, num_epochs, verbose)
-        return self.assess(self.x_test, self.y_test, verbose)
+        return self.test(self.x_test, self.y_test, verbose)
+
 
 
 
