@@ -63,7 +63,7 @@ def main():
     # train_epochs = number of training epochs
 
 
-    ga_search(dataset = 'cifar10', generations=1, N=2, C=2, m=0, b=0, fitness_metric=1, k=2, train_epochs=10, mode=3, number_of_blocks=2, save=True)
+    ga_search(dataset = 'cifar10', generations=1, N=2, C=2, m=0, b=0, fitness_metric=1, k=5, train_epochs=10, mode=3, number_of_blocks=2, save=True)
     #random_search(dataset = 'cifar10', generations=2, N=2, C=1, k=2, train_epochs=2, mode=1, number_of_blocks=1, save=True)
     
 
