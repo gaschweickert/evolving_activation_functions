@@ -192,9 +192,9 @@ class CNN:
         self.build_and_compile(mode, candidate_activation, no_blocks)
 
         # Early stoppage when there is no improvement in test accuracy
-        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=3, mode='max')
+        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10, mode='max')
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
-        callbacks = [] #callback_test_acc
+        callbacks = [callback_test_acc] 
 
         if tensorboard_log: callbacks.append(callback_tensorboard)
         if save_model: self.model.save('architecture.h5')
