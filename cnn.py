@@ -22,11 +22,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.utils.generic_utils import get_custom_objects
 from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import train_test_split
 from tensorflow.keras import optimizers
 from tensorflow.keras.datasets import cifar10, cifar100
 from tensorflow.keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooling2D, BatchNormalization, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import to_categorical
+from statistics import median
 
 from tensorflow.keras.callbacks import TensorBoard
 
@@ -44,7 +46,7 @@ class CNN:
         self.custom_activation_functions = None
 
         # set batch size for models depending on number of available gpus
-        self.batch_size = 256 * number_of_gpus
+        self.batch_size = 128 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 
@@ -60,11 +62,11 @@ class CNN:
 
         #normalizing inputs from 0-255 to 0.0-1.0 
         x_train = x_train.astype('float32') / 255.0 
-        x_test = x_test.astype('float32') / 255.0  
+        x_test = x_test.astype('float32') / 255.0
 
-        self.x_train = x_train  
+        self.x_train, self.x_val, self.y_train, self.y_val = train_test_split(x_train, y_train, stratify=y_train, test_size=0.1)
+
         self.x_test = x_test
-        self.y_train = y_train
         self.y_test = y_test
 
 
@@ -77,9 +79,9 @@ class CNN:
         elif mode == 1 and not type(activation) == str:
             assert len(activation) == 1, "Warning: Invalid number of custom activations for homogenous custom"
         elif mode == 2:
-            assert len(activation) == no_blocks * 2, "Warning: Number of custom activations does not match network number of layers!"
+            assert len(activation) == no_blocks * 2 + 1, "Warning: Number of custom activations does not match network number of layers!"
         elif mode == 3:
-            assert len(activation) == no_blocks, "Warning: Number of custom activations does not match network number of blocks!"
+            assert len(activation) == no_blocks + 1, "Warning: Number of custom activations does not match network number of blocks + 1!"
         
         if not type(activation) == str:
             for i, custom_af in enumerate(activation):
@@ -108,7 +110,9 @@ class CNN:
                 model.add(Dropout(0.1 + 0.1 * block_num))
 
             model.add(Flatten())
-            model.add(Dense(no_filters, activation='relu', kernel_initializer='he_uniform'))
+            model.add(Dense(no_filters, kernel_initializer='he_uniform'))
+            af = self.get_custom_activation_function(mode, block_num + 1, layer_num + 1) if not type(activation) == str else activation
+            model.add(Activation(af, name=af))
             model.add(BatchNormalization())
             model.add(Dropout(0.1 + 0.1 * (no_blocks + 1)))
             if self.dataset_id == "cifar10":
@@ -173,6 +177,7 @@ class CNN:
         val_data = self.format_data(val_inputs, val_targets)
         return self.model.evaluate(val_data, verbose=verbosity)
 
+    '''
     def k_fold_crossvalidation(self, candidate_activation, k, train_epochs, mode, no_blocks, verbosity):
         # Define the K-fold Cross Validator
         kfold = StratifiedKFold(n_splits=k, shuffle=True, random_state=None) # Should random state be none
@@ -187,7 +192,42 @@ class CNN:
             val_results_per_fold.append(val_results)
         average_val_results = np.mean(val_results_per_fold, axis=0) 
         return average_val_results
+    '''
 
+    def search_test(self, candidate_activation, train_epochs, mode, no_blocks, verbosity):
+        self.build_and_compile(mode, candidate_activation, no_blocks)
+        if verbosity: print('Training:')
+        self.train(self.x_train, self.y_train, train_epochs, verbosity)
+        if verbosity: print('Validation:')
+        val_results = self.validate(self.x_val, self.y_val, verbosity)
+        return val_results
+
+    def final_test(self, k, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
+        self.build_and_compile(mode, candidate_activation, no_blocks)
+
+        # Early stoppage when there is no improvement in test accuracy
+        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0.0001, patience=10, mode='min')
+        callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
+        callbacks = [callback_test_acc] 
+
+        if tensorboard_log: callbacks.append(callback_tensorboard)
+        if save_model: self.model.save('architecture.h5')
+        if visualize: self.visualize()
+
+        train_data = self.format_data(self.x_train, self.y_train)
+        test_data = self.format_data(self.x_test, self.y_test)
+
+        run_val_loss = []
+        run_val_acc = []
+        for run in k:
+            hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+            if verbosity and (len(hist.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs))
+            run_val_loss.append(hist.history['val_loss'][-1]) # or max(hist.history['val_loss'])
+            run_val_acc.append(hist.history['val_accuracy'][-1])
+        return median[run_val_loss], median[run_val_acc]
+
+
+    '''
     def assess(self, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
         self.build_and_compile(mode, candidate_activation, no_blocks)
 
@@ -207,6 +247,5 @@ class CNN:
         if verbosity and (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs))
 
         return history.history['val_loss'][-1], history.history['val_accuracy'][-1]
-
-
+    '''
 

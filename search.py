@@ -23,7 +23,7 @@ class SEARCH:
             '0': 0.0, 
             '1': 1.0, 
             'x' : lambda x:x, 
-            '(-x)' : lambda x:(-x), 
+            '-x)' : lambda x:(-x), 
             'abs(x)' : lambda x:K.abs(x),
             'x**2' : lambda x:x**2, 
             'x**3' : lambda x:x**3,
@@ -96,8 +96,8 @@ class SEARCH:
     fitness_base = 0 (loss-based), 1 (accuracy_based)
     mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     '''
-    def evaluate_candidate(self, candidate, k, train_epochs, model, mode, no_blocks, verbosity=0):
-        average_val_results = model.k_fold_crossvalidation(candidate[0], k, train_epochs, mode, no_blocks, verbosity)
+    def evaluate_candidate(self, candidate, train_epochs, model, mode, no_blocks, verbosity=0):
+        average_val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
         candidate[1] = average_val_results[0] # average loss
         candidate[2] = average_val_results[1] # average accuracy
 
@@ -136,14 +136,33 @@ class SEARCH:
         loss = 0.0
         return [candidate_solution, loss, accuracy]
 
-    '''
-    N-sized population generator of complexity C, done on the basis on random generation.
-    '''
-    def generate_N_candidates(self):
-        # creating population from random candidate solutons
-        self.population = []
-        for i in range(self.N):
-            self.population.append(self.generate_random_new_candidate_solution())
+    def same_candidate_solution(self, can1, can2):
+        same_cu = 0
+        for i in range(self.C):
+            cu_i_can1_name = can1[0][i].get_name()
+            cu_i_can2_name = can2[0][i].get_name()
+            if cu_i_can1_name == cu_i_can2_name:
+                same_cu = same_cu + 1
+        return True if same_cu == self.C else False
+            
+
+    def generate_n_unique_candidates(self, n):
+        # creating population from unique random candidate solutons
+        candidate_list = []
+        while n:
+            new = 1
+            new_candidate = self.generate_random_new_candidate_solution()
+            for existing_candidate in candidate_list:
+                if self.same_candidate_solution(new_candidate, existing_candidate):
+                    new = 0
+                    n = n + 1
+                    break
+            if new:
+                candidate_list.append(new_candidate)
+                n = n-1
+        return candidate_list
+        
+
 
 
     def get_search_top_candidates(self, number_of_candidates=3, evaluation_metric = 2):

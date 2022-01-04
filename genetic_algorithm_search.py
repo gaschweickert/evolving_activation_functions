@@ -14,14 +14,15 @@ class GAS(SEARCH):
         self.m = m
         self.b = b
 
-    def run(self, k, train_epochs, cnn, mode, number_of_blocks):
-        self.generate_N_candidates() 
+    def run(self, train_epochs, cnn, mode, number_of_blocks):
+        #self.generate_N_candidates() 
+        self.population = self.generate_n_unique_candidates(n=self.N)
         for gen in range(1, self.generations + 1):
             print(self.search_type)
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
                 self.print_candidate_name(candidate)
-                self.evaluate_candidate(candidate, k, train_epochs, cnn, mode, number_of_blocks, verbosity=1)
+                self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity=1)
                 self.print_candidate_results(candidate)
                 self.all_evaluated_candidate_solutions.append(candidate)
             print("\nGeneration #" + str(gen) + ' : Best Candidate')

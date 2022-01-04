@@ -5,10 +5,10 @@ class RS(SEARCH):
         super().__init__("RANDOM SEARCH", generations, N, C)
 
     def run(self, k, train_epochs, cnn, mode, number_of_blocks):
+        all_candidates = self.generate_n_unique_candidates(n=self.N*self.generations)
         for gen in range(1, self.generations + 1):
             print(self.search_type)
-            self.generate_N_candidates()
-            self.print_population()
+            self.population = all_candidates[(gen-1)*self.N : gen*self.N]
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
                 self.print_candidate_name(candidate)
