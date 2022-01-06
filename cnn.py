@@ -46,7 +46,7 @@ class CNN:
         self.custom_activation_functions = None
 
         # set batch size for models depending on number of available gpus
-        self.batch_size = 256 * number_of_gpus
+        self.batch_size = 128 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 
@@ -206,25 +206,27 @@ class CNN:
         self.build_and_compile(mode, candidate_activation, no_blocks)
 
         # Early stoppage when there is no improvement in test accuracy
-        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0.0001, patience=10, mode='min')
+        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, mode='min')
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
         callbacks = [callback_test_acc] 
-
-        if tensorboard_log: callbacks.append(callback_tensorboard)
-        if save_model: self.model.save('architecture.h5')
-        if visualize: self.visualize()
 
         train_data = self.format_data(self.x_train, self.y_train)
         test_data = self.format_data(self.x_test, self.y_test)
 
         run_val_loss = []
         run_val_acc = []
-        for run in k:
-            hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-            if verbosity and (len(hist.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs))
-            run_val_loss.append(hist.history['val_loss'][-1]) # or max(hist.history['val_loss'])
-            run_val_acc.append(hist.history['val_accuracy'][-1])
-        return median[run_val_loss], median[run_val_acc]
+        for run_i in range(k):
+            print('Run: ' + str(run_i + 1) + '/' + str(k))
+            # Only save architecture and log last run
+            if run_i == (k - 1): 
+                if tensorboard_log: callbacks.append(callback_tensorboard)
+                if save_model: self.model.save('architecture.h5')
+                if visualize: self.visualize()
+            hist = self.model.fit(train_data + val_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+            if verbosity and (len(hist.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(hist.history['loss'])) + '/' + str(no_epochs))
+            run_val_loss.append(max(hist.history['val_loss'])) # or hist.history['val_loss'][-1]
+            run_val_acc.append(max(hist.history['val_accuracy']))
+        return median(run_val_loss), median(run_val_acc)
 
 
     '''

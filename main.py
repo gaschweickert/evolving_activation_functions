@@ -19,7 +19,7 @@ def ga_search(dataset, generations, N, C, m, b, fitness_metric, train_epochs, mo
 
     if save:
         base = '_loss-based_' if fitness_metric == 1 else '_accuracy-based_'
-        save_file_name = date_and_time + '_GA-search' + base + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_m=' + str(m) + '_b=' + str(b) + '_mode=' + str(mode) + '_k=' + str(k) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
+        save_file_name = date_and_time + '_GA-search' + base + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_m=' + str(m) + '_b=' + str(b) + '_mode=' + str(mode) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
         gas.save_data_log(save_file_name, total_time)
 
     
@@ -36,14 +36,14 @@ def random_search(dataset, generations, N, C, k, train_epochs, mode, number_of_b
     total_time = t1-t0
 
     if save:
-        save_file_name = date_and_time + '_Random-search'+ '_' + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_mode=' + str(mode) + '_k=' + str(k) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
+        save_file_name = date_and_time + '_Random-search'+ '_' + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_mode=' + str(mode) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
         rs.save_data_log(save_file_name, total_time)
 
 def test_candidate():
     ss = SEARCH('None', 0,0,0)
     cnn= CNN('cifar10')
     candidate = ss.generate_candidate_solution_from_keys([['abs(x)', 'x1 / (x2 + err)', '1'], ['abs(x)', 'x1 * x2', '1']])
-    candidate[1], candidate[2] = cnn.final_test(mode=3, candidate_activation=candidate[0], no_blocks=2, no_epochs=200, verbosity=1, tensorboard_log=True)
+    candidate[1], candidate[2] = cnn.final_test(k = 2, mode=3, candidate_activation=candidate[0], no_blocks=1, no_epochs=10, verbosity=1, tensorboard_log=True)
     ss.print_candidate_name_and_results(candidate)
 
 
@@ -64,10 +64,11 @@ def main():
     # train_epochs = number of training epochs
 
 
-    ga_search(dataset = 'cifar10', generations=10, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=10, mode=1, number_of_blocks=2, save=False)
+    ga_search(dataset = 'cifar10', generations=1, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=50, mode=1, number_of_blocks=2, save=True)
     #random_search(dataset = 'cifar10', generations=3, N=3, C=1, k=2, train_epochs=1, mode=1, number_of_blocks=1, save=True)
     #test_candidate()
     
+
 
     
 

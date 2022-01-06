@@ -164,7 +164,6 @@ class SEARCH:
         
 
 
-
     def get_search_top_candidates(self, number_of_candidates=3, evaluation_metric = 2):
         ordered_search_candidates = sorted(self.all_evaluated_candidate_solutions, key=itemgetter(evaluation_metric), reverse=False if evaluation_metric == 1 else True)
         return ordered_search_candidates[:number_of_candidates]
