@@ -23,7 +23,7 @@ class SEARCH:
             '0': 0.0, 
             '1': 1.0, 
             'x' : lambda x:x, 
-            '-x)' : lambda x:(-x), 
+            '(-x)' : lambda x:(-x), 
             'abs(x)' : lambda x:K.abs(x),
             'x**2' : lambda x:x**2, 
             'x**3' : lambda x:x**3,
