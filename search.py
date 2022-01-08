@@ -108,8 +108,8 @@ class SEARCH:
             val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
         else:
             val_results = [nan, 0]
-        candidate[1] = val_results[0] # average loss
-        candidate[2] = val_results[1] # average accuracy
+        candidate[1] = val_results[0] # loss
+        candidate[2] = val_results[1] # accuracy
 
     # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
     def generate_candidate_solution_from_keys(self, list_of_keys):
