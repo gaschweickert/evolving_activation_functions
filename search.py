@@ -107,7 +107,7 @@ class SEARCH:
         if self.check_candidate_validity(candidate):        
             val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
         else:
-            val_results = [nan, 0]
+            val_results = [nan, nan]
         candidate[1] = val_results[0] # loss
         candidate[2] = val_results[1] # accuracy
 
