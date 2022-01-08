@@ -116,6 +116,7 @@ class GAS(SEARCH):
             assert len(parent1_gene) == len(child_gene)
             child_gene_keys = [core_unit.get_elementary_units_keys() for core_unit in child_gene]
 
+        
         # determining random gene mutation point
         gene_mutation_point = random.randint(0, length_of_gene - 1) 
         #print("gene_mutation_point = " + str(gene_mutation_point))
@@ -124,7 +125,7 @@ class GAS(SEARCH):
         core_unit_mutation_point = gene_mutation_point%length_of_core_unit
         if (core_unit_mutation_point == 1): # binary_unit
             mutated_unit_key = random.sample(list(self.binary_units), 1)[0]
-        else:
+        else: # unary_unit
             mutated_unit_key = random.sample(list(self.unary_units), 1)[0]
         child_gene_keys[int(gene_mutation_point//length_of_core_unit)][gene_mutation_point%length_of_core_unit] = mutated_unit_key
 
@@ -135,6 +136,9 @@ class GAS(SEARCH):
             core_unit_functions = [self.unary_units[unary1], self.binary_units[binary], self.unary_units[unary2]]
             core_unit = CORE_UNIT(core_unit_keys, core_unit_functions)
             child_gene.append(core_unit)
+
+
+
 
         # reset fitness metrics
         loss = 0.0

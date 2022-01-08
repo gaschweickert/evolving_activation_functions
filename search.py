@@ -90,6 +90,12 @@ class SEARCH:
                 best_candidate = candidate
         return best_candidate
 
+    def check_candidate_validity(self, candidate):
+        for core_unit in candidate[0]:
+            if not core_unit.check_validity:
+                return False
+        return True
+
 
     '''
     Evaluates the candidate at given index through k-fold crossvalidation
@@ -97,9 +103,12 @@ class SEARCH:
     mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     '''
     def evaluate_candidate(self, candidate, train_epochs, model, mode, no_blocks, verbosity=0):
-        average_val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
-        candidate[1] = average_val_results[0] # average loss
-        candidate[2] = average_val_results[1] # average accuracy
+        if self.check_candidate_validity(candidate):        
+            val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
+        else:
+            val_results = [0, 0]
+        candidate[1] = val_results[0] # average loss
+        candidate[2] = val_results[1] # average accuracy
 
     # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
     def generate_candidate_solution_from_keys(self, list_of_keys):
@@ -136,7 +145,7 @@ class SEARCH:
         loss = 0.0
         return [candidate_solution, loss, accuracy]
 
-    def same_candidate_solution(self, can1, can2):
+    def check_same_candidate_solution(self, can1, can2):
         same_cu = 0
         for i in range(self.C):
             cu_i_can1_name = can1[0][i].get_name()
@@ -153,7 +162,7 @@ class SEARCH:
             new = 1
             new_candidate = self.generate_random_new_candidate_solution()
             for existing_candidate in candidate_list:
-                if self.same_candidate_solution(new_candidate, existing_candidate):
+                if self.check_same_candidate_solution(new_candidate, existing_candidate):
                     new = 0
                     n = n + 1
                     break
@@ -162,7 +171,6 @@ class SEARCH:
                 n = n-1
         return candidate_list
         
-
 
     def get_search_top_candidates(self, number_of_candidates=3, evaluation_metric = 2):
         ordered_search_candidates = sorted(self.all_evaluated_candidate_solutions, key=itemgetter(evaluation_metric), reverse=False if evaluation_metric == 1 else True)
