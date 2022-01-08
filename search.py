@@ -93,7 +93,7 @@ class SEARCH:
 
     def check_candidate_validity(self, candidate):
         for core_unit in candidate[0]:
-            if not core_unit.check_validity:
+            if not core_unit.check_validity():
                 return False
         return True
 
