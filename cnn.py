@@ -46,7 +46,7 @@ class CNN:
         self.custom_activation_functions = None
 
         # set batch size for models depending on number of available gpus
-        self.batch_size = 128 * number_of_gpus
+        self.batch_size = 256 * number_of_gpus
 
         self.load_and_prep_data(dataset)
 

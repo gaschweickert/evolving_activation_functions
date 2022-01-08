@@ -41,19 +41,25 @@ class GAS(SEARCH):
 
         new_population = []
         # selecting top b candidates to keep in population without mutation or crossover
-        ordered_population = sorted(self.population, key=itemgetter(fitness_metric), reverse=False if fitness_metric == 1 else True)
-        best_candidates = ordered_population[:self.b]
-        for candidate in best_candidates:
-            new_population.append(candidate)
+        nan_removed_population = []
+        nan_population = []
+        for candidate in self.population:
+            if not math.isnan(candidate[fitness_metric]):
+                nan_removed_population.append(candidate)
+            else:
+                nan_population.append(candidate)
+        nan_removed_ordered_population = sorted(nan_removed_population, key=itemgetter(fitness_metric), reverse=False if fitness_metric == 1 else True)
+        ordered_population = nan_removed_ordered_population + nan_population
+        new_population.extend(ordered_population[:self.b])
 
         # determining selection prob based on fitness
+        valence = -1 if fitness_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss
         fitness_exp_sum  = 0
         for candidate in self.population:
             if not math.isnan(candidate[fitness_metric]):
-                fitness_exp_sum += K.exp(candidate[fitness_metric])
+                fitness_exp_sum += K.exp(valence * candidate[fitness_metric])
         
         selection_probabilities = []
-        valence = -1 if fitness_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss
         for candidate in self.population: 
             if not math.isnan(candidate[fitness_metric]):
                 selection_probabilities.append(K.exp(valence * candidate[fitness_metric])/fitness_exp_sum)
@@ -108,7 +114,6 @@ class GAS(SEARCH):
             flat_parent2_gene_keys = np.array(parent2_gene_keys).flatten()
             flat_child_gene_keys = np.concatenate((flat_parent1_gene_keys[:gene_crossover_point], flat_parent2_gene_keys[gene_crossover_point:]))
             child_gene_keys = flat_child_gene_keys.reshape((len(parent1_gene),length_of_core_unit)).tolist()
-
         else: # Only cross over between core_units
             assert self.C > 1, "Not enough core_units to perform cross over between core_units (C must be > 1)"
             gene_crossover_point = random.randint(0, len(parent1_gene) - 1)
@@ -119,7 +124,6 @@ class GAS(SEARCH):
         
         # determining random gene mutation point
         gene_mutation_point = random.randint(0, length_of_gene - 1) 
-        #print("gene_mutation_point = " + str(gene_mutation_point))
 
         # performing mutation
         core_unit_mutation_point = gene_mutation_point%length_of_core_unit
@@ -136,9 +140,6 @@ class GAS(SEARCH):
             core_unit_functions = [self.unary_units[unary1], self.binary_units[binary], self.unary_units[unary2]]
             core_unit = CORE_UNIT(core_unit_keys, core_unit_functions)
             child_gene.append(core_unit)
-
-
-
 
         # reset fitness metrics
         loss = 0.0
