@@ -1,3 +1,4 @@
+from math import nan
 import tensorflow.keras.backend as K
 import tensorflow as tf
 import random
@@ -106,7 +107,7 @@ class SEARCH:
         if self.check_candidate_validity(candidate):        
             val_results = model.search_test(candidate[0], train_epochs, mode, no_blocks, verbosity)
         else:
-            val_results = [0, 0]
+            val_results = [nan, 0]
         candidate[1] = val_results[0] # average loss
         candidate[2] = val_results[1] # average accuracy
 
