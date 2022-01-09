@@ -4,7 +4,7 @@ class RS(SEARCH):
     def __init__(self, generations, N, C):
         super().__init__("RANDOM SEARCH", generations, N, C)
 
-    def run(self, train_epochs, cnn, mode, number_of_blocks):
+    def run(self, train_epochs, cnn, mode, number_of_blocks, verbosity):
         all_candidates = self.generate_n_unique_candidates(n=self.N*self.generations)
         for gen in range(1, self.generations + 1):
             print(self.search_type)
@@ -12,7 +12,7 @@ class RS(SEARCH):
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
                 candidate.print_candidate_name()
-                self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity=1)
+                self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity)
                 candidate.print_candidate_results() # prints evaluated candidate results
                 self.all_evaluated_candidate_solutions.append(candidate)
             print("\nGeneration #" + str(gen) + ' : Best Candidate')
