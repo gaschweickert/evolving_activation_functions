@@ -15,7 +15,7 @@ class GAS(SEARCH):
         self.m = m
         self.b = b
 
-    def run(self, train_epochs, cnn, mode, number_of_blocks):
+    def run(self, train_epochs, cnn, mode, number_of_blocks, verbosity=0):
         #self.generate_N_candidates() 
         self.population = self.generate_n_unique_candidates(n=self.N)
         for gen in range(1, self.generations + 1):
@@ -23,7 +23,7 @@ class GAS(SEARCH):
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
                 candidate.print_candidate_name()
-                self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity=0)
+                self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity)
                 candidate.print_candidate_results()
                 self.all_evaluated_candidate_solutions.append(candidate)
             print("\nGeneration #" + str(gen) + ' : Best Candidate')
@@ -44,16 +44,7 @@ class GAS(SEARCH):
 
         new_population = []
         # selecting top b candidates to keep in population without mutation or crossover
-        nan_removed_population = []
-        nan_population = []
-        for candidate in self.population:
-            if not math.isnan(fitness(candidate)):
-                nan_removed_population.append(candidate)
-            else:
-                nan_population.append(candidate)
-        nan_removed_ordered_population = sorted(nan_removed_population, key=fitness, reverse=False if fitness_metric == 1 else True)
-        ordered_population = nan_removed_ordered_population + nan_population
-        new_population.extend(ordered_population[:self.b])
+        new_population.extend(self.get_search_top_candidates(self.b, evaluation_metric=fitness_metric))
 
         # determining selection prob based on fitness
         valence = -1 if fitness_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss

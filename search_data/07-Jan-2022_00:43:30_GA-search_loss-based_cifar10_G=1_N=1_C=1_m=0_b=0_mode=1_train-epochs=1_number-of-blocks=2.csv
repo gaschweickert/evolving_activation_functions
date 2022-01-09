@@ -1,3 +1,0 @@
-Gen,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,Loss,Accuracy
-1,atanh(x) - exp(-x^2),atanh(x),x1 - x2,exp(-x^2),nan,0.10000000149011612
-Total time:,16.7968909740448

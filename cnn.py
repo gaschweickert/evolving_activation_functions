@@ -219,35 +219,14 @@ class CNN:
             self.build_and_compile(mode, candidate_activation, no_blocks)
             # Only save architecture and log last run
             if run_i == (k - 1): 
-                if tensorboard_log: callbacks.append(callback_tensorboard)
+                if tensorboard_log: callbacks.append(callback_tensorboard) 
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
-            hist = self.model.fit(train_data, validation_data=val_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+            hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
             if verbosity and (len(hist.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(hist.history['loss'])) + '/' + str(no_epochs))
             run_val_loss.append(max(hist.history['val_loss'])) # or hist.history['val_loss'][-1]
             run_val_acc.append(max(hist.history['val_accuracy']))
         return median(run_val_loss), median(run_val_acc)
 
 
-    '''
-    def assess(self, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
-        self.build_and_compile(mode, candidate_activation, no_blocks)
-
-        # Early stoppage when there is no improvement in test accuracy
-        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10, mode='max')
-        callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
-        callbacks = [callback_test_acc] 
-
-        if tensorboard_log: callbacks.append(callback_tensorboard)
-        if save_model: self.model.save('architecture.h5')
-        if visualize: self.visualize()
-
-        train_data = self.format_data(self.x_train, self.y_train)
-        test_data = self.format_data(self.x_test, self.y_test)
-        
-        history = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-        if verbosity and (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs))
-
-        return history.history['val_loss'][-1], history.history['val_accuracy'][-1]
-    '''
 

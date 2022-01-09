@@ -1,3 +1,0 @@
-Gen,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,Loss,Accuracy
-1,tanh(x) - sinh(x),tanh(x),x1 - x2,sinh(x),nan,0.10000000149011612
-Total time:,20.67097043991089

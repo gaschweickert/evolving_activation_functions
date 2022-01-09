@@ -3,10 +3,10 @@ import tensorflow.keras.backend as K
 import tensorflow as tf
 import random
 import itertools
-from core_unit import CORE_UNIT
+import math
 import csv
-from operator import itemgetter
 import os
+from core_unit import CORE_UNIT
 from candidate import CANDIDATE
 
 class SEARCH:
@@ -71,10 +71,15 @@ class SEARCH:
             self.print_candidate_name_and_results(can)
 
     def get_population_best_candidate(self, evaluation_metric):
-        valence = -1 if evaluation_metric == 1 else 1 
+        if evaluation_metric == 1:
+            valence = -1
+            evaluation = lambda x: x.loss
+        else:
+            valence = 1
+            evaluation = lambda x: x.accuracy
         best_candidate = self.population[0]
         for candidate in self.population:
-            if candidate[valence * evaluation_metric] > best_candidate[valence * evaluation_metric]:
+            if valence * evaluation(candidate) > valence * evaluation(best_candidate):
                 best_candidate = candidate
         return best_candidate
 
@@ -85,7 +90,7 @@ class SEARCH:
     mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
     '''
     def evaluate_candidate(self, candidate, train_epochs, model, mode, no_blocks, verbosity=0):
-        if self.check_candidate_validity(candidate):        
+        if candidate.check_validity():        
             val_results = model.search_test(candidate.core_units, train_epochs, mode, no_blocks, verbosity)
         else:
             val_results = [nan, nan]
@@ -151,10 +156,21 @@ class SEARCH:
                 n = n-1
         return candidate_list
         
+    def get_search_top_candidates(self, no_candidates, evaluation_metric):
+        fitness = lambda x: x.loss if evaluation_metric == 1 else lambda x: x.accuracy
+        
+        # selecting top no candidates to keep in population without mutation or crossover
+        nan_removed_population = []
+        nan_population = []
+        for candidate in self.population:
+            if not math.isnan(fitness(candidate)):
+                nan_removed_population.append(candidate)
+            else:
+                nan_population.append(candidate)
+        nan_removed_ordered_population = sorted(nan_removed_population, key=fitness, reverse=False if evaluation_metric == 1 else True)
+        ordered_population = nan_removed_ordered_population + nan_population
+        return ordered_population[:no_candidates]
 
-    def get_search_top_candidates(self, number_of_candidates=3, evaluation_metric = 2):
-        ordered_search_candidates = sorted(self.all_evaluated_candidate_solutions, key=itemgetter(evaluation_metric), reverse=False if evaluation_metric == 1 else True)
-        return ordered_search_candidates[:number_of_candidates]
 
     def save_data_log(self, save_file_name, time_taken=0):
         assert self.all_evaluated_candidate_solutions, "Evaluated candidate solutions list is empty"
@@ -182,7 +198,7 @@ class SEARCH:
                     entry.extend(cu.get_elementary_units_keys())
                 entry.extend([candidate.loss, candidate.accuracy])
                 write.writerow(entry)
-                if (i)%self.N: gen = gen + 1
+                if not (i + 1) % self.N: gen = gen + 1
 
             write.writerow(['Total time:',time_taken])
 
