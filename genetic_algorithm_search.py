@@ -6,6 +6,7 @@ from core_unit import CORE_UNIT
 import tensorflow as tf
 import tensorflow.keras.backend as K
 from operator import itemgetter
+from candidate import CANDIDATE
 
 class GAS(SEARCH):
     def __init__(self, generations, N, C, m, b, fitness_metric):
@@ -21,13 +22,13 @@ class GAS(SEARCH):
             print(self.search_type)
             for i, candidate in enumerate(self.population):
                 print("\nGeneration #" + str(gen) + " : Candidate #" + str(i + 1))
-                self.print_candidate_name(candidate)
+                candidate.print_candidate_name()
                 self.evaluate_candidate(candidate, train_epochs, cnn, mode, number_of_blocks, verbosity=0)
-                self.print_candidate_results(candidate)
+                candidate.print_candidate_results()
                 self.all_evaluated_candidate_solutions.append(candidate)
             print("\nGeneration #" + str(gen) + ' : Best Candidate')
             gen_best_candidate = self.get_population_best_candidate(evaluation_metric=2) # best accuracy wise
-            self.print_candidate_name_and_results(gen_best_candidate)
+            gen_best_candidate.print_candidate_name_and_results()
             if (gen != self.generations): self.evolve(self.fitness_metric) # do not evolve final generation
 
 
@@ -39,16 +40,18 @@ class GAS(SEARCH):
         assert self.N - self.m - self.b >= 2, "Not enough parents for crossover!"
         assert fitness_metric == 1 or 2, "Invalid fitness metric should be 1 (loss) or 2 (accuracy)"
 
+        fitness = lambda x: x.loss if fitness_metric == 1 else lambda x: x.accuracy
+
         new_population = []
         # selecting top b candidates to keep in population without mutation or crossover
         nan_removed_population = []
         nan_population = []
         for candidate in self.population:
-            if not math.isnan(candidate[fitness_metric]):
+            if not math.isnan(fitness(candidate)):
                 nan_removed_population.append(candidate)
             else:
                 nan_population.append(candidate)
-        nan_removed_ordered_population = sorted(nan_removed_population, key=itemgetter(fitness_metric), reverse=False if fitness_metric == 1 else True)
+        nan_removed_ordered_population = sorted(nan_removed_population, key=fitness, reverse=False if fitness_metric == 1 else True)
         ordered_population = nan_removed_ordered_population + nan_population
         new_population.extend(ordered_population[:self.b])
 
@@ -56,13 +59,13 @@ class GAS(SEARCH):
         valence = -1 if fitness_metric == 1 else 1 # higher values refer to fitter solutions with accuracy metric and the opposite is true for loss
         fitness_exp_sum  = 0
         for candidate in self.population:
-            if not math.isnan(candidate[fitness_metric]):
-                fitness_exp_sum += K.exp(valence * candidate[fitness_metric])
+            if not math.isnan(fitness(candidate)):
+                fitness_exp_sum += K.exp(valence * fitness(candidate))
         
         selection_probabilities = []
         for candidate in self.population: 
-            if not math.isnan(candidate[fitness_metric]):
-                selection_probabilities.append(K.exp(valence * candidate[fitness_metric])/fitness_exp_sum)
+            if not math.isnan(fitness(candidate)):
+                selection_probabilities.append(K.exp(valence * fitness(candidate))/fitness_exp_sum)
             else:
                 selection_probabilities.append(0.0) # if solution results in NaN loss give 0 change of reproducting
 
@@ -83,8 +86,8 @@ class GAS(SEARCH):
         
         # reset evaluation metrics
         for candidate in new_population:
-            candidate[1] = 0.0
-            candidate[2] = 0.0
+            candidate.loss = 0.0
+            candidate.accuracy = 0.0
 
         self.population = new_population
         
@@ -93,8 +96,8 @@ class GAS(SEARCH):
     def crossover_and_mutate(self, parent1, parent2):
         crossover_anywhere = True # if False crossover only happens between core units
 
-        parent1_gene = parent1[0] # [core unit, core unit, ...]
-        parent2_gene = parent2[0] 
+        parent1_gene = parent1.core_units # [core unit, core unit, ...]
+        parent2_gene = parent2.core_units 
         assert len(parent1_gene) == len(parent2_gene)
 
         length_of_core_unit = len(parent1_gene[0].get_elementary_units_keys()) #3
@@ -142,10 +145,7 @@ class GAS(SEARCH):
             child_gene.append(core_unit)
 
         # reset fitness metrics
-        loss = 0.0
-        accuracy = 0.0
-        
-        return [child_gene, loss, accuracy]
+        return CANDIDATE(child_gene, loss=0.0, accuracy=0.0)
 
 
 
