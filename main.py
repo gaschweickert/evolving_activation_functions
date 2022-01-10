@@ -7,13 +7,13 @@ from search import SEARCH
 from data import DATA
 import datetime
 
-def ga_search(dataset, generations, N, C, m, b, fitness_metric, train_epochs, mode, number_of_blocks, save=True):
+def ga_search(dataset, generations, N, C, m, b, fitness_metric, train_epochs, mode, number_of_blocks, verbosity=0, save=True):
     date_and_time = datetime.datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
     t0 = time.time()
 
     cnn = CNN(dataset)
     gas = GAS(generations, N, C, m, b, fitness_metric)
-    gas.run(train_epochs, cnn, mode, number_of_blocks, verbosity=1)
+    gas.run(train_epochs, cnn, mode, number_of_blocks, verbosity)
 
     t1 = time.time()
     total_time = t1-t0
@@ -73,14 +73,17 @@ def main():
     # train_epochs = number of training epochs
 
 
-    ga_search(dataset = 'cifar10', generations=10, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=50, mode=1, number_of_blocks=2, save=True)
+    ga_search(dataset = 'cifar10', generations=10, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
     #random_search(dataset = 'cifar10', generations=10, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
-    #ga_data = DATA("search_data/08-Jan-2022_22:27:44_GA-search_loss-based_cifar10_G=10_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
-    #ga_data.print_overall_best()
-    #'max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))'
-    #ga_data.plot_gen_vs_accuracy()
 
+
+    #data = DATA()
+    #data.collect_data_from_file("search_data/08-Jan-2022_22:27:44_GA-search_loss-based_cifar10_G=10_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/09-Jan-2022_15:33:45_Random-search_cifar10_G=10_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.plot_gen_vs_accuracy()
+    #data.print_overall_best()
+    #gasearch: 'max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))'
 
 
     
