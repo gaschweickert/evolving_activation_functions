@@ -160,6 +160,7 @@ class SEARCH:
         fitness = lambda x: x.loss if evaluation_metric == 1 else lambda x: x.accuracy
         
         # selecting top no candidates to keep in population without mutation or crossover
+        # arr[np.argsort(arr[:,1])]
         nan_removed_population = []
         nan_population = []
         for candidate in self.population:

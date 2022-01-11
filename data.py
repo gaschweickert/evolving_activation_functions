@@ -1,4 +1,5 @@
 import csv
+import math
 import matplotlib.pyplot as plt
 import numpy as np
 from operator import itemgetter
@@ -22,15 +23,41 @@ class DATA:
         self.data.append(rows[:-1])
 
     def plot_gen_vs_accuracy(self):
-        for data in self.data:
-            gen_max = []
-            for gen in range(10):
-                gen_data = data[gen*50: (gen + 1)*50]
-                gen_best = max(gen_data, key=itemgetter(-1))
-                gen_max.append(float(gen_best[-1]))
+        """
+        generations = 10
+        N = 50
+        for i, data in enumerate(self.data):
+            gens_max = []
+            for gen in range(generations):
+                gen_data = data[gen*N: (gen + 1)*N]
+                nan_removed_gen_data = [x for x in gen_data if not math.isnan(float(x[-1]))]
+                gen_max = max(nan_removed_gen_data, key=itemgetter(-1))
+                gens_max.append(float(gen_max[-1]))
+            print(gens_max)
             xpoints = np.array(range(1, 11))
-            ypoints = np.array(gen_max)
-            plt.plot(xpoints, ypoints)
+            ypoints = np.array(gens_max)
+            plt.plot(xpoints, ypoints, label=self.filenames[i][33:])
+        """
+        
+        for i, data in enumerate(self.data):
+            gens = []
+            gens_best_accuracy = []
+            prev_gen = 1
+            gen_best_accuracy = 0.0 
+            for entry in data:
+                entry_gen = int(entry[0])
+                if entry_gen != prev_gen:
+                    gens.append(prev_gen)
+                    gens_best_accuracy.append(gen_best_accuracy)
+                    prev_gen = prev_gen + 1
+                    gen_best_accuracy = 0.0            
+                entry_accuracy = float(entry[-1])
+                if not math.isnan(entry_accuracy):
+                    if entry_accuracy > gen_best_accuracy:
+                        gen_best_accuracy = entry_accuracy
+            xpoints = np.array(gens)
+            ypoints = np.array(gens_best_accuracy)
+            plt.plot(xpoints, ypoints, label=self.filenames[i][33:])
 
 
         plt.ylim((0.65, 0.8)) 
@@ -38,13 +65,12 @@ class DATA:
         plt.xlabel("Accuracy")
         plt.ylabel("Generation #")
         plt.title("ACCURACY vs GENERATIONS")
-
+        plt.legend()
         plt.show()
 
     def print_overall_best(self):
         for data in self.data:
             print(max(data, key=itemgetter(-1)))
-    
         
 
 
