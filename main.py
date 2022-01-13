@@ -113,10 +113,10 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
 #Loss: 2.744981050491333; Accuracy: 0.7875999808311462
 
 def load_data(data):
-    #data.collect_data_from_file("search_data/09-Jan-2022_15:33:45_Random-search_cifar10_G=10_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/10-Jan-2022_00:49:53_GA-search_loss-based_cifar10_G=10_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/10-Jan-2022_14:23:10_GA-search_loss-based_cifar10_G=10_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    data.collect_data_from_file("search_data/09-Jan-2022_15:33:45_Random-search_cifar10_G=10_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/10-Jan-2022_00:49:53_GA-search_loss-based_cifar10_G=10_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
     #data.collect_data_from_file("search_data/11-Jan-2022_15:42:02_Random-search_cifar10_G=10_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/13-Jan-2022_00:03:32_GA-search_loss-based_cifar10_G=10_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
 
 
 
@@ -139,20 +139,20 @@ def main():
     # train_epochs = number of training epochs
 
 
-    #ga_search(dataset = 'cifar10', generations=10, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
+    ga_search(dataset = 'cifar100', generations=10, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #random_search(dataset = 'cifar10', generations=10, N=50, C=3, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    test_benchmarks(dataset='cifar10', k=1, no_blocks=2, no_epochs=2, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    #test_benchmarks(dataset='cifar10', k=1, no_blocks=2, no_epochs=2, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
     """
     data = DATA()
     load_data(data)
+    data.plot_gen_vs_accuracy()
     data_n_tops = data.get_n_top_candidates(3)
     for d in data_n_tops:
         test_candidates(filename=d[0], candidate_entries=d[1], dataset = 'cifar10', k = 1, mode=3, no_blocks=2, no_epochs=1, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
     """
-
 
 
     

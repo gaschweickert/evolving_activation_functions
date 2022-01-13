@@ -1,0 +1,4 @@
+Top,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,Epochs_Completed,Final_Loss,Final_Accuracy
+1,"min(max(x, 0), exp(-x^2))","max(x, 0)","min(x1, x2)",exp(-x^2),1,2.400852918624878,0.10509999841451645
+2,x**3 * erf(x),x**3,x1 * x2,erf(x),1,2.6284130404663296e+16,0.10010000318288803
+3,erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),1,2.4612648487091064,0.1111999973654747
