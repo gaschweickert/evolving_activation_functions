@@ -223,10 +223,11 @@ class CNN:
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
             hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-            if verbosity and (len(hist.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(hist.history['loss'])) + '/' + str(no_epochs))
+            final_epoch = len(hist.history['loss'])
+            if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             run_val_loss.append(max(hist.history['val_loss'])) # or hist.history['val_loss'][-1]
             run_val_acc.append(max(hist.history['val_accuracy']))
-        return median(run_val_loss), median(run_val_acc)
+        return final_epoch, median(run_val_loss), median(run_val_acc)
 
 
 
