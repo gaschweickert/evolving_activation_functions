@@ -1,6 +1,0 @@
-Gen,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,C2_name,C2_unary1_key,C2_binary_key,C2_unary2_key,C3_name,C3_unary1_key,C3_binary_key,C3_unary2_key,Loss,Accuracy
-1,"max(atanh(x), log(abs(x + err)))",atanh(x),"max(x1, x2)",log(abs(x + err)),"min(min(x, 0), abs(x))","min(x, 0)","min(x1, x2)",abs(x),(-x) + tanh(x),(-x),x1 + x2,tanh(x),nan,0.10000000149011612
-1,"min((-x), asinh(x))",(-x),"min(x1, x2)",asinh(x),"min(cos(x), sinc(x))",cos(x),"min(x1, x2)",sinc(x),cosh(x) / (1 + err),cosh(x),x1 / (x2 + err),1,2.71807861328125,0.08500000089406967
-2,"min((-x), asinh(x))",(-x),"min(x1, x2)",asinh(x),"min(cos(x), exp(x))",cos(x),"min(x1, x2)",exp(x),cosh(x) / (1 + err),cosh(x),x1 / (x2 + err),1,2.7901535034179688,0.09459999948740005
-2,"min((-x), asinh(x))",(-x),"min(x1, x2)",asinh(x),"min(cos(x), sinc(x))",cos(x),"min(x1, x2)",sinc(x),cosh(x) / (sin(x) + err),cosh(x),x1 / (x2 + err),sin(x),nan,0.10000000149011612
-Total time:,48.13543963432312
