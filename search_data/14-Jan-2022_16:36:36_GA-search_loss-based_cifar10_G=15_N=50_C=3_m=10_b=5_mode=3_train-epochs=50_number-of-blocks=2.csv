@@ -1,0 +1,752 @@
+Gen,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,C2_name,C2_unary1_key,C2_binary_key,C2_unary2_key,C3_name,C3_unary1_key,C3_binary_key,C3_unary2_key,Loss,Accuracy
+1,1 + cos(x),1,x1 + x2,cos(x),"max(x**3, abs(x))",x**3,"max(x1, x2)",abs(x),exp(-x^2) / (asinh(x) + err),exp(-x^2),x1 / (x2 + err),asinh(x),2.3061962127685547,0.10520000010728836
+1,(-x) - abs(x),(-x),x1 - x2,abs(x),"min(tanh(x), 0)",tanh(x),"min(x1, x2)",0,"min(atanh(x), max(x, 0))",atanh(x),"min(x1, x2)","max(x, 0)",nan,0.10000000149011612
+1,cosh(x) + 0,cosh(x),x1 + x2,0,"max(sinh(x), sinh(x))",sinh(x),"max(x1, x2)",sinh(x),0 / (cosh(x) + err),0,x1 / (x2 + err),cosh(x),nan,0.10000000149011612
+1,log(1 + exp(x)) / (x**3 + err),log(1 + exp(x)),x1 / (x2 + err),x**3,abs(x) / (asinh(x) + err),abs(x),x1 / (x2 + err),asinh(x),"min(log(1 + exp(x)), (1/(1 + exp(-x))))",log(1 + exp(x)),"min(x1, x2)",(1/(1 + exp(-x))),nan,0.10000000149011612
+1,"max((1/(1 + exp(-x))), exp(-x^2))",(1/(1 + exp(-x))),"max(x1, x2)",exp(-x^2),cosh(x) + (-x),cosh(x),x1 + x2,(-x),abs(x) / (1 + err),abs(x),x1 / (x2 + err),1,nan,0.10000000149011612
+1,(-x) - (1/(1 + exp(-x))),(-x),x1 - x2,(1/(1 + exp(-x))),cos(x) / ((-x) + err),cos(x),x1 / (x2 + err),(-x),"min(x**2, sin(x))",x**2,"min(x1, x2)",sin(x),nan,0.10000000149011612
+1,"min(x**2, asinh(x))",x**2,"min(x1, x2)",asinh(x),cos(x) / (tanh(x) + err),cos(x),x1 / (x2 + err),tanh(x),"max(x, 0) - exp(x)","max(x, 0)",x1 - x2,exp(x),nan,0.10000000149011612
+1,sin(x) + erf(x),sin(x),x1 + x2,erf(x),"max((-x), atanh(x))",(-x),"max(x1, x2)",atanh(x),"min(x**2, sinh(x))",x**2,"min(x1, x2)",sinh(x),nan,0.10000000149011612
+1,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),0.980673611164093,0.6474000215530396
+1,cosh(x) * cosh(x),cosh(x),x1 * x2,cosh(x),x**2 * asinh(x),x**2,x1 * x2,asinh(x),"max(abs(x), exp(x))",abs(x),"max(x1, x2)",exp(x),nan,0.10000000149011612
+1,erf(x) + cos(x),erf(x),x1 + x2,cos(x),sin(x) * cosh(x),sin(x),x1 * x2,cosh(x),"log(abs(x + err)) / (max(x, 0) + err)",log(abs(x + err)),x1 / (x2 + err),"max(x, 0)",nan,0.10000000149011612
+1,sinc(x) - exp(x),sinc(x),x1 - x2,exp(x),(1/(1 + exp(-x))) - x**3,(1/(1 + exp(-x))),x1 - x2,x**3,0 + sqrt(x),0,x1 + x2,sqrt(x),nan,0.10000000149011612
+1,"min(log(abs(x + err)), sin(x))",log(abs(x + err)),"min(x1, x2)",sin(x),"max(exp(x), log(abs(x + err)))",exp(x),"max(x1, x2)",log(abs(x + err)),"min(x, exp(-x^2))",x,"min(x1, x2)",exp(-x^2),nan,0.10000000149011612
+1,1 / ((-x) + err),1,x1 / (x2 + err),(-x),"min(abs(x), exp(-x^2))",abs(x),"min(x1, x2)",exp(-x^2),(1/(1 + exp(-x))) / (x + err),(1/(1 + exp(-x))),x1 / (x2 + err),x,nan,0.10000000149011612
+1,sinh(x) * 0,sinh(x),x1 * x2,0,cos(x) - exp(x),cos(x),x1 - x2,exp(x),0 / (asinh(x) + err),0,x1 / (x2 + err),asinh(x),2.3025882244110107,0.10000000149011612
+1,sinh(x) * sinh(x),sinh(x),x1 * x2,sinh(x),log(1 + exp(x)) + x,log(1 + exp(x)),x1 + x2,x,"min(sinc(x), exp(-x^2))",sinc(x),"min(x1, x2)",exp(-x^2),nan,0.10000000149011612
+1,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(x**3, (-x))",x**3,"max(x1, x2)",(-x),1.0280958414077759,0.6335999965667725
+1,"min(sinh(x), exp(-x^2))",sinh(x),"min(x1, x2)",exp(-x^2),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),1.430361032485962,0.4796000123023987
+1,"x * min(x, 0)",x,x1 * x2,"min(x, 0)",cosh(x) * exp(-x^2),cosh(x),x1 * x2,exp(-x^2),sqrt(x) * tanh(x),sqrt(x),x1 * x2,tanh(x),nan,0.10000000149011612
+1,"min(tanh(x), tanh(x))",tanh(x),"min(x1, x2)",tanh(x),log(abs(x + err)) * sinh(x),log(abs(x + err)),x1 * x2,sinh(x),"min(x, 0) * exp(-x^2)","min(x, 0)",x1 * x2,exp(-x^2),nan,0.10000000149011612
+1,1 - asinh(x),1,x1 - x2,asinh(x),"max(x**2, cosh(x))",x**2,"max(x1, x2)",cosh(x),log(1 + exp(x)) / (tanh(x) + err),log(1 + exp(x)),x1 / (x2 + err),tanh(x),nan,0.10000000149011612
+1,x**2 - exp(-x^2),x**2,x1 - x2,exp(-x^2),"min(sin(x), (1/(1 + exp(-x))))",sin(x),"min(x1, x2)",(1/(1 + exp(-x))),tanh(x) + atanh(x),tanh(x),x1 + x2,atanh(x),nan,0.10000000149011612
+1,"cos(x) / (min(x, 0) + err)",cos(x),x1 / (x2 + err),"min(x, 0)","sqrt(x) * min(x, 0)",sqrt(x),x1 * x2,"min(x, 0)",sinh(x) + atanh(x),sinh(x),x1 + x2,atanh(x),nan,0.10000000149011612
+1,"min(exp(x), x**3)",exp(x),"min(x1, x2)",x**3,asinh(x) / (x + err),asinh(x),x1 / (x2 + err),x,sin(x) / (abs(x) + err),sin(x),x1 / (x2 + err),abs(x),nan,0.10000000149011612
+1,sinc(x) - exp(x),sinc(x),x1 - x2,exp(x),"min(x, 0) + erf(x)","min(x, 0)",x1 + x2,erf(x),exp(x) / ((1/(1 + exp(-x))) + err),exp(x),x1 / (x2 + err),(1/(1 + exp(-x))),nan,0.10000000149011612
+1,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9218289852142334,0.6722000241279602
+1,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",cos(x) + (1/(1 + exp(-x))),cos(x),x1 + x2,(1/(1 + exp(-x))),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.0790878534317017,0.6244000196456909
+1,tanh(x) * exp(-x^2),tanh(x),x1 * x2,exp(-x^2),"min(x, 0) * log(1 + exp(x))","min(x, 0)",x1 * x2,log(1 + exp(x)),"min(x, 0) / (sqrt(x) + err)","min(x, 0)",x1 / (x2 + err),sqrt(x),nan,0.10000000149011612
+1,x + 0,x,x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9424139857292175,0.6675999760627747
+1,asinh(x) * sqrt(x),asinh(x),x1 * x2,sqrt(x),"atanh(x) - max(x, 0)",atanh(x),x1 - x2,"max(x, 0)",sqrt(x) - x,sqrt(x),x1 - x2,x,nan,0.10000000149011612
+1,tanh(x) / (exp(x) + err),tanh(x),x1 / (x2 + err),exp(x),asinh(x) / (erf(x) + err),asinh(x),x1 / (x2 + err),erf(x),0 + tanh(x),0,x1 + x2,tanh(x),nan,0.10000000149011612
+1,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9211187362670898,0.6909999847412109
+1,cos(x) / ((-x) + err),cos(x),x1 / (x2 + err),(-x),"max(x, 0) + x**2","max(x, 0)",x1 + x2,x**2,sqrt(x) / (log(abs(x + err)) + err),sqrt(x),x1 / (x2 + err),log(abs(x + err)),nan,0.10000000149011612
+1,(1/(1 + exp(-x))) / (sin(x) + err),(1/(1 + exp(-x))),x1 / (x2 + err),sin(x),"min(x, 0) / (cosh(x) + err)","min(x, 0)",x1 / (x2 + err),cosh(x),"max(atanh(x), exp(x))",atanh(x),"max(x1, x2)",exp(x),nan,0.10000000149011612
+1,log(1 + exp(x)) / (asinh(x) + err),log(1 + exp(x)),x1 / (x2 + err),asinh(x),"atanh(x) * min(x, 0)",atanh(x),x1 * x2,"min(x, 0)","tanh(x) * max(x, 0)",tanh(x),x1 * x2,"max(x, 0)",nan,0.10000000149011612
+1,sqrt(x) * x**2,sqrt(x),x1 * x2,x**2,x**2 - cosh(x),x**2,x1 - x2,cosh(x),x * sqrt(x),x,x1 * x2,sqrt(x),nan,0.10000000149011612
+1,sqrt(x) / (exp(x) + err),sqrt(x),x1 / (x2 + err),exp(x),"max(x, 0) - sin(x)","max(x, 0)",x1 - x2,sin(x),"max(x, 0) * x","max(x, 0)",x1 * x2,x,nan,0.10000000149011612
+1,"min(exp(-x^2), (-x))",exp(-x^2),"min(x1, x2)",(-x),1 / (log(1 + exp(x)) + err),1,x1 / (x2 + err),log(1 + exp(x)),sinc(x) / (1 + err),sinc(x),x1 / (x2 + err),1,nan,0.10000000149011612
+1,"max(erf(x), x**3)",erf(x),"max(x1, x2)",x**3,(1/(1 + exp(-x))) - 1,(1/(1 + exp(-x))),x1 - x2,1,tanh(x) + asinh(x),tanh(x),x1 + x2,asinh(x),nan,0.10000000149011612
+1,"max(sqrt(x), sinc(x))",sqrt(x),"max(x1, x2)",sinc(x),x**2 - x,x**2,x1 - x2,x,asinh(x) * (1/(1 + exp(-x))),asinh(x),x1 * x2,(1/(1 + exp(-x))),nan,0.10000000149011612
+1,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.893181562423706,0.682200014591217
+1,"max(cos(x), x**2)",cos(x),"max(x1, x2)",x**2,x**2 * cos(x),x**2,x1 * x2,cos(x),"min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),2.2526068687438965,0.1736000031232834
+1,"max(log(abs(x + err)), tanh(x))",log(abs(x + err)),"max(x1, x2)",tanh(x),"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),exp(-x^2) * sinh(x),exp(-x^2),x1 * x2,sinh(x),nan,0.10000000149011612
+1,exp(-x^2) + atanh(x),exp(-x^2),x1 + x2,atanh(x),sqrt(x) / (x + err),sqrt(x),x1 / (x2 + err),x,"min(x**2, cosh(x))",x**2,"min(x1, x2)",cosh(x),nan,0.10000000149011612
+1,log(1 + exp(x)) - log(1 + exp(x)),log(1 + exp(x)),x1 - x2,log(1 + exp(x)),0 - sinc(x),0,x1 - x2,sinc(x),0 - sinh(x),0,x1 - x2,sinh(x),nan,0.10000000149011612
+1,(-x) - x,(-x),x1 - x2,x,sin(x) * log(abs(x + err)),sin(x),x1 * x2,log(abs(x + err)),x**2 / (sinh(x) + err),x**2,x1 / (x2 + err),sinh(x),nan,0.10000000149011612
+1,0 * x,0,x1 * x2,x,x**2 + atanh(x),x**2,x1 + x2,atanh(x),x**3 - (1/(1 + exp(-x))),x**3,x1 - x2,(1/(1 + exp(-x))),nan,0.10000000149011612
+1,"min(cos(x), max(x, 0))",cos(x),"min(x1, x2)","max(x, 0)",erf(x) * atanh(x),erf(x),x1 * x2,atanh(x),x**3 - (-x),x**3,x1 - x2,(-x),nan,0.10000000149011612
+1,sin(x) + x**2,sin(x),x1 + x2,x**2,"min(sqrt(x), asinh(x))",sqrt(x),"min(x1, x2)",asinh(x),exp(x) / (asinh(x) + err),exp(x),x1 / (x2 + err),asinh(x),nan,0.10000000149011612
+1,"max(max(x, 0), min(x, 0))","max(x, 0)","max(x1, x2)","min(x, 0)","min(exp(-x^2), atanh(x))",exp(-x^2),"min(x1, x2)",atanh(x),"max(abs(x), (-x))",abs(x),"max(x1, x2)",(-x),nan,0.10000000149011612
+2,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.893181562423706,0.682200014591217
+2,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),0.980673611164093,0.6474000215530396
+2,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9218289852142334,0.6722000241279602
+2,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9211187362670898,0.6909999847412109
+2,x + 0,x,x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9424139857292175,0.6675999760627747
+2,sinh(x) + cos(x),sinh(x),x1 + x2,cos(x),"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9998416900634766,0.6412000060081482
+2,exp(x) + x**3,exp(x),x1 + x2,x**3,tanh(x) * 1,tanh(x),x1 * x2,1,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9802859425544739,0.6552000045776367
+2,"min(x**2, tanh(x))",x**2,"min(x1, x2)",tanh(x),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),1.044350028038025,0.6348000168800354
+2,x + 0,x,x1 + x2,0,"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.0415313243865967,0.6510000228881836
+2,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.9680814743041992,0.652999997138977
+2,x**2 * tanh(x),x**2,x1 * x2,tanh(x),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9105710983276367,0.673799991607666
+2,x**2 * 0,x**2,x1 * x2,0,cos(x) - exp(x),cos(x),x1 - x2,exp(x),0 / (asinh(x) + err),0,x1 / (x2 + err),asinh(x),2.302588701248169,0.10000000149011612
+2,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(tanh(x), (-x))",tanh(x),"max(x1, x2)",(-x),1.076066255569458,0.6266000270843506
+2,"min(sinh(x), 1)",sinh(x),"min(x1, x2)",1,"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),1.3038500547409058,0.557200014591217
+2,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / ((1/(1 + exp(-x))) + err),log(1 + exp(x)),x1 / (x2 + err),(1/(1 + exp(-x))),1.1768763065338135,0.578000009059906
+2,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),sinh(x) / ((-x) + err),sinh(x),x1 / (x2 + err),(-x),nan,0.10000000149011612
+2,x + 0,x,x1 + x2,0,"min(min(x, 0), x**3)","min(x, 0)","min(x1, x2)",x**3,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.2503591775894165,0.5648000240325928
+2,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),"max(x**3, (1/(1 + exp(-x))))",x**3,"max(x1, x2)",(1/(1 + exp(-x))),0.9235732555389404,0.6765999794006348
+2,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9670107364654541,0.6593999862670898
+2,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",cos(x) + (1/(1 + exp(-x))),cos(x),x1 + x2,(1/(1 + exp(-x))),x * asinh(x),x,x1 * x2,asinh(x),0.9951995015144348,0.6564000248908997
+2,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.8663294911384583,0.692799985408783
+2,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.9038246870040894,0.6819999814033508
+2,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8984379172325134,0.6848000288009644
+2,x + erf(x),x,x1 + x2,erf(x),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), tanh(x))",sinh(x),"min(x1, x2)",tanh(x),0.9305437207221985,0.6740000247955322
+2,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"cos(x) + max(x, 0)",cos(x),x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9322017431259155,0.6868000030517578
+2,exp(x) + 1,exp(x),x1 + x2,1,"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(x**3, x)",x**3,"max(x1, x2)",x,1.0454020500183105,0.628600001335144
+2,x + 0,x,x1 + x2,0,"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(x**3, (-x))",x**3,"max(x1, x2)",(-x),1.0154049396514893,0.6456000208854675
+2,exp(x) - 1,exp(x),x1 - x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9262346625328064,0.6773999929428101
+2,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.8951753973960876,0.6782000064849854
+2,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)","min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),1.279405117034912,0.5631999969482422
+2,"min(sinh(x), sqrt(x))",sinh(x),"min(x1, x2)",sqrt(x),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),1.140556812286377,0.604200005531311
+2,1 + cos(x),1,x1 + x2,cos(x),"max(x**3, abs(x))",x**3,"max(x1, x2)",abs(x),exp(x) / (asinh(x) + err),exp(x),x1 / (x2 + err),asinh(x),nan,0.10000000149011612
+2,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,sqrt(x) * 1,sqrt(x),x1 * x2,1,0.9465806484222412,0.6592000126838684
+2,"min(sinh(x), exp(-x^2))",sinh(x),"min(x1, x2)",exp(-x^2),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),"max(log(1 + exp(x)), cosh(x))",log(1 + exp(x)),"max(x1, x2)",cosh(x),1.3810847997665405,0.5162000060081482
+2,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",cos(x) + (1/(1 + exp(-x))),cos(x),x1 + x2,(1/(1 + exp(-x))),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.1374562978744507,0.6069999933242798
+2,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",abs(x) / ((-x) + err),abs(x),x1 / (x2 + err),(-x),1.9940804243087769,0.30160000920295715
+2,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"max(min(x, 0), max(x, 0))","min(x, 0)","max(x1, x2)","max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9171410202980042,0.6872000098228455
+2,"max(cos(x), x**2)",cos(x),"max(x1, x2)",x**2,"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) * x**2,sqrt(x),x1 * x2,x**2,0.9906560778617859,0.6498000025749207
+2,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),1.042893409729004,0.6402000188827515
+2,x + 0,x,x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9574283361434937,0.6665999889373779
+2,atanh(x) * log(abs(x + err)),atanh(x),x1 * x2,log(abs(x + err)),x / (sqrt(x) + err),x,x1 / (x2 + err),sqrt(x),"max(x, 0) * (-x)","max(x, 0)",x1 * x2,(-x),nan,0.10000000149011612
+2,"min(x**2, sinh(x))",x**2,"min(x1, x2)",sinh(x),sqrt(x) - cosh(x),sqrt(x),x1 - x2,cosh(x),sqrt(x) / (sinc(x) + err),sqrt(x),x1 / (x2 + err),sinc(x),nan,0.10000000149011612
+2,exp(-x^2) - asinh(x),exp(-x^2),x1 - x2,asinh(x),exp(x) + exp(-x^2),exp(x),x1 + x2,exp(-x^2),(-x) + erf(x),(-x),x1 + x2,erf(x),nan,0.10000000149011612
+2,atanh(x) - tanh(x),atanh(x),x1 - x2,tanh(x),exp(x) / (0 + err),exp(x),x1 / (x2 + err),0,exp(x) * asinh(x),exp(x),x1 * x2,asinh(x),nan,0.10000000149011612
+2,"max(x, 0) + log(abs(x + err))","max(x, 0)",x1 + x2,log(abs(x + err)),"min(x, 0) * (1/(1 + exp(-x)))","min(x, 0)",x1 * x2,(1/(1 + exp(-x))),abs(x) - sin(x),abs(x),x1 - x2,sin(x),2.308394432067871,0.10000000149011612
+2,cos(x) / (cos(x) + err),cos(x),x1 / (x2 + err),cos(x),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),log(abs(x + err)) - tanh(x),log(abs(x + err)),x1 - x2,tanh(x),nan,0.10000000149011612
+2,"min(x**2, (-x))",x**2,"min(x1, x2)",(-x),"max(max(x, 0), abs(x))","max(x, 0)","max(x1, x2)",abs(x),"max(sinc(x), cos(x))",sinc(x),"max(x1, x2)",cos(x),1.1125637292861938,0.6065999865531921
+2,x / (1 + err),x,x1 / (x2 + err),1,cosh(x) - exp(x),cosh(x),x1 - x2,exp(x),exp(x) * atanh(x),exp(x),x1 * x2,atanh(x),nan,0.10000000149011612
+2,cos(x) + log(abs(x + err)),cos(x),x1 + x2,log(abs(x + err)),sinh(x) * x**3,sinh(x),x1 * x2,x**3,atanh(x) + sinh(x),atanh(x),x1 + x2,sinh(x),nan,0.10000000149011612
+2,"min(sinh(x), log(1 + exp(x)))",sinh(x),"min(x1, x2)",log(1 + exp(x)),"max(erf(x), log(1 + exp(x)))",erf(x),"max(x1, x2)",log(1 + exp(x)),"min(sin(x), 0)",sin(x),"min(x1, x2)",0,nan,0.10000000149011612
+3,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.8663294911384583,0.692799985408783
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.893181562423706,0.682200014591217
+3,x + 0,x,x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9424139857292175,0.6675999760627747
+3,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8984379172325134,0.6848000288009644
+3,exp(x) - 1,exp(x),x1 - x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9262346625328064,0.6773999929428101
+3,x**2 * tanh(x),x**2,x1 * x2,tanh(x),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),log(1 + exp(x)) / ((1/(1 + exp(-x))) + err),log(1 + exp(x)),x1 / (x2 + err),(1/(1 + exp(-x))),1.078593134880066,0.6197999715805054
+3,x / (0 + err),x,x1 / (x2 + err),0,"min(min(x, 0), x**3)","min(x, 0)","min(x1, x2)",x**3,log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),nan,0.10000000149011612
+3,"max(sinh(x), erf(x))",sinh(x),"max(x1, x2)",erf(x),"cos(x) + max(x, 0)",cos(x),x1 + x2,"max(x, 0)",log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),nan,0.10000000149011612
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),"max(x**3, cosh(x))",x**3,"max(x1, x2)",cosh(x),0.8998449444770813,0.6855999827384949
+3,(1/(1 + exp(-x))) + erf(x),(1/(1 + exp(-x))),x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),1.0283935070037842,0.6453999876976013
+3,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.9184807538986206,0.6751999855041504
+3,x**2 * 0,x**2,x1 * x2,0,cos(x) - (-x),cos(x),x1 - x2,(-x),abs(x) - sin(x),abs(x),x1 - x2,sin(x),2.3033664226531982,0.10000000149011612
+3,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(max(x, 0), (-x))","max(x, 0)","max(x1, x2)",(-x),1.0123872756958008,0.6384000182151794
+3,x + 0,x,x1 + x2,0,"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.0044941902160645,0.6547999978065491
+3,"x + max(x, 0)",x,x1 + x2,"max(x, 0)","min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9710138440132141,0.6661999821662903
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), exp(x))",erf(x),"max(x1, x2)",exp(x),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",nan,0.10000000149011612
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9510613083839417,0.6736000180244446
+3,x + erf(x),x,x1 + x2,erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"min(log(1 + exp(x)), min(x, 0))",log(1 + exp(x)),"min(x1, x2)","min(x, 0)",0.9697088003158569,0.6589999794960022
+3,x + log(abs(x + err)),x,x1 + x2,log(abs(x + err)),"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),nan,0.10000000149011612
+3,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,log(abs(x + err)) * 1,log(abs(x + err)),x1 * x2,1,"min(sinh(x), (-x))",sinh(x),"min(x1, x2)",(-x),nan,0.10000000149011612
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"min(x, 0) * max(x, 0)","min(x, 0)",x1 * x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),2.302589178085327,0.10000000149011612
+3,x + log(1 + exp(x)),x,x1 + x2,log(1 + exp(x)),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(tanh(x), (-x))",tanh(x),"max(x1, x2)",(-x),0.9725236296653748,0.65420001745224
+3,x + erf(x),x,x1 + x2,erf(x),"max(max(x, 0), erf(x))","max(x, 0)","max(x1, x2)",erf(x),abs(x) / ((-x) + err),abs(x),x1 / (x2 + err),(-x),1.9603601694107056,0.2978000044822693
+3,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(sinc(x), cos(x))",sinc(x),"min(x1, x2)",cos(x),0.900810718536377,0.678600013256073
+3,exp(x) + 1,exp(x),x1 + x2,1,"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),log(1 + exp(x)) - (1/(1 + exp(-x))),log(1 + exp(x)),x1 - x2,(1/(1 + exp(-x))),0.9794121384620667,0.6565999984741211
+3,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,1.0697029829025269,0.6272000074386597
+3,"min(sinh(x), exp(-x^2))",sinh(x),"min(x1, x2)",exp(-x^2),"min(exp(-x^2), exp(-x^2))",exp(-x^2),"min(x1, x2)",exp(-x^2),sqrt(x) / (asinh(x) + err),sqrt(x),x1 / (x2 + err),asinh(x),nan,0.10000000149011612
+3,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"max(min(x, 0), max(x, 0))","min(x, 0)","max(x1, x2)","max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.164242148399353,0.6172000169754028
+3,"max(sin(x), x**3)",sin(x),"max(x1, x2)",x**3,"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.997403621673584,0.6643999814987183
+3,cosh(x) * (1/(1 + exp(-x))),cosh(x),x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.9356513619422913,0.6690000295639038
+3,cos(x) + 0,cos(x),x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.1867246627807617,0.5843999981880188
+3,exp(x) + 1,exp(x),x1 + x2,1,cos(x) + (1/(1 + exp(-x))),cos(x),x1 + x2,(1/(1 + exp(-x))),"sin(x) / (max(x, 0) + err)",sin(x),x1 / (x2 + err),"max(x, 0)",nan,0.10000000149011612
+3,"min(x**2, (-x))",x**2,"min(x1, x2)",(-x),"max(max(x, 0), abs(x))","max(x, 0)","max(x1, x2)",abs(x),sqrt(x) / (asinh(x) + err),sqrt(x),x1 / (x2 + err),asinh(x),1.8899074792861938,0.3172000050544739
+3,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) * 1,sqrt(x),x1 * x2,1,1.0257972478866577,0.6402000188827515
+3,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8510153293609619,0.6944000124931335
+3,sinh(x) + cos(x),sinh(x),x1 + x2,cos(x),"min(1, x)",1,"min(x1, x2)",x,log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),1.0918902158737183,0.6182000041007996
+3,(1/(1 + exp(-x))) + 0,(1/(1 + exp(-x))),x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9384689331054688,0.6636000275611877
+3,x + erf(x),x,x1 + x2,erf(x),exp(-x^2) / (erf(x) + err),exp(-x^2),x1 / (x2 + err),erf(x),"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),2.328002452850342,0.10000000149011612
+3,"min(x**2, tanh(x))",x**2,"min(x1, x2)",tanh(x),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), x)",sinh(x),"min(x1, x2)",x,0.9851126670837402,0.652999997138977
+3,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8527497053146362,0.6944000124931335
+3,0 * x,0,x1 * x2,x,"min(asinh(x), tanh(x))",asinh(x),"min(x1, x2)",tanh(x),atanh(x) * x**3,atanh(x),x1 * x2,x**3,2.3025870323181152,0.10000000149011612
+3,"min(1, x**2)",1,"min(x1, x2)",x**2,"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),"max(x, 0) * erf(x)","max(x, 0)",x1 * x2,erf(x),nan,0.10000000149011612
+3,exp(x) / (exp(-x^2) + err),exp(x),x1 / (x2 + err),exp(-x^2),log(abs(x + err)) / (abs(x) + err),log(abs(x + err)),x1 / (x2 + err),abs(x),sinc(x) + (1/(1 + exp(-x))),sinc(x),x1 + x2,(1/(1 + exp(-x))),nan,0.10000000149011612
+3,"max((1/(1 + exp(-x))), asinh(x))",(1/(1 + exp(-x))),"max(x1, x2)",asinh(x),"min(sinc(x), exp(x))",sinc(x),"min(x1, x2)",exp(x),"max(log(1 + exp(x)), x)",log(1 + exp(x)),"max(x1, x2)",x,nan,0.10000000149011612
+3,"exp(-x^2) * max(x, 0)",exp(-x^2),x1 * x2,"max(x, 0)",exp(x) * (1/(1 + exp(-x))),exp(x),x1 * x2,(1/(1 + exp(-x))),cos(x) + x**3,cos(x),x1 + x2,x**3,nan,0.10000000149011612
+3,sinh(x) * sinh(x),sinh(x),x1 * x2,sinh(x),"min(sqrt(x), log(1 + exp(x)))",sqrt(x),"min(x1, x2)",log(1 + exp(x)),"max(exp(x), erf(x))",exp(x),"max(x1, x2)",erf(x),nan,0.10000000149011612
+3,"min(x**3, x)",x**3,"min(x1, x2)",x,exp(x) / (erf(x) + err),exp(x),x1 / (x2 + err),erf(x),"max(x, 0) - 0","max(x, 0)",x1 - x2,0,nan,0.10000000149011612
+3,asinh(x) - sqrt(x),asinh(x),x1 - x2,sqrt(x),x**3 / (x**2 + err),x**3,x1 / (x2 + err),x**2,atanh(x) / (x**3 + err),atanh(x),x1 / (x2 + err),x**3,nan,0.10000000149011612
+3,sin(x) + log(abs(x + err)),sin(x),x1 + x2,log(abs(x + err)),"min(sinc(x), asinh(x))",sinc(x),"min(x1, x2)",asinh(x),"max(x, 0) - log(abs(x + err))","max(x, 0)",x1 - x2,log(abs(x + err)),nan,0.10000000149011612
+3,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(x**2, log(abs(x + err)))",x**2,"min(x1, x2)",log(abs(x + err)),(-x) - asinh(x),(-x),x1 - x2,asinh(x),nan,0.10000000149011612
+4,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8527497053146362,0.6944000124931335
+4,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8510153293609619,0.6944000124931335
+4,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.8663294911384583,0.692799985408783
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.893181562423706,0.682200014591217
+4,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8984379172325134,0.6848000288009644
+4,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.8748514652252197,0.6898000240325928
+4,x**2 * tanh(x),x**2,x1 * x2,tanh(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"min(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"min(x1, x2)",erf(x),1.0417652130126953,0.6335999965667725
+4,x + log(1 + exp(x)),x,x1 + x2,log(1 + exp(x)),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"max(abs(x), (-x))",abs(x),"max(x1, x2)",(-x),0.9478930830955505,0.6710000038146973
+4,exp(x) + 1,exp(x),x1 + x2,1,exp(-x^2) / (erf(x) + err),exp(-x^2),x1 / (x2 + err),erf(x),sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),nan,0.10000000149011612
+4,x + 0,x,x1 + x2,0,"min(x**2, x)",x**2,"min(x1, x2)",x,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.9495482444763184,0.6722000241279602
+4,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.888833224773407,0.6850000023841858
+4,erf(x) * (1/(1 + exp(-x))),erf(x),x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),"max(x**3, cosh(x))",x**3,"max(x1, x2)",cosh(x),1.0357344150543213,0.6362000107765198
+4,(1/(1 + exp(-x))) / (erf(x) + err),(1/(1 + exp(-x))),x1 / (x2 + err),erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),nan,0.10000000149011612
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8958081007003784,0.6805999875068665
+4,exp(x) + log(1 + exp(x)),exp(x),x1 + x2,log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.0043033361434937,0.649399995803833
+4,x + 0,x,x1 + x2,0,"min(sinh(x), x)",sinh(x),"min(x1, x2)",x,"min(sinh(x), x)",sinh(x),"min(x1, x2)",x,nan,0.10000000149011612
+4,x - 0,x,x1 - x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9260511994361877,0.6736000180244446
+4,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),sqrt(x) * cos(x),sqrt(x),x1 * x2,cos(x),1.0525685548782349,0.6370000243186951
+4,x / (erf(x) + err),x,x1 / (x2 + err),erf(x),"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),"min(log(1 + exp(x)), min(x, 0))",log(1 + exp(x)),"min(x1, x2)","min(x, 0)",nan,0.10000000149011612
+4,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(x, 0) - x","min(x, 0)",x1 - x2,x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),1.0584851503372192,0.6313999891281128
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(exp(-x^2), cos(x))",exp(-x^2),"min(x1, x2)",cos(x),0.9117636680603027,0.6787999868392944
+4,sinc(x) + 0,sinc(x),x1 + x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,log(1 + exp(x)) / (cosh(x) + err),log(1 + exp(x)),x1 / (x2 + err),cosh(x),2.3066296577453613,0.10000000149011612
+4,x + erf(x),x,x1 + x2,erf(x),"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,"max(x, 0) * asinh(x)","max(x, 0)",x1 * x2,asinh(x),0.9465978741645813,0.6647999882698059
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sinc(x) - cos(x),sinc(x),x1 - x2,cos(x),0.961158275604248,0.6704000234603882
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),log(1 + exp(x)) + erf(x),log(1 + exp(x)),x1 + x2,erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),nan,0.10000000149011612
+4,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"max(min(x, 0), max(x, 0))","min(x, 0)","max(x1, x2)","max(x, 0)",(-x) * asinh(x),(-x),x1 * x2,asinh(x),0.959291398525238,0.6643999814987183
+4,"min(max(x, 0), 1)","max(x, 0)","min(x1, x2)",1,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.8849683403968811,0.6863999962806702
+4,exp(x) + 1,exp(x),x1 + x2,1,"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9666544795036316,0.6516000032424927
+4,(1/(1 + exp(-x))) + 0,(1/(1 + exp(-x))),x1 + x2,0,"min(x**3, x)",x**3,"min(x1, x2)",x,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.1085222959518433,0.6118000149726868
+4,0 * x,0,x1 * x2,x,asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),nan,0.10000000149011612
+4,x + erf(x),x,x1 + x2,erf(x),"min(x, 0) + max(x, 0)","min(x, 0)",x1 + x2,"max(x, 0)",x**2 / ((-x) + err),x**2,x1 / (x2 + err),(-x),0.9827455282211304,0.6531999707221985
+4,x + erf(x),x,x1 + x2,erf(x),"max(cos(x), tanh(x))",cos(x),"max(x1, x2)",tanh(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.0871459245681763,0.6341999769210815
+4,"max(log(1 + exp(x)), max(x, 0))",log(1 + exp(x)),"max(x1, x2)","max(x, 0)",erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) * 1,sqrt(x),x1 * x2,1,1.0445492267608643,0.6407999992370605
+4,tanh(x) - (1/(1 + exp(-x))),tanh(x),x1 - x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9896971583366394,0.645799994468689
+4,exp(x) + 1,exp(x),x1 + x2,1,"max(exp(-x^2), erf(x))",exp(-x^2),"max(x1, x2)",erf(x),log(1 + exp(x)) - tanh(x),log(1 + exp(x)),x1 - x2,tanh(x),1.1055850982666016,0.6159999966621399
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),erf(x) - (-x),erf(x),x1 - x2,(-x),0.8998033404350281,0.6818000078201294
+4,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"max(x**3, cosh(x))",x**3,"max(x1, x2)",cosh(x),nan,0.10000000149011612
+4,exp(x) + 1,exp(x),x1 + x2,1,"min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9377329349517822,0.6711999773979187
+4,"min(x**2, (-x))",x**2,"min(x1, x2)",(-x),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), x)",sinh(x),"min(x1, x2)",x,1.0343109369277954,0.6381999850273132
+4,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.9455437660217285,0.6728000044822693
+4,cos(x) + erf(x),cos(x),x1 + x2,erf(x),1 / (exp(x) + err),1,x1 / (x2 + err),exp(x),sinh(x) - x,sinh(x),x1 - x2,x,nan,0.10000000149011612
+4,"min(atanh(x), asinh(x))",atanh(x),"min(x1, x2)",asinh(x),sinh(x) / (log(1 + exp(x)) + err),sinh(x),x1 / (x2 + err),log(1 + exp(x)),sin(x) + asinh(x),sin(x),x1 + x2,asinh(x),nan,0.10000000149011612
+4,cos(x) * x,cos(x),x1 * x2,x,atanh(x) * sin(x),atanh(x),x1 * x2,sin(x),cosh(x) + cosh(x),cosh(x),x1 + x2,cosh(x),nan,0.10000000149011612
+4,"atanh(x) * min(x, 0)",atanh(x),x1 * x2,"min(x, 0)","min((-x), erf(x))",(-x),"min(x1, x2)",erf(x),exp(-x^2) + abs(x),exp(-x^2),x1 + x2,abs(x),nan,0.10000000149011612
+4,"max(x, 0) - cos(x)","max(x, 0)",x1 - x2,cos(x),cos(x) * exp(-x^2),cos(x),x1 * x2,exp(-x^2),erf(x) / (tanh(x) + err),erf(x),x1 / (x2 + err),tanh(x),1.6693788766860962,0.38040000200271606
+4,"min(sinc(x), exp(-x^2))",sinc(x),"min(x1, x2)",exp(-x^2),exp(-x^2) * abs(x),exp(-x^2),x1 * x2,abs(x),atanh(x) / (x**2 + err),atanh(x),x1 / (x2 + err),x**2,nan,0.10000000149011612
+4,"max(x, min(x, 0))",x,"max(x1, x2)","min(x, 0)","min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9316251873970032,0.6725999712944031
+4,log(1 + exp(x)) / (log(1 + exp(x)) + err),log(1 + exp(x)),x1 / (x2 + err),log(1 + exp(x)),cos(x) * log(1 + exp(x)),cos(x),x1 * x2,log(1 + exp(x)),"max(atanh(x), asinh(x))",atanh(x),"max(x1, x2)",asinh(x),nan,0.10000000149011612
+4,"max(1, exp(x))",1,"max(x1, x2)",exp(x),"max(x**2, exp(-x^2))",x**2,"max(x1, x2)",exp(-x^2),tanh(x) + x**3,tanh(x),x1 + x2,x**3,nan,0.10000000149011612
+4,x**2 / (log(1 + exp(x)) + err),x**2,x1 / (x2 + err),log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"min(atanh(x), exp(x))",atanh(x),"min(x1, x2)",exp(x),nan,0.10000000149011612
+5,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.888833224773407,0.6850000023841858
+5,"min(max(x, 0), 1)","max(x, 0)","min(x1, x2)",1,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.8849683403968811,0.6863999962806702
+5,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8510153293609619,0.6944000124931335
+5,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8527497053146362,0.6944000124931335
+5,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.8748514652252197,0.6898000240325928
+5,exp(x) + 1,exp(x),x1 + x2,1,sinh(x) + sin(x),sinh(x),x1 + x2,sin(x),"min(exp(-x^2), cos(x))",exp(-x^2),"min(x1, x2)",cos(x),nan,0.10000000149011612
+5,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + log(abs(x + err)),erf(x),x1 + x2,log(abs(x + err)),"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),nan,0.10000000149011612
+5,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) / (sin(x) + err),log(1 + exp(x)),x1 / (x2 + err),sin(x),nan,0.10000000149011612
+5,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(tanh(x), log(1 + exp(x)))",tanh(x),"min(x1, x2)",log(1 + exp(x)),"min(sinh(x), x)",sinh(x),"min(x1, x2)",x,nan,0.10000000149011612
+5,exp(x) + 1,exp(x),x1 + x2,1,erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(sinc(x), cos(x))",sinc(x),"min(x1, x2)",cos(x),0.9523654580116272,0.6651999950408936
+5,"min(x**2, (-x))",x**2,"min(x1, x2)",(-x),"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * sinh(x),erf(x),x1 * x2,sinh(x),nan,0.10000000149011612
+5,"max(x, 0) * (1/(1 + exp(-x)))","max(x, 0)",x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9506152272224426,0.6664000153541565
+5,exp(x) + log(1 + exp(x)),exp(x),x1 + x2,log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.0649194717407227,0.6254000067710876
+5,exp(x) + log(1 + exp(x)),exp(x),x1 + x2,log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),(1/(1 + exp(-x))) / ((-x) + err),(1/(1 + exp(-x))),x1 / (x2 + err),(-x),nan,0.10000000149011612
+5,"max(x**2, (1/(1 + exp(-x))))",x**2,"max(x1, x2)",(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8684427738189697,0.6905999779701233
+5,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),sqrt(x) * cos(x),sqrt(x),x1 * x2,cos(x),0.9390611052513123,0.6711999773979187
+5,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.943968653678894,0.6614000201225281
+5,x**2 - (1/(1 + exp(-x))),x**2,x1 - x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8764819502830505,0.6937999725341797
+5,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,asinh(x) + 1,asinh(x),x1 + x2,1,erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),1.0557527542114258,0.6517999768257141
+5,tanh(x) - (1/(1 + exp(-x))),tanh(x),x1 - x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) / (x**2 + err),sqrt(x),x1 / (x2 + err),x**2,nan,0.10000000149011612
+5,x**2 * 0,x**2,x1 * x2,0,erf(x) + sin(x),erf(x),x1 + x2,sin(x),erf(x) - (-x),erf(x),x1 - x2,(-x),2.3043296337127686,0.10000000149011612
+5,x + erf(x),x,x1 + x2,erf(x),"min(asinh(x), x)",asinh(x),"min(x1, x2)",x,"max(x, 0) * asinh(x)","max(x, 0)",x1 * x2,asinh(x),0.9383437633514404,0.6693999767303467
+5,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.8824867010116577,0.6934000253677368
+5,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.8653470873832703,0.696399986743927
+5,x**2 + 1,x**2,x1 + x2,1,"min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),nan,0.39320001006126404
+5,x**2 + 1,x**2,x1 + x2,1,"min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9096465110778809,0.6796000003814697
+5,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8611451387405396,0.6958000063896179
+5,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.862999439239502,0.6959999799728394
+5,"min(exp(x), 1)",exp(x),"min(x1, x2)",1,tanh(x) + exp(-x^2),tanh(x),x1 + x2,exp(-x^2),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.9927443265914917,0.6489999890327454
+5,x - 0,x,x1 - x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,erf(x) * (-x),erf(x),x1 * x2,(-x),0.8753382563591003,0.6894000172615051
+5,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"min(erf(x), (-x))",erf(x),"min(x1, x2)",(-x),0.8652125000953674,0.6955999732017517
+5,cosh(x) + 0,cosh(x),x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),nan,0.10000000149011612
+5,exp(x) + 1,exp(x),x1 + x2,1,"max(exp(-x^2), x**2)",exp(-x^2),"max(x1, x2)",x**2,log(1 + exp(x)) - tanh(x),log(1 + exp(x)),x1 - x2,tanh(x),nan,0.10000000149011612
+5,x - (-x),x,x1 - x2,(-x),tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.9203900098800659,0.6815999746322632
+5,exp(x) + 1,exp(x),x1 + x2,1,"max(exp(-x^2), exp(x))",exp(-x^2),"max(x1, x2)",exp(x),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",nan,0.10000000149011612
+5,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(x, 0) - x","min(x, 0)",x1 - x2,x,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.1003457307815552,0.6173999905586243
+5,x - 0,x,x1 - x2,0,"min(x, 0) + x","min(x, 0)",x1 + x2,x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9528525471687317,0.6661999821662903
+5,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.9150644540786743,0.6776000261306763
+5,tanh(x) - sqrt(x),tanh(x),x1 - x2,sqrt(x),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"max(abs(x), (-x))",abs(x),"max(x1, x2)",(-x),nan,0.10000000149011612
+5,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),erf(x) + sin(x),erf(x),x1 + x2,sin(x),sqrt(x) * 1,sqrt(x),x1 * x2,1,0.9622496962547302,0.6639999747276306
+5,"min(tanh(x), atanh(x))",tanh(x),"min(x1, x2)",atanh(x),"max(x, 0) / (log(1 + exp(x)) + err)","max(x, 0)",x1 / (x2 + err),log(1 + exp(x)),tanh(x) * 1,tanh(x),x1 * x2,1,nan,0.10000000149011612
+5,atanh(x) * cos(x),atanh(x),x1 * x2,cos(x),"max(cosh(x), max(x, 0))",cosh(x),"max(x1, x2)","max(x, 0)",sinh(x) - atanh(x),sinh(x),x1 - x2,atanh(x),nan,0.10000000149011612
+5,"min((-x), sinc(x))",(-x),"min(x1, x2)",sinc(x),cos(x) / (log(1 + exp(x)) + err),cos(x),x1 / (x2 + err),log(1 + exp(x)),"min(0, cos(x))",0,"min(x1, x2)",cos(x),nan,0.10000000149011612
+5,(1/(1 + exp(-x))) * exp(x),(1/(1 + exp(-x))),x1 * x2,exp(x),exp(x) + sinc(x),exp(x),x1 + x2,sinc(x),"min((1/(1 + exp(-x))), min(x, 0))",(1/(1 + exp(-x))),"min(x1, x2)","min(x, 0)",nan,0.10000000149011612
+5,"min(cosh(x), (-x))",cosh(x),"min(x1, x2)",(-x),sinh(x) + tanh(x),sinh(x),x1 + x2,tanh(x),log(abs(x + err)) * atanh(x),log(abs(x + err)),x1 * x2,atanh(x),nan,0.10000000149011612
+5,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),tanh(x) + exp(-x^2),tanh(x),x1 + x2,exp(-x^2),"min(cosh(x), exp(x))",cosh(x),"min(x1, x2)",exp(x),0.92470782995224,0.6741999983787537
+5,"min(exp(x), 0)",exp(x),"min(x1, x2)",0,(1/(1 + exp(-x))) * sinh(x),(1/(1 + exp(-x))),x1 * x2,sinh(x),"max(sin(x), 1)",sin(x),"max(x1, x2)",1,2.3137288093566895,0.10000000149011612
+5,"min(x, 0) * (-x)","min(x, 0)",x1 * x2,(-x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),exp(x) - 0,exp(x),x1 - x2,0,nan,0.10000000149011612
+5,exp(x) - cosh(x),exp(x),x1 - x2,cosh(x),(-x) + (-x),(-x),x1 + x2,(-x),cos(x) / ((1/(1 + exp(-x))) + err),cos(x),x1 / (x2 + err),(1/(1 + exp(-x))),nan,0.10000000149011612
+5,"max(exp(x), log(1 + exp(x)))",exp(x),"max(x1, x2)",log(1 + exp(x)),log(1 + exp(x)) / (sqrt(x) + err),log(1 + exp(x)),x1 / (x2 + err),sqrt(x),"max(x, 0) - exp(x)","max(x, 0)",x1 - x2,exp(x),nan,0.10000000149011612
+6,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8510153293609619,0.6944000124931335
+6,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.862999439239502,0.6959999799728394
+6,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8527497053146362,0.6944000124931335
+6,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8611451387405396,0.6958000063896179
+6,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),0.8653470873832703,0.696399986743927
+6,x + 0,x,x1 + x2,0,log(1 + exp(x)) + erf(x),log(1 + exp(x)),x1 + x2,erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8875362277030945,0.6891999840736389
+6,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9803481698036194,0.6531999707221985
+6,exp(x) + log(1 + exp(x)),exp(x),x1 + x2,log(1 + exp(x)),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.8900535106658936,0.6845999956130981
+6,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,tanh(x) * 1,tanh(x),x1 * x2,1,"min(log(1 + exp(x)), abs(x))",log(1 + exp(x)),"min(x1, x2)",abs(x),0.9016844630241394,0.6814000010490417
+6,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8730115294456482,0.6913999915122986
+6,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(x, 0) - tanh(x)","min(x, 0)",x1 - x2,tanh(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,1.1067992448806763,0.6028000116348267
+6,exp(x) * 1,exp(x),x1 * x2,1,"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8581099510192871,0.7026000022888184
+6,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),1.0832843780517578,0.629800021648407
+6,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8482316136360168,0.6973999738693237
+6,"min(max(x, 0), 1)","max(x, 0)","min(x1, x2)",1,tanh(x) / ((1/(1 + exp(-x))) + err),tanh(x),x1 / (x2 + err),(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),nan,0.10000000149011612
+6,asinh(x) * (1/(1 + exp(-x))),asinh(x),x1 * x2,(1/(1 + exp(-x))),"max(erf(x), sin(x))",erf(x),"max(x1, x2)",sin(x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.9104273319244385,0.6826000213623047
+6,x * 0,x,x1 * x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),2.3026416301727295,0.10000000149011612
+6,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(x, 0) - cos(x)","min(x, 0)",x1 - x2,cos(x),"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.0630275011062622,0.6291999816894531
+6,0 + x,0,x1 + x2,x,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),0.9867538213729858,0.652400016784668
+6,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.8648141622543335,0.704200029373169
+6,sinh(x) + sqrt(x),sinh(x),x1 + x2,sqrt(x),"min(x, 0) - x","min(x, 0)",x1 - x2,x,"min(log(1 + exp(x)), sin(x))",log(1 + exp(x)),"min(x1, x2)",sin(x),nan,0.10000000149011612
+6,x + 0,x,x1 + x2,0,tanh(x) * (1/(1 + exp(-x))),tanh(x),x1 * x2,(1/(1 + exp(-x))),asinh(x) * cos(x),asinh(x),x1 * x2,cos(x),1.2064703702926636,0.5776000022888184
+6,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),"max(sinh(x), cosh(x))",sinh(x),"max(x1, x2)",cosh(x),0.8855001926422119,0.7080000042915344
+6,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),tanh(x) + exp(-x^2),tanh(x),x1 + x2,exp(-x^2),"min(x, exp(x))",x,"min(x1, x2)",exp(x),0.8996277451515198,0.6836000084877014
+6,x + 1,x,x1 + x2,1,erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(sinc(x), cos(x))",sinc(x),"min(x1, x2)",cos(x),0.8883125185966492,0.6899999976158142
+6,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),atanh(x) * 1,atanh(x),x1 * x2,1,nan,0.10000000149011612
+6,x - 0,x,x1 - x2,0,erf(x) + cos(x),erf(x),x1 + x2,cos(x),sqrt(x) * 1,sqrt(x),x1 * x2,1,1.0990192890167236,0.6338000297546387
+6,x - 0,x,x1 - x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,tanh(x) + x**2,tanh(x),x1 + x2,x**2,0.9184566140174866,0.6747999787330627
+6,exp(x) * log(1 + exp(x)),exp(x),x1 * x2,log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.2670828104019165,0.5455999970436096
+6,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.0192471742630005,0.6377999782562256
+6,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(x, 0) - x","min(x, 0)",x1 - x2,x,"sin(x) - min(x, 0)",sin(x),x1 - x2,"min(x, 0)",1.205839991569519,0.5809999704360962
+6,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + (1/(1 + exp(-x))),asinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),0.8654820322990417,0.6970000267028809
+6,x**2 + 1,x**2,x1 + x2,1,"min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),"max(min(x, 0), (-x))","min(x, 0)","max(x1, x2)",(-x),0.8773812651634216,0.6977999806404114
+6,(1/(1 + exp(-x))) + sinc(x),(1/(1 + exp(-x))),x1 + x2,sinc(x),erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(sinc(x), cos(x))",sinc(x),"min(x1, x2)",cos(x),nan,0.10000000149011612
+6,"max(exp(x), log(1 + exp(x)))",exp(x),"max(x1, x2)",log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.0907968282699585,0.6097999811172485
+6,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(x, (-x))",x,"max(x1, x2)",(-x),0.8529658913612366,0.7071999907493591
+6,exp(x) + 1,exp(x),x1 + x2,1,"min(x, 0) * x","min(x, 0)",x1 * x2,x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),14.72020149230957,0.46299999952316284
+6,x**2 - 1,x**2,x1 - x2,1,asinh(x) + 1,asinh(x),x1 + x2,1,erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9033605456352234,0.6898000240325928
+6,cos(x) + 1,cos(x),x1 + x2,1,"min(x, 0) + x","min(x, 0)",x1 + x2,x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),1.014830231666565,0.6407999992370605
+6,"min(exp(x), 0)",exp(x),"min(x1, x2)",0,erf(x) + sin(x),erf(x),x1 + x2,sin(x),"min(sinc(x), cos(x))",sinc(x),"min(x1, x2)",cos(x),nan,0.10000000149011612
+6,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),(-x) * 1,(-x),x1 * x2,1,"max(sin(x), sinc(x))",sin(x),"max(x1, x2)",sinc(x),0.9227939248085022,0.6772000193595886
+6,log(1 + exp(x)) * sinh(x),log(1 + exp(x)),x1 * x2,sinh(x),sin(x) * atanh(x),sin(x),x1 * x2,atanh(x),"min(cosh(x), log(1 + exp(x)))",cosh(x),"min(x1, x2)",log(1 + exp(x)),nan,0.10000000149011612
+6,abs(x) + 1,abs(x),x1 + x2,1,"max(max(x, 0), max(x, 0))","max(x, 0)","max(x1, x2)","max(x, 0)","max(min(x, 0), exp(-x^2))","min(x, 0)","max(x1, x2)",exp(-x^2),0.8900431394577026,0.6891999840736389
+6,log(1 + exp(x)) + sinh(x),log(1 + exp(x)),x1 + x2,sinh(x),"(-x) + min(x, 0)",(-x),x1 + x2,"min(x, 0)",sin(x) - tanh(x),sin(x),x1 - x2,tanh(x),nan,0.10000000149011612
+6,"max(1, sinc(x))",1,"max(x1, x2)",sinc(x),"max(x, log(1 + exp(x)))",x,"max(x1, x2)",log(1 + exp(x)),x**2 / (cosh(x) + err),x**2,x1 / (x2 + err),cosh(x),44.2612190246582,0.10000000149011612
+6,"log(abs(x + err)) + max(x, 0)",log(abs(x + err)),x1 + x2,"max(x, 0)",1 * (1/(1 + exp(-x))),1,x1 * x2,(1/(1 + exp(-x))),exp(x) * sqrt(x),exp(x),x1 * x2,sqrt(x),nan,0.10000000149011612
+6,log(1 + exp(x)) / (erf(x) + err),log(1 + exp(x)),x1 / (x2 + err),erf(x),"min(exp(-x^2), atanh(x))",exp(-x^2),"min(x1, x2)",atanh(x),"max(atanh(x), 0)",atanh(x),"max(x1, x2)",0,nan,0.10000000149011612
+6,"min(tanh(x), tanh(x))",tanh(x),"min(x1, x2)",tanh(x),"min(atanh(x), x**3)",atanh(x),"min(x1, x2)",x**3,abs(x) - atanh(x),abs(x),x1 - x2,atanh(x),nan,0.10000000149011612
+6,"exp(x) - max(x, 0)",exp(x),x1 - x2,"max(x, 0)",exp(-x^2) / (sqrt(x) + err),exp(-x^2),x1 / (x2 + err),sqrt(x),cos(x) + cosh(x),cos(x),x1 + x2,cosh(x),nan,0.10000000149011612
+6,"min(sinh(x), cosh(x))",sinh(x),"min(x1, x2)",cosh(x),0 + sinc(x),0,x1 + x2,sinc(x),"max(x, 0) + cos(x)","max(x, 0)",x1 + x2,cos(x),nan,0.10000000149011612
+7,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.8648141622543335,0.704200029373169
+7,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8482316136360168,0.6973999738693237
+7,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.862999439239502,0.6959999799728394
+7,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",0.8510153293609619,0.6944000124931335
+7,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9803481698036194,0.6531999707221985
+7,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",asinh(x) + log(1 + exp(x)),asinh(x),x1 + x2,log(1 + exp(x)),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9328267574310303,0.6854000091552734
+7,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8249332904815674,0.7071999907493591
+7,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),atanh(x) * (-x),atanh(x),x1 * x2,(-x),nan,0.10000000149011612
+7,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"max(min(x, 0), sqrt(x))","min(x, 0)","max(x1, x2)",sqrt(x),0.8590580224990845,0.7020000219345093
+7,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(atanh(x), asinh(x))",atanh(x),"min(x1, x2)",asinh(x),nan,0.10000000149011612
+7,cos(x) + 1,cos(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,1.0277966260910034,0.6399999856948853
+7,x - 0,x,x1 - x2,0,x**2 + cos(x),x**2,x1 + x2,cos(x),sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),1.0117154121398926,0.6442000269889832
+7,x - sqrt(x),x,x1 - x2,sqrt(x),"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),nan,0.10000000149011612
+7,"max(exp(x), log(1 + exp(x)))",exp(x),"max(x1, x2)",log(1 + exp(x)),log(1 + exp(x)) + erf(x),log(1 + exp(x)),x1 + x2,erf(x),erf(x) * x**2,erf(x),x1 * x2,x**2,nan,0.10000000149011612
+7,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",sinh(x) + (1/(1 + exp(-x))),sinh(x),x1 + x2,(1/(1 + exp(-x))),log(1 + exp(x)) - sin(x),log(1 + exp(x)),x1 - x2,sin(x),nan,0.10000000149011612
+7,erf(x) + 1,erf(x),x1 + x2,1,"min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),"max(min(x, 0), (-x))","min(x, 0)","max(x1, x2)",(-x),0.9225670695304871,0.6687999963760376
+7,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8542437553405762,0.7017999887466431
+7,exp(x) * log(1 + exp(x)),exp(x),x1 * x2,log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.1978700160980225,0.5699999928474426
+7,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(cosh(x), cos(x))",cosh(x),"min(x1, x2)",cos(x),nan,0.10000000149011612
+7,abs(x) + 1,abs(x),x1 + x2,1,"max(max(x, 0), 0)","max(x, 0)","max(x1, x2)",0,"max(min(x, 0), exp(-x^2))","min(x, 0)","max(x1, x2)",exp(-x^2),0.924693763256073,0.6872000098228455
+7,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(asinh(x), sin(x))",asinh(x),"max(x1, x2)",sin(x),"sin(x) - min(x, 0)",sin(x),x1 - x2,"min(x, 0)",0.9070847630500793,0.6764000058174133
+7,"max(0, x)",0,"max(x1, x2)",x,"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.8993898630142212,0.6872000098228455
+7,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),sin(x) + 1,sin(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.129472017288208,0.6092000007629395
+7,log(abs(x + err)) + x,log(abs(x + err)),x1 + x2,x,tanh(x) * 1,tanh(x),x1 * x2,1,erf(x) * (-x),erf(x),x1 * x2,(-x),2.3054211139678955,0.10000000149011612
+7,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,"min(tanh(x), 1)",tanh(x),"min(x1, x2)",1,"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9642629027366638,0.6632000207901001
+7,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(sin(x), cosh(x))",sin(x),"min(x1, x2)",cosh(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),1.0702937841415405,0.6309999823570251
+7,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),log(abs(x + err)) - x,log(abs(x + err)),x1 - x2,x,"sin(x) - min(x, 0)",sin(x),x1 - x2,"min(x, 0)",nan,0.10000000149011612
+7,"max(sinh(x), sqrt(x))",sinh(x),"max(x1, x2)",sqrt(x),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"max(sinh(x), x**3)",sinh(x),"max(x1, x2)",x**3,nan,0.10000000149011612
+7,x - 0,x,x1 - x2,0,"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,tanh(x) + log(abs(x + err)),tanh(x),x1 + x2,log(abs(x + err)),1.7503466606140137,0.3846000134944916
+7,"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),"min(x, 0) - x","min(x, 0)",x1 - x2,x,"sin(x) - min(x, 0)",sin(x),x1 - x2,"min(x, 0)",0.9978373050689697,0.6534000039100647
+7,0 + 1,0,x1 + x2,1,"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),nan,nan
+7,sqrt(x) * asinh(x),sqrt(x),x1 * x2,asinh(x),"max(tanh(x), exp(-x^2))",tanh(x),"max(x1, x2)",exp(-x^2),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.954669713973999,0.6638000011444092
+7,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,tanh(x) * sin(x),tanh(x),x1 * x2,sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),1.3641126155853271,0.5130000114440918
+7,exp(x) + sin(x),exp(x),x1 + x2,sin(x),tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.9576314687728882,0.6620000004768372
+7,"max(exp(x), log(1 + exp(x)))",exp(x),"max(x1, x2)",log(1 + exp(x)),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.0885473489761353,0.6154000163078308
+7,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,tanh(x) + x**2,tanh(x),x1 + x2,x**2,0.9045130610466003,0.6872000098228455
+7,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8462509512901306,0.6998000144958496
+7,"max(exp(x), log(1 + exp(x)))",exp(x),"max(x1, x2)",log(1 + exp(x)),"min(x**2, cosh(x))",x**2,"min(x1, x2)",cosh(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),nan,0.10000000149011612
+7,"max(sin(x), max(x, 0))",sin(x),"max(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.918919026851654,0.6812000274658203
+7,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8427677750587463,0.7044000029563904
+7,(1/(1 + exp(-x))) + x**3,(1/(1 + exp(-x))),x1 + x2,x**3,"min(min(x, 0), log(1 + exp(x)))","min(x, 0)","min(x1, x2)",log(1 + exp(x)),"min(x**2, exp(-x^2))",x**2,"min(x1, x2)",exp(-x^2),nan,0.10000000149011612
+7,tanh(x) + x,tanh(x),x1 + x2,x,0 / (x**3 + err),0,x1 / (x2 + err),x**3,(1/(1 + exp(-x))) / (exp(-x^2) + err),(1/(1 + exp(-x))),x1 / (x2 + err),exp(-x^2),2.310901403427124,0.10000000149011612
+7,(-x) + tanh(x),(-x),x1 + x2,tanh(x),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(asinh(x), (1/(1 + exp(-x))))",asinh(x),"max(x1, x2)",(1/(1 + exp(-x))),0.8612138628959656,0.6995999813079834
+7,exp(x) - x,exp(x),x1 - x2,x,"max(x, 0) / (cos(x) + err)","max(x, 0)",x1 / (x2 + err),cos(x),"min(sin(x), (-x))",sin(x),"min(x1, x2)",(-x),nan,0.10000000149011612
+7,"max(x, 0) / (atanh(x) + err)","max(x, 0)",x1 / (x2 + err),atanh(x),"max((-x), 1)",(-x),"max(x1, x2)",1,"max(0, x**2)",0,"max(x1, x2)",x**2,nan,0.10000000149011612
+7,"max(1, asinh(x))",1,"max(x1, x2)",asinh(x),sinc(x) * sin(x),sinc(x),x1 * x2,sin(x),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",1.2414621114730835,0.5594000220298767
+7,sqrt(x) - (1/(1 + exp(-x))),sqrt(x),x1 - x2,(1/(1 + exp(-x))),sin(x) * atanh(x),sin(x),x1 * x2,atanh(x),(1/(1 + exp(-x))) / (log(abs(x + err)) + err),(1/(1 + exp(-x))),x1 / (x2 + err),log(abs(x + err)),nan,0.10000000149011612
+7,0 * (1/(1 + exp(-x))),0,x1 * x2,(1/(1 + exp(-x))),cos(x) - log(abs(x + err)),cos(x),x1 - x2,log(abs(x + err)),log(abs(x + err)) + abs(x),log(abs(x + err)),x1 + x2,abs(x),nan,0.10000000149011612
+7,"max(0, (-x))",0,"max(x1, x2)",(-x),"min(x, sinh(x))",x,"min(x1, x2)",sinh(x),"abs(x) / (min(x, 0) + err)",abs(x),x1 / (x2 + err),"min(x, 0)",nan,0.10000000149011612
+7,"sqrt(x) / (min(x, 0) + err)",sqrt(x),x1 / (x2 + err),"min(x, 0)","min(cosh(x), sqrt(x))",cosh(x),"min(x1, x2)",sqrt(x),(-x) / (sin(x) + err),(-x),x1 / (x2 + err),sin(x),nan,0.10000000149011612
+8,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.862999439239502,0.6959999799728394
+8,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8249332904815674,0.7071999907493591
+8,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8427677750587463,0.7044000029563904
+8,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8482316136360168,0.6973999738693237
+8,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8542437553405762,0.7017999887466431
+8,cos(x) + tanh(x),cos(x),x1 + x2,tanh(x),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.9654898643493652,0.6607999801635742
+8,x + 0,x,x1 + x2,0,tanh(x) + 1,tanh(x),x1 + x2,1,sqrt(x) / (x**2 + err),sqrt(x),x1 / (x2 + err),x**2,1.9059187173843384,0.3391999900341034
+8,x + 0,x,x1 + x2,0,"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8570653200149536,0.6967999935150146
+8,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),0.9392383694648743,0.675000011920929
+8,0 - x,0,x1 - x2,x,"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.86245197057724,0.6944000124931335
+8,"min(sin(x), max(x, 0))",sin(x),"min(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8924539089202881,0.6883999705314636
+8,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(sinc(x), sin(x))",sinc(x),"max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,nan,0.10000000149011612
+8,exp(x) + sin(x),exp(x),x1 + x2,sin(x),tanh(x) + 1,tanh(x),x1 + x2,1,"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.9782136678695679,0.6611999869346619
+8,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",x + cosh(x),x,x1 + x2,cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+8,"max(exp(-x^2), max(x, 0))",exp(-x^2),"max(x1, x2)","max(x, 0)","max(tanh(x), exp(-x^2))",tanh(x),"max(x1, x2)",exp(-x^2),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9950307607650757,0.6488000154495239
+8,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(abs(x), sin(x))",abs(x),"max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8598945140838623,0.6967999935150146
+8,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,"max(cos(x), tanh(x))",cos(x),"max(x1, x2)",tanh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.0317556858062744,0.6395999789237976
+8,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),tanh(x) - 1,tanh(x),x1 - x2,1,sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9042230248451233,0.6809999942779541
+8,"min(x**2, min(x, 0))",x**2,"min(x1, x2)","min(x, 0)",sin(x) + 1,sin(x),x1 + x2,1,"sin(x) - max(x, 0)",sin(x),x1 - x2,"max(x, 0)",1.013933777809143,0.6413999795913696
+8,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),0 + 1,0,x1 + x2,1,"max(min(x, 0), sqrt(x))","min(x, 0)","max(x1, x2)",sqrt(x),nan,nan
+8,"max(0, max(x, 0))",0,"max(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8615705370903015,0.6980000138282776
+8,"max(sqrt(x), x)",sqrt(x),"max(x1, x2)",x,"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,nan,0.10000000149011612
+8,(-x) + tanh(x),(-x),x1 + x2,tanh(x),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(exp(x), (1/(1 + exp(-x))))",exp(x),"max(x1, x2)",(1/(1 + exp(-x))),0.9672589898109436,0.6665999889373779
+8,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(log(1 + exp(x)), cosh(x))",log(1 + exp(x)),"min(x1, x2)",cosh(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.916957437992096,0.6723999977111816
+8,(1/(1 + exp(-x))) + x,(1/(1 + exp(-x))),x1 + x2,x,(-x) * sin(x),(-x),x1 * x2,sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),1.2776086330413818,0.5284000039100647
+8,"max(sin(x), max(x, 0))",sin(x),"max(x1, x2)","max(x, 0)","max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.8582640886306763,0.7020000219345093
+8,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),(1/(1 + exp(-x))) + log(abs(x + err)),(1/(1 + exp(-x))),x1 + x2,log(abs(x + err)),nan,0.10000000149011612
+8,"min(x**2, (1/(1 + exp(-x))))",x**2,"min(x1, x2)",(1/(1 + exp(-x))),"min(sin(x), log(1 + exp(x)))",sin(x),"min(x1, x2)",log(1 + exp(x)),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.160822868347168,0.6060000061988831
+8,x - 0,x,x1 - x2,0,"min(sin(x), cosh(x))",sin(x),"min(x1, x2)",cosh(x),"min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),0.9227356314659119,0.673799991607666
+8,x**2 / (log(1 + exp(x)) + err),x**2,x1 / (x2 + err),log(1 + exp(x)),"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),tanh(x) + log(abs(x + err)),tanh(x),x1 + x2,log(abs(x + err)),nan,0.10000000149011612
+8,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,0.8704341650009155,0.6905999779701233
+8,log(abs(x + err)) + x,log(abs(x + err)),x1 + x2,x,1 * 1,1,x1 * x2,1,erf(x) * (-x),erf(x),x1 * x2,(-x),nan,nan
+8,exp(x) / (sin(x) + err),exp(x),x1 / (x2 + err),sin(x),tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",nan,0.10000000149011612
+8,exp(x) * log(1 + exp(x)),exp(x),x1 * x2,log(1 + exp(x)),"max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.220054268836975,0.5681999921798706
+8,"max(asinh(x), max(x, 0))",asinh(x),"max(x1, x2)","max(x, 0)",x + sinc(x),x,x1 + x2,sinc(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+8,"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),tanh(x) + sinc(x),tanh(x),x1 + x2,sinc(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,nan,0.10000000149011612
+8,"min(x**2, 0)",x**2,"min(x1, x2)",0,"min(tanh(x), cosh(x))",tanh(x),"min(x1, x2)",cosh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),nan,0.10000000149011612
+8,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8246498107910156,0.7020000219345093
+8,sqrt(x) * sinh(x),sqrt(x),x1 * x2,sinh(x),"max(exp(-x^2), tanh(x))",exp(-x^2),"max(x1, x2)",tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),1.189491629600525,0.5777999758720398
+8,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,tanh(x) + x**2,tanh(x),x1 + x2,x**2,0.9538075923919678,0.6686000227928162
+8,"max(x, 0) - max(x, 0)","max(x, 0)",x1 - x2,"max(x, 0)","min((1/(1 + exp(-x))), log(1 + exp(x)))",(1/(1 + exp(-x))),"min(x1, x2)",log(1 + exp(x)),abs(x) + log(1 + exp(x)),abs(x),x1 + x2,log(1 + exp(x)),2.304593086242676,0.10000000149011612
+8,sinc(x) + tanh(x),sinc(x),x1 + x2,tanh(x),"log(abs(x + err)) + max(x, 0)",log(abs(x + err)),x1 + x2,"max(x, 0)","min(sinc(x), sin(x))",sinc(x),"min(x1, x2)",sin(x),nan,0.10000000149011612
+8,"min(exp(-x^2), cosh(x))",exp(-x^2),"min(x1, x2)",cosh(x),tanh(x) / (sin(x) + err),tanh(x),x1 / (x2 + err),sin(x),"max(x, 0) - x**3","max(x, 0)",x1 - x2,x**3,nan,0.10000000149011612
+8,exp(-x^2) * 1,exp(-x^2),x1 * x2,1,"min(sqrt(x), asinh(x))",sqrt(x),"min(x1, x2)",asinh(x),"max(atanh(x), cos(x))",atanh(x),"max(x1, x2)",cos(x),nan,0.10000000149011612
+8,"min(cos(x), min(x, 0))",cos(x),"min(x1, x2)","min(x, 0)","max(atanh(x), x**3)",atanh(x),"max(x1, x2)",x**3,"min(x, asinh(x))",x,"min(x1, x2)",asinh(x),nan,0.10000000149011612
+8,exp(x) * (-x),exp(x),x1 * x2,(-x),"max(x**2, sinh(x))",x**2,"max(x1, x2)",sinh(x),"min(x, 0) * erf(x)","min(x, 0)",x1 * x2,erf(x),nan,0.10000000149011612
+8,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"min(abs(x), (1/(1 + exp(-x))))",abs(x),"min(x1, x2)",(1/(1 + exp(-x))),sin(x) - (1/(1 + exp(-x))),sin(x),x1 - x2,(1/(1 + exp(-x))),0.9731521606445312,0.657800018787384
+8,"max(cosh(x), max(x, 0))",cosh(x),"max(x1, x2)","max(x, 0)",tanh(x) - exp(x),tanh(x),x1 - x2,exp(x),(1/(1 + exp(-x))) + 0,(1/(1 + exp(-x))),x1 + x2,0,nan,0.10000000149011612
+8,"max(min(x, 0), x**3)","min(x, 0)","max(x1, x2)",x**3,asinh(x) + cosh(x),asinh(x),x1 + x2,cosh(x),"min(erf(x), log(abs(x + err)))",erf(x),"min(x1, x2)",log(abs(x + err)),nan,0.10000000149011612
+8,"min(atanh(x), tanh(x))",atanh(x),"min(x1, x2)",tanh(x),"sin(x) + max(x, 0)",sin(x),x1 + x2,"max(x, 0)",atanh(x) + cosh(x),atanh(x),x1 + x2,cosh(x),nan,0.10000000149011612
+9,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(log(1 + exp(x)), cosh(x))",log(1 + exp(x)),"min(x1, x2)",cosh(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.916957437992096,0.6723999977111816
+9,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8246498107910156,0.7020000219345093
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(min(x, 0), x)","min(x, 0)","min(x1, x2)",x,0.8704341650009155,0.6905999779701233
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8249332904815674,0.7071999907493591
+9,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8482316136360168,0.6973999738693237
+9,x - 0,x,x1 - x2,0,sin(x) - cosh(x),sin(x),x1 - x2,cosh(x),"min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),nan,0.10000000149011612
+9,cos(x) + tanh(x),cos(x),x1 + x2,tanh(x),tanh(x) + atanh(x),tanh(x),x1 + x2,atanh(x),sqrt(x) / (x**2 + err),sqrt(x),x1 / (x2 + err),x**2,nan,0.10000000149011612
+9,"max((-x), max(x, 0))",(-x),"max(x1, x2)","max(x, 0)","max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.8577226400375366,0.6944000124931335
+9,exp(x) + sin(x),exp(x),x1 + x2,sin(x),"max(x, 0) * sin(x)","max(x, 0)",x1 * x2,sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,nan,0.10000000149011612
+9,x**2 + 1,x**2,x1 + x2,1,"min(tanh(x), 1)",tanh(x),"min(x1, x2)",1,sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8142662048339844,0.7071999907493591
+9,0 - x,0,x1 - x2,x,exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),1.2031562328338623,0.5720000267028809
+9,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"min(log(1 + exp(x)), cosh(x))",log(1 + exp(x)),"min(x1, x2)",cosh(x),atanh(x) * (-x),atanh(x),x1 * x2,(-x),nan,0.10000000149011612
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.8303043246269226,0.704800009727478
+9,"min(x**2, log(1 + exp(x)))",x**2,"min(x1, x2)",log(1 + exp(x)),"min(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"min(x1, x2)",erf(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.9439582228660583,0.6664000153541565
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(tanh(x), exp(-x^2))",tanh(x),"max(x1, x2)",exp(-x^2),"min(x, 0) / (asinh(x) + err)","min(x, 0)",x1 / (x2 + err),asinh(x),1.1815941333770752,0.5745999813079834
+9,abs(x) - (1/(1 + exp(-x))),abs(x),x1 - x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8536531329154968,0.699400007724762
+9,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,abs(x) * log(1 + exp(x)),abs(x),x1 * x2,log(1 + exp(x)),0.9590396285057068,0.6629999876022339
+9,"min(x, max(x, 0))",x,"min(x1, x2)","max(x, 0)",x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.9456709027290344,0.6675999760627747
+9,sin(x) * erf(x),sin(x),x1 * x2,erf(x),"min(abs(x), (1/(1 + exp(-x))))",abs(x),"min(x1, x2)",(1/(1 + exp(-x))),tanh(x) + x**2,tanh(x),x1 + x2,x**2,0.9983225464820862,0.6416000127792358
+9,exp(x) * log(1 + exp(x)),exp(x),x1 * x2,log(1 + exp(x)),"max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)","min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.3042066097259521,0.5329999923706055
+9,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),"min(max(x, 0), sin(x))","max(x, 0)","min(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9139012694358826,0.6790000200271606
+9,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8648782968521118,0.6973999738693237
+9,x - 0,x,x1 - x2,0,"max(sin(x), cosh(x))",sin(x),"max(x1, x2)",cosh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8431410193443298,0.7067999839782715
+9,abs(x) * x**2,abs(x),x1 * x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8920773267745972,0.6837999820709229
+9,x**2 + sqrt(x),x**2,x1 + x2,sqrt(x),tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+9,"max(0, max(x, 0))",0,"max(x1, x2)","max(x, 0)",log(1 + exp(x)) * cosh(x),log(1 + exp(x)),x1 * x2,cosh(x),erf(x) * (-x),erf(x),x1 * x2,(-x),nan,0.10000000149011612
+9,x**2 * (1/(1 + exp(-x))),x**2,x1 * x2,(1/(1 + exp(-x))),exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),"max(sinh(x), (-x))",sinh(x),"max(x1, x2)",(-x),0.9179892539978027,0.6773999929428101
+9,"min(x**2, 0)",x**2,"min(x1, x2)",0,"min(sin(x), log(1 + exp(x)))",sin(x),"min(x1, x2)",log(1 + exp(x)),abs(x) + log(1 + exp(x)),abs(x),x1 + x2,log(1 + exp(x)),nan,0.10000000149011612
+9,x**2 + 1,x**2,x1 + x2,1,tanh(x) - 1,tanh(x),x1 - x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8138009905815125,0.7098000049591064
+9,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8525733351707458,0.7045999765396118
+9,"min(x**2, min(x, 0))",x**2,"min(x1, x2)","min(x, 0)",tanh(x) + 1,tanh(x),x1 + x2,1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.9472000002861023,0.6710000038146973
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(abs(x), sin(x))",abs(x),"max(x1, x2)",sin(x),asinh(x) - 0,asinh(x),x1 - x2,0,0.8452796936035156,0.701200008392334
+9,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,exp(-x^2) - sqrt(x),exp(-x^2),x1 - x2,sqrt(x),0.9200367331504822,0.6783999800682068
+9,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),sqrt(x) * x**2,sqrt(x),x1 * x2,x**2,0.9756962656974792,0.6570000052452087
+9,"min(sinh(x), log(1 + exp(x)))",sinh(x),"min(x1, x2)",log(1 + exp(x)),"min(log(1 + exp(x)), cosh(x))",log(1 + exp(x)),"min(x1, x2)",cosh(x),erf(x) * (-x),erf(x),x1 * x2,(-x),nan,0.10000000149011612
+9,"max(sin(x), max(x, 0))",sin(x),"max(x1, x2)","max(x, 0)","max(sin(x), (-x))",sin(x),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.8860267400741577,0.6863999962806702
+9,"min(sin(x), max(x, 0))",sin(x),"min(x1, x2)","max(x, 0)","min(x, (1/(1 + exp(-x))))",x,"min(x1, x2)",(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8711165189743042,0.6913999915122986
+9,exp(x) * exp(-x^2),exp(x),x1 * x2,exp(-x^2),"max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)","min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),1.3482921123504639,0.5203999876976013
+9,exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,tanh(x) + x**2,tanh(x),x1 + x2,x**2,0.9998462200164795,0.6462000012397766
+9,log(abs(x + err)) * exp(x),log(abs(x + err)),x1 * x2,exp(x),cos(x) / (cos(x) + err),cos(x),x1 / (x2 + err),cos(x),sin(x) / (sinc(x) + err),sin(x),x1 / (x2 + err),sinc(x),nan,0.10000000149011612
+9,cos(x) - 0,cos(x),x1 - x2,0,exp(x) * 1,exp(x),x1 * x2,1,"min(x, 0) * sin(x)","min(x, 0)",x1 * x2,sin(x),nan,0.10000000149011612
+9,"min(tanh(x), tanh(x))",tanh(x),"min(x1, x2)",tanh(x),sinh(x) * sqrt(x),sinh(x),x1 * x2,sqrt(x),"tanh(x) / (min(x, 0) + err)",tanh(x),x1 / (x2 + err),"min(x, 0)",nan,0.10000000149011612
+9,"min(asinh(x), 0)",asinh(x),"min(x1, x2)",0,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),"erf(x) / (max(x, 0) + err)",erf(x),x1 / (x2 + err),"max(x, 0)",nan,0.10000000149011612
+9,"min(sin(x), cos(x))",sin(x),"min(x1, x2)",cos(x),cos(x) + cosh(x),cos(x),x1 + x2,cosh(x),x**2 * atanh(x),x**2,x1 * x2,atanh(x),nan,0.10000000149011612
+9,tanh(x) / (cos(x) + err),tanh(x),x1 / (x2 + err),cos(x),"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),sqrt(x) * sinc(x),sqrt(x),x1 * x2,sinc(x),nan,0.10000000149011612
+9,asinh(x) * cosh(x),asinh(x),x1 * x2,cosh(x),sqrt(x) + sinh(x),sqrt(x),x1 + x2,sinh(x),x / (exp(-x^2) + err),x,x1 / (x2 + err),exp(-x^2),nan,0.10000000149011612
+9,"log(abs(x + err)) * min(x, 0)",log(abs(x + err)),x1 * x2,"min(x, 0)",cos(x) - x,cos(x),x1 - x2,x,"max(min(x, 0), x**2)","min(x, 0)","max(x1, x2)",x**2,1.0054658651351929,0.6467999815940857
+9,"min(x, 0) / (sinc(x) + err)","min(x, 0)",x1 / (x2 + err),sinc(x),"tanh(x) - max(x, 0)",tanh(x),x1 - x2,"max(x, 0)",cos(x) + log(1 + exp(x)),cos(x),x1 + x2,log(1 + exp(x)),nan,0.10000000149011612
+9,"max(cos(x), (-x))",cos(x),"max(x1, x2)",(-x),x**2 + sqrt(x),x**2,x1 + x2,sqrt(x),"max((-x), log(abs(x + err)))",(-x),"max(x1, x2)",log(abs(x + err)),nan,0.10000000149011612
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8249332904815674,0.7071999907493591
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.8303043246269226,0.704800009727478
+10,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8525733351707458,0.7045999765396118
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8431410193443298,0.7067999839782715
+10,x**2 + 1,x**2,x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8246498107910156,0.7020000219345093
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"min(exp(-x^2), (-x))",exp(-x^2),"min(x1, x2)",(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8964070081710815,0.6782000064849854
+10,exp(-x^2) * (1/(1 + exp(-x))),exp(-x^2),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.9255418181419373,0.6682000160217285
+10,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),tanh(x) + 1,tanh(x),x1 + x2,1,(1/(1 + exp(-x))) - 0,(1/(1 + exp(-x))),x1 - x2,0,0.8396900296211243,0.7020000219345093
+10,1 * (1/(1 + exp(-x))),1,x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)","min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),1.1760554313659668,0.5827999711036682
+10,x**2 + 1,x**2,x1 + x2,1,abs(x) - 1,abs(x),x1 - x2,1,"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),1.0418941974639893,0.621999979019165
+10,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,exp(-x^2) - sqrt(x),exp(-x^2),x1 - x2,sqrt(x),1.0213432312011719,0.6480000019073486
+10,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),sqrt(x) + 1,sqrt(x),x1 + x2,1,0.8859575986862183,0.6901999711990356
+10,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.0413873195648193,0.6366000175476074
+10,"min((-x), log(1 + exp(x)))",(-x),"min(x1, x2)",log(1 + exp(x)),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.9094929695129395,0.678600013256073
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), (1/(1 + exp(-x))))","max(x, 0)","max(x1, x2)",(1/(1 + exp(-x))),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8306384086608887,0.7062000036239624
+10,"max(sin(x), erf(x))",sin(x),"max(x1, x2)",erf(x),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.863352358341217,0.6944000124931335
+10,sin(x) + 1,sin(x),x1 + x2,1,"min(tanh(x), 1)",tanh(x),"min(x1, x2)",1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8830081820487976,0.6934000253677368
+10,"min(max(x, 0), max(x, 0))","max(x, 0)","min(x1, x2)","max(x, 0)","min(x, (1/(1 + exp(-x))))",x,"min(x1, x2)",(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8405255675315857,0.704800009727478
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),sqrt(x) * (-x),sqrt(x),x1 * x2,(-x),0.8670074343681335,0.6937999725341797
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8277483582496643,0.6976000070571899
+10,0 - x,0,x1 - x2,x,exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,1.1404643058776855,0.5924000144004822
+10,x**2 * abs(x),x**2,x1 * x2,abs(x),exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.9733679890632629,0.6517999768257141
+10,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),sqrt(x) * x**2,sqrt(x),x1 * x2,x**2,0.8708199262619019,0.6837999820709229
+10,0 - x,0,x1 - x2,x,"min(tanh(x), 1)",tanh(x),"min(x1, x2)",1,x**3 + x**2,x**3,x1 + x2,x**2,0.9445788860321045,0.6597999930381775
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.8986772298812866,0.6922000050544739
+10,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+10,"min(x, 0) * (1/(1 + exp(-x)))","min(x, 0)",x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),1.0189636945724487,0.6417999863624573
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8361158967018127,0.7013999819755554
+10,"min(sin(x), max(x, 0))",sin(x),"min(x1, x2)","max(x, 0)","min(exp(-x^2), (1/(1 + exp(-x))))",exp(-x^2),"min(x1, x2)",(1/(1 + exp(-x))),"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",1.3065394163131714,0.545799970626831
+10,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,"max(exp(-x^2), sqrt(x))",exp(-x^2),"max(x1, x2)",sqrt(x),0.9549398422241211,0.6611999869346619
+10,"max((-x), max(x, 0))",(-x),"max(x1, x2)","max(x, 0)","max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),0.924196183681488,0.673799991607666
+10,sin(x) * x**2,sin(x),x1 * x2,x**2,"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),nan,0.10000000149011612
+10,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"min(x1, x2)",erf(x),erf(x) * cos(x),erf(x),x1 * x2,cos(x),1.2165826559066772,0.5893999934196472
+10,0 - x,0,x1 - x2,x,exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),"max(sqrt(x), abs(x))",sqrt(x),"max(x1, x2)",abs(x),1.133813500404358,0.600600004196167
+10,"min(x, max(x, 0))",x,"min(x1, x2)","max(x, 0)","max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)","min(min(x, 0), sqrt(x))","min(x, 0)","min(x1, x2)",sqrt(x),1.237135887145996,0.5626000165939331
+10,abs(x) * x**2,abs(x),x1 * x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),0.9475241303443909,0.6759999990463257
+10,sin(x) * x**3,sin(x),x1 * x2,x**3,"min(abs(x), (1/(1 + exp(-x))))",abs(x),"min(x1, x2)",(1/(1 + exp(-x))),tanh(x) + x**2,tanh(x),x1 + x2,x**2,nan,0.10000000149011612
+10,"max(abs(x), (1/(1 + exp(-x))))",abs(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8500771522521973,0.7013999819755554
+10,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(x, (1/(1 + exp(-x))))",x,"max(x1, x2)",(1/(1 + exp(-x))),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8614887595176697,0.698199987411499
+10,abs(x) - (1/(1 + exp(-x))),abs(x),x1 - x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),"max(asinh(x), min(x, 0))",asinh(x),"max(x1, x2)","min(x, 0)",0.878839373588562,0.6988000273704529
+10,1 / (cosh(x) + err),1,x1 / (x2 + err),cosh(x),atanh(x) * asinh(x),atanh(x),x1 * x2,asinh(x),sin(x) + (1/(1 + exp(-x))),sin(x),x1 + x2,(1/(1 + exp(-x))),nan,0.10000000149011612
+10,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,"min(sin(x), x**2)",sin(x),"min(x1, x2)",x**2,sqrt(x) * tanh(x),sqrt(x),x1 * x2,tanh(x),0.9260501861572266,0.678600013256073
+10,x * exp(-x^2),x,x1 * x2,exp(-x^2),sin(x) / (sqrt(x) + err),sin(x),x1 / (x2 + err),sqrt(x),"min(x**2, sinc(x))",x**2,"min(x1, x2)",sinc(x),2.3025875091552734,0.10000000149011612
+10,"max(x, 0) * sin(x)","max(x, 0)",x1 * x2,sin(x),abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),cos(x) + atanh(x),cos(x),x1 + x2,atanh(x),nan,0.10000000149011612
+10,atanh(x) * asinh(x),atanh(x),x1 * x2,asinh(x),"max(exp(x), 0)",exp(x),"max(x1, x2)",0,log(abs(x + err)) - erf(x),log(abs(x + err)),x1 - x2,erf(x),nan,0.10000000149011612
+10,sinh(x) + (1/(1 + exp(-x))),sinh(x),x1 + x2,(1/(1 + exp(-x))),"max(log(1 + exp(x)), erf(x))",log(1 + exp(x)),"max(x1, x2)",erf(x),0 / (asinh(x) + err),0,x1 / (x2 + err),asinh(x),nan,0.10000000149011612
+10,"max(0, sinc(x))",0,"max(x1, x2)",sinc(x),"min(x, 0) / ((-x) + err)","min(x, 0)",x1 / (x2 + err),(-x),tanh(x) * exp(x),tanh(x),x1 * x2,exp(x),nan,0.10000000149011612
+10,(1/(1 + exp(-x))) / ((-x) + err),(1/(1 + exp(-x))),x1 / (x2 + err),(-x),"0 - min(x, 0)",0,x1 - x2,"min(x, 0)",sinh(x) / ((-x) + err),sinh(x),x1 / (x2 + err),(-x),nan,0.10000000149011612
+10,atanh(x) - x,atanh(x),x1 - x2,x,x**2 / (cos(x) + err),x**2,x1 / (x2 + err),cos(x),(1/(1 + exp(-x))) / (sin(x) + err),(1/(1 + exp(-x))),x1 / (x2 + err),sin(x),nan,0.10000000149011612
+10,"max(cos(x), erf(x))",cos(x),"max(x1, x2)",erf(x),cos(x) + (-x),cos(x),x1 + x2,(-x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,1.0452032089233398,0.6330000162124634
+11,"max(abs(x), (1/(1 + exp(-x))))",abs(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.8500771522521973,0.7013999819755554
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,0.8431410193443298,0.7067999839782715
+11,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),tanh(x) + 1,tanh(x),x1 + x2,1,(1/(1 + exp(-x))) - 0,(1/(1 + exp(-x))),x1 - x2,0,0.8396900296211243,0.7020000219345093
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.8986772298812866,0.6922000050544739
+11,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+11,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),atanh(x) * x**2,atanh(x),x1 * x2,x**2,nan,0.10000000149011612
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), abs(x))",exp(-x^2),"max(x1, x2)",abs(x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.8745071291923523,0.6955999732017517
+11,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,log(abs(x + err)) + 1,log(abs(x + err)),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),(-x) / ((-x) + err),(-x),x1 / (x2 + err),(-x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),nan,0.10000000149011612
+11,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),0.8483274579048157,0.7021999955177307
+11,sin(x) * abs(x),sin(x),x1 * x2,abs(x),abs(x) + (1/(1 + exp(-x))),abs(x),x1 + x2,(1/(1 + exp(-x))),sqrt(x) * (-x),sqrt(x),x1 * x2,(-x),0.9363600611686707,0.6728000044822693
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),"max(sqrt(x), 1)",sqrt(x),"max(x1, x2)",1,1.340009331703186,0.5221999883651733
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),cos(x) + (-x),cos(x),x1 + x2,(-x),exp(x) * 1,exp(x),x1 * x2,1,0.9158958792686462,0.6790000200271606
+11,x * exp(x),x,x1 * x2,exp(x),sin(x) / (sqrt(x) + err),sin(x),x1 / (x2 + err),sqrt(x),sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),nan,0.10000000149011612
+11,exp(-x^2) * (1/(1 + exp(-x))),exp(-x^2),x1 * x2,(1/(1 + exp(-x))),x + asinh(x),x,x1 + x2,asinh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9607234597206116,0.6592000126838684
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(max(x, 0), abs(x))","max(x, 0)","max(x1, x2)",abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8942011594772339,0.6848000288009644
+11,sin(x) * abs(x),sin(x),x1 * x2,abs(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,erf(x) * cos(x),erf(x),x1 * x2,cos(x),1.2222988605499268,0.5789999961853027
+11,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,"min(atanh(x), x**2)",atanh(x),"min(x1, x2)",x**2,sqrt(x) * tanh(x),sqrt(x),x1 * x2,tanh(x),nan,0.10000000149011612
+11,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,"min(sin(x), x**2)",sin(x),"min(x1, x2)",x**2,erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),1.097020149230957,0.6309999823570251
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(x), sin(x))",exp(x),"max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),nan,0.10000000149011612
+11,sinh(x) + 1,sinh(x),x1 + x2,1,"min(tanh(x), 1)",tanh(x),"min(x1, x2)",1,"(1/(1 + exp(-x))) - max(x, 0)",(1/(1 + exp(-x))),x1 - x2,"max(x, 0)",0.8749914169311523,0.6940000057220459
+11,"max((-x), max(x, 0))",(-x),"max(x1, x2)","max(x, 0)","max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) + x,sqrt(x),x1 + x2,x,0.9400503635406494,0.6686000227928162
+11,sin(x) + 1,sin(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,sqrt(x) + abs(x),sqrt(x),x1 + x2,abs(x),1.0648884773254395,0.6248000264167786
+11,tanh(x) * exp(-x^2),tanh(x),x1 * x2,exp(-x^2),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.9813099503517151,0.6629999876022339
+11,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(max(x, 0), (1/(1 + exp(-x))))","max(x, 0)","max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8677565455436707,0.6958000063896179
+11,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8847876787185669,0.6866000294685364
+11,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.0230000019073486,0.6413999795913696
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.8378548622131348,0.7084000110626221
+11,log(1 + exp(x)) + asinh(x),log(1 + exp(x)),x1 + x2,asinh(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.852200984954834,0.6991999745368958
+11,"min(x, 0) * (1/(1 + exp(-x)))","min(x, 0)",x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),sqrt(x) * abs(x),sqrt(x),x1 * x2,abs(x),0.9247961044311523,0.6773999929428101
+11,"min(max(x, 0), max(x, 0))","max(x, 0)","min(x1, x2)","max(x, 0)","min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8691421747207642,0.6934000253677368
+11,"min(sin(x), max(x, 0))",sin(x),"min(x1, x2)","max(x, 0)",exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),"max(sqrt(x), abs(x))",sqrt(x),"max(x1, x2)",abs(x),1.2307591438293457,0.5601999759674072
+11,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,"min(x**2, x**2)",x**2,"min(x1, x2)",x**2,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.2548751831054688,0.5411999821662903
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(0, sin(x))",0,"max(x1, x2)",sin(x),sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,1.0125759840011597,0.6380000114440918
+11,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.0288177728652954,0.6384000182151794
+11,abs(x) + sinc(x),abs(x),x1 + x2,sinc(x),tanh(x) + 1,tanh(x),x1 + x2,1,sqrt(x) + x**2,sqrt(x),x1 + x2,x**2,2.303448438644409,0.10400000214576721
+11,x**2 * abs(x),x**2,x1 * x2,abs(x),exp(-x^2) + tanh(x),exp(-x^2),x1 + x2,tanh(x),exp(-x^2) - exp(x),exp(-x^2),x1 - x2,exp(x),1.0339068174362183,0.6377999782562256
+11,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),x + (1/(1 + exp(-x))),x,x1 + x2,(1/(1 + exp(-x))),sqrt(x) - (-x),sqrt(x),x1 - x2,(-x),0.9298320412635803,0.6759999990463257
+11,x**2 + 1,x**2,x1 + x2,1,abs(x) / (1 + err),abs(x),x1 / (x2 + err),1,"min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),1.1156115531921387,0.5996000170707703
+11,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),0.8624890446662903,0.692799985408783
+11,"max(x, 0) * 0","max(x, 0)",x1 * x2,0,abs(x) - (1/(1 + exp(-x))),abs(x),x1 - x2,(1/(1 + exp(-x))),"min(cosh(x), tanh(x))",cosh(x),"min(x1, x2)",tanh(x),44.134525299072266,0.10000000149011612
+11,"max(x, log(1 + exp(x)))",x,"max(x1, x2)",log(1 + exp(x)),"min(sinc(x), sqrt(x))",sinc(x),"min(x1, x2)",sqrt(x),1 * tanh(x),1,x1 * x2,tanh(x),nan,0.10000000149011612
+11,log(1 + exp(x)) * x**2,log(1 + exp(x)),x1 * x2,x**2,"min(x, 0) / (sinc(x) + err)","min(x, 0)",x1 / (x2 + err),sinc(x),asinh(x) / (erf(x) + err),asinh(x),x1 / (x2 + err),erf(x),nan,0.10000000149011612
+11,exp(-x^2) + sinc(x),exp(-x^2),x1 + x2,sinc(x),x**3 / (abs(x) + err),x**3,x1 / (x2 + err),abs(x),abs(x) - sinc(x),abs(x),x1 - x2,sinc(x),639.700927734375,0.10000000149011612
+11,"min(x**3, log(abs(x + err)))",x**3,"min(x1, x2)",log(abs(x + err)),"max(1, exp(x))",1,"max(x1, x2)",exp(x),"min(exp(-x^2), x**3)",exp(-x^2),"min(x1, x2)",x**3,nan,0.10000000149011612
+11,x - sin(x),x,x1 - x2,sin(x),"exp(-x^2) / (max(x, 0) + err)",exp(-x^2),x1 / (x2 + err),"max(x, 0)","min(log(abs(x + err)), sin(x))",log(abs(x + err)),"min(x1, x2)",sin(x),nan,0.10000000149011612
+11,"log(abs(x + err)) + min(x, 0)",log(abs(x + err)),x1 + x2,"min(x, 0)",cos(x) - log(1 + exp(x)),cos(x),x1 - x2,log(1 + exp(x)),abs(x) * cosh(x),abs(x),x1 * x2,cosh(x),nan,0.10000000149011612
+11,sinc(x) * log(1 + exp(x)),sinc(x),x1 * x2,log(1 + exp(x)),atanh(x) / (cosh(x) + err),atanh(x),x1 / (x2 + err),cosh(x),exp(-x^2) - x,exp(-x^2),x1 - x2,x,nan,0.10000000149011612
+11,sinc(x) + (1/(1 + exp(-x))),sinc(x),x1 + x2,(1/(1 + exp(-x))),"min(x, cosh(x))",x,"min(x1, x2)",cosh(x),"max(cosh(x), cos(x))",cosh(x),"max(x1, x2)",cos(x),nan,0.10000000149011612
+11,(1/(1 + exp(-x))) - tanh(x),(1/(1 + exp(-x))),x1 - x2,tanh(x),x**3 + (-x),x**3,x1 + x2,(-x),log(abs(x + err)) / (cos(x) + err),log(abs(x + err)),x1 / (x2 + err),cos(x),nan,0.10000000149011612
+12,log(1 + exp(x)) + asinh(x),log(1 + exp(x)),x1 + x2,asinh(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),erf(x) * (-x),erf(x),x1 * x2,(-x),0.852200984954834,0.6991999745368958
+12,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+12,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),0.8624890446662903,0.692799985408783
+12,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8847876787185669,0.6866000294685364
+12,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),0.8483274579048157,0.7021999955177307
+12,"min(max(x, 0), max(x, 0))","max(x, 0)","min(x1, x2)","max(x, 0)","min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8312886953353882,0.7059999704360962
+12,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(sqrt(x), erf(x))",sqrt(x),"min(x1, x2)",erf(x),sqrt(x) * abs(x),sqrt(x),x1 * x2,abs(x),nan,0.10000000149011612
+12,"min(log(abs(x + err)), x**2)",log(abs(x + err)),"min(x1, x2)",x**2,tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),nan,0.10000000149011612
+12,exp(-x^2) * (1/(1 + exp(-x))),exp(-x^2),x1 * x2,(1/(1 + exp(-x))),x + asinh(x),x,x1 + x2,asinh(x),exp(x) + 1,exp(x),x1 + x2,1,1.1106784343719482,0.6186000108718872
+12,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(cosh(x), (1/(1 + exp(-x))))",cosh(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,nan,0.10000000149011612
+12,x**2 + 1,x**2,x1 + x2,1,abs(x) / ((1/(1 + exp(-x))) + err),abs(x),x1 / (x2 + err),(1/(1 + exp(-x))),(1/(1 + exp(-x))) - 0,(1/(1 + exp(-x))),x1 - x2,0,nan,0.10000000149011612
+12,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),x**3 - 0,x**3,x1 - x2,0,1.1017429828643799,0.6075999736785889
+12,tanh(x) * exp(-x^2),tanh(x),x1 * x2,exp(-x^2),"min(0, erf(x))",0,"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.0396627187728882,0.6277999877929688
+12,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(sqrt(x), (1/(1 + exp(-x))))",sqrt(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8410456776618958,0.6998000144958496
+12,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8288769721984863,0.6980000138282776
+12,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), abs(x))",exp(-x^2),"max(x1, x2)",abs(x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.9084712862968445,0.6855999827384949
+12,sin(x) + 1,sin(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8525892496109009,0.7003999948501587
+12,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) + x,sqrt(x),x1 + x2,x,0.9325679540634155,0.6761999726295471
+12,"min(sin(x), 1)",sin(x),"min(x1, x2)",1,tanh(x) * 1,tanh(x),x1 * x2,1,"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.8929951190948486,0.6862000226974487
+12,0 * log(abs(x + err)),0,x1 * x2,log(abs(x + err)),exp(-x^2) * (-x),exp(-x^2),x1 * x2,(-x),"max(sqrt(x), abs(x))",sqrt(x),"max(x1, x2)",abs(x),nan,0.10000000149011612
+12,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),1.0184268951416016,0.6452000141143799
+12,abs(x) * sqrt(x),abs(x),x1 * x2,sqrt(x),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),0.9059056639671326,0.6891999840736389
+12,"max(asinh(x), x**2)",asinh(x),"max(x1, x2)",x**2,exp(-x^2) / ((-x) + err),exp(-x^2),x1 / (x2 + err),(-x),sqrt(x) * abs(x),sqrt(x),x1 * x2,abs(x),2.3026115894317627,0.10000000149011612
+12,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(asinh(x), 0)",asinh(x),"max(x1, x2)",0,"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.835316002368927,0.7089999914169312
+12,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),tanh(x) * 1,tanh(x),x1 * x2,1,"max(sqrt(x), abs(x))",sqrt(x),"max(x1, x2)",abs(x),0.8820897340774536,0.6869999766349792
+12,"min(x, 0) - (1/(1 + exp(-x)))","min(x, 0)",x1 - x2,(1/(1 + exp(-x))),abs(x) + (1/(1 + exp(-x))),abs(x),x1 + x2,(1/(1 + exp(-x))),sqrt(x) * (-x),sqrt(x),x1 * x2,(-x),0.9211525321006775,0.6758000254631042
+12,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(x**2, abs(x))",x**2,"max(x1, x2)",abs(x),0.9420791864395142,0.6674000024795532
+12,x + x**2,x,x1 + x2,x**2,abs(x) / (1 + err),abs(x),x1 / (x2 + err),1,"min(x, 0) - sqrt(x)","min(x, 0)",x1 - x2,sqrt(x),0.9738827347755432,0.6603999733924866
+12,"max((1/(1 + exp(-x))), max(x, 0))",(1/(1 + exp(-x))),"max(x1, x2)","max(x, 0)","max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) * (-x),sqrt(x),x1 * x2,(-x),0.9224255681037903,0.676800012588501
+12,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),exp(-x^2) + abs(x),exp(-x^2),x1 + x2,abs(x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.9108651280403137,0.6777999997138977
+12,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.9342865943908691,0.6638000011444092
+12,abs(x) * cos(x),abs(x),x1 * x2,cos(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,erf(x) * cos(x),erf(x),x1 * x2,cos(x),1.3741412162780762,0.5116000175476074
+12,"min(max(x, 0), 1)","max(x, 0)","min(x1, x2)",1,"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),0.9093165993690491,0.6779999732971191
+12,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(max(x, 0), (1/(1 + exp(-x))))","max(x, 0)","max(x1, x2)",(1/(1 + exp(-x))),"min(max(x, 0), 1)","max(x, 0)","min(x1, x2)",1,0.9038656949996948,0.682200014591217
+12,sin(x) + 1,sin(x),x1 + x2,1,tanh(x) * 1,tanh(x),x1 * x2,1,sqrt(x) + cosh(x),sqrt(x),x1 + x2,cosh(x),0.9015786051750183,0.6913999915122986
+12,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),0 - 0,0,x1 - x2,0,nan,nan
+12,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min((-x), erf(x))",(-x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.2129281759262085,0.5712000131607056
+12,abs(x) + x**2,abs(x),x1 + x2,x**2,x + asinh(x),x,x1 + x2,asinh(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8779345750808716,0.6883999705314636
+12,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) - cos(x)","min(x, 0)",x1 - x2,cos(x),0.867375373840332,0.6850000023841858
+12,(-x) + (1/(1 + exp(-x))),(-x),x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),0.9327784180641174,0.6690000295639038
+12,exp(x) * sinh(x),exp(x),x1 * x2,sinh(x),atanh(x) * 0,atanh(x),x1 * x2,0,exp(-x^2) / (tanh(x) + err),exp(-x^2),x1 / (x2 + err),tanh(x),nan,0.10000000149011612
+12,erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),"min(x, 0) / (max(x, 0) + err)","min(x, 0)",x1 / (x2 + err),"max(x, 0)",log(abs(x + err)) - log(1 + exp(x)),log(abs(x + err)),x1 - x2,log(1 + exp(x)),nan,0.10000000149011612
+12,exp(x) - log(abs(x + err)),exp(x),x1 - x2,log(abs(x + err)),cosh(x) - sinc(x),cosh(x),x1 - x2,sinc(x),sinc(x) * erf(x),sinc(x),x1 * x2,erf(x),nan,0.10000000149011612
+12,abs(x) / (exp(x) + err),abs(x),x1 / (x2 + err),exp(x),"x - min(x, 0)",x,x1 - x2,"min(x, 0)",abs(x) - (1/(1 + exp(-x))),abs(x),x1 - x2,(1/(1 + exp(-x))),nan,0.10000000149011612
+12,x - x**3,x,x1 - x2,x**3,x / (x + err),x,x1 / (x2 + err),x,sqrt(x) / (sinh(x) + err),sqrt(x),x1 / (x2 + err),sinh(x),nan,0.10000000149011612
+12,exp(x) / (log(abs(x + err)) + err),exp(x),x1 / (x2 + err),log(abs(x + err)),"min(sinc(x), 0)",sinc(x),"min(x1, x2)",0,x**3 / (cos(x) + err),x**3,x1 / (x2 + err),cos(x),nan,0.10000000149011612
+12,tanh(x) * sqrt(x),tanh(x),x1 * x2,sqrt(x),"max(tanh(x), 1)",tanh(x),"max(x1, x2)",1,erf(x) - x,erf(x),x1 - x2,x,2.3150675296783447,0.10000000149011612
+12,tanh(x) + log(abs(x + err)),tanh(x),x1 + x2,log(abs(x + err)),cos(x) + sin(x),cos(x),x1 + x2,sin(x),"max(sinh(x), x**2)",sinh(x),"max(x1, x2)",x**2,nan,0.10000000149011612
+12,"min(sin(x), asinh(x))",sin(x),"min(x1, x2)",asinh(x),x / (sinh(x) + err),x,x1 / (x2 + err),sinh(x),erf(x) / ((-x) + err),erf(x),x1 / (x2 + err),(-x),nan,0.10000000149011612
+12,"max(max(x, 0), erf(x))","max(x, 0)","max(x1, x2)",erf(x),"max(x, 0) + x**3","max(x, 0)",x1 + x2,x**3,"max(exp(-x^2), x**3)",exp(-x^2),"max(x1, x2)",x**3,2.2389678955078125,0.12399999797344208
+13,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(sqrt(x), (1/(1 + exp(-x))))",sqrt(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8410456776618958,0.6998000144958496
+13,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8288769721984863,0.6980000138282776
+13,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+13,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), abs(x))",exp(-x^2),"max(x1, x2)",abs(x),"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),0.9084712862968445,0.6855999827384949
+13,"min(max(x, 0), max(x, 0))","max(x, 0)","min(x1, x2)","max(x, 0)","min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"min(asinh(x), min(x, 0))",asinh(x),"min(x1, x2)","min(x, 0)",0.8312886953353882,0.7059999704360962
+13,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.8286882638931274,0.7157999873161316
+13,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(max(x, 0), abs(x))","max(x, 0)","min(x1, x2)",abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8405894637107849,0.7026000022888184
+13,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8309270739555359,0.704200029373169
+13,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(x, abs(x))",x,"max(x1, x2)",abs(x),sqrt(x) + x,sqrt(x),x1 + x2,x,0.8487797975540161,0.7027999758720398
+13,abs(x) + atanh(x),abs(x),x1 + x2,atanh(x),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),nan,0.10000000149011612
+13,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.0263338088989258,0.6380000114440918
+13,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) / (0 + err)","min(x, 0)",x1 / (x2 + err),0,nan,0.10000000149011612
+13,tanh(x) * exp(-x^2),tanh(x),x1 * x2,exp(-x^2),"min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"max(asinh(x), min(x, 0))",asinh(x),"max(x1, x2)","min(x, 0)",0.9617119431495667,0.6651999950408936
+13,abs(x) + x**2,abs(x),x1 + x2,x**2,x + asinh(x),x,x1 + x2,asinh(x),"min(x, 0) - asinh(x)","min(x, 0)",x1 - x2,asinh(x),0.8869044780731201,0.6866000294685364
+13,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(erf(x), (1/(1 + exp(-x))))",erf(x),"max(x1, x2)",(1/(1 + exp(-x))),0.7986942529678345,0.7215999960899353
+13,tanh(x) * asinh(x),tanh(x),x1 * x2,asinh(x),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),exp(x) + 1,exp(x),x1 + x2,1,0.876030445098877,0.692799985408783
+13,x**3 * (1/(1 + exp(-x))),x**3,x1 * x2,(1/(1 + exp(-x))),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),0.9555116891860962,0.6660000085830688
+13,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,erf(x) * cos(x),erf(x),x1 * x2,cos(x),1.5349689722061157,0.46700000762939453
+13,"min((1/(1 + exp(-x))), max(x, 0))",(1/(1 + exp(-x))),"min(x1, x2)","max(x, 0)","max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) * (-x),sqrt(x),x1 * x2,(-x),0.9292908310890198,0.678600013256073
+13,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) - x**2","min(x, 0)",x1 - x2,x**2,0.8314724564552307,0.7044000029563904
+13,(-x) + (1/(1 + exp(-x))),(-x),x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + erf(x)","min(x, 0)",x1 + x2,erf(x),0.9184015393257141,0.6844000220298767
+13,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),tanh(x) * 1,tanh(x),x1 * x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),0.8436562418937683,0.7034000158309937
+13,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),0.9908011555671692,0.6592000126838684
+13,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(asinh(x), 0)",asinh(x),"max(x1, x2)",0,cosh(x) - 0,cosh(x),x1 - x2,0,0.8916527628898621,0.7008000016212463
+13,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),1 + x,1,x1 + x2,x,0.9646837711334229,0.6564000248908997
+13,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max((-x), sinc(x))",(-x),"max(x1, x2)",sinc(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8341609239578247,0.6991999745368958
+13,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(sinh(x), abs(x))",sinh(x),"max(x1, x2)",abs(x),1.0864341259002686,0.618399977684021
+13,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),sqrt(x) + log(abs(x + err)),sqrt(x),x1 + x2,log(abs(x + err)),2.099956512451172,0.24660000205039978
+13,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),"min(x, 0) - x**3","min(x, 0)",x1 - x2,x**3,0.8813040852546692,0.6877999901771545
+13,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),tanh(x) * log(abs(x + err)),tanh(x),x1 * x2,log(abs(x + err)),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9732406139373779,0.6600000262260437
+13,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), abs(x))",exp(-x^2),"max(x1, x2)",abs(x),"max(erf(x), (-x))",erf(x),"max(x1, x2)",(-x),1.0073271989822388,0.6528000235557556
+13,atanh(x) * (1/(1 + exp(-x))),atanh(x),x1 * x2,(1/(1 + exp(-x))),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,nan,0.10000000149011612
+13,log(1 + exp(x)) + abs(x),log(1 + exp(x)),x1 + x2,abs(x),"max(exp(-x^2), (-x))",exp(-x^2),"max(x1, x2)",(-x),erf(x) * tanh(x),erf(x),x1 * x2,tanh(x),1.008982539176941,0.6697999835014343
+13,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"min((-x), erf(x))",(-x),"min(x1, x2)",erf(x),"min(atanh(x), asinh(x))",atanh(x),"min(x1, x2)",asinh(x),nan,0.10000000149011612
+13,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - sinh(x)","min(x, 0)",x1 - x2,sinh(x),0.9634281396865845,0.6610000133514404
+13,exp(x) + 1,exp(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8146424889564514,0.7196000218391418
+13,"min(abs(x), (1/(1 + exp(-x))))",abs(x),"min(x1, x2)",(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),1.0110197067260742,0.6507999897003174
+13,sin(x) + 1,sin(x),x1 + x2,1,"exp(-x^2) * min(x, 0)",exp(-x^2),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),1.4618403911590576,0.47099998593330383
+13,"min(x, 0) - (1/(1 + exp(-x)))","min(x, 0)",x1 - x2,(1/(1 + exp(-x))),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(x**2, abs(x))",x**2,"max(x1, x2)",abs(x),0.9577357172966003,0.6575999855995178
+13,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),abs(x) / (erf(x) + err),abs(x),x1 / (x2 + err),erf(x),sqrt(x) * abs(x),sqrt(x),x1 * x2,abs(x),1.0599441528320312,0.6209999918937683
+13,"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),"max(asinh(x), x**3)",asinh(x),"max(x1, x2)",x**3,sin(x) * sinh(x),sin(x),x1 * x2,sinh(x),nan,0.10000000149011612
+13,"min(atanh(x), 0)",atanh(x),"min(x1, x2)",0,sqrt(x) / (exp(-x^2) + err),sqrt(x),x1 / (x2 + err),exp(-x^2),"max(log(abs(x + err)), log(1 + exp(x)))",log(abs(x + err)),"max(x1, x2)",log(1 + exp(x)),nan,0.10000000149011612
+13,tanh(x) + x,tanh(x),x1 + x2,x,"min(cosh(x), asinh(x))",cosh(x),"min(x1, x2)",asinh(x),"min(1, max(x, 0))",1,"min(x1, x2)","max(x, 0)",0.9770269393920898,0.6606000065803528
+13,log(1 + exp(x)) / (sinh(x) + err),log(1 + exp(x)),x1 / (x2 + err),sinh(x),erf(x) * cos(x),erf(x),x1 * x2,cos(x),cos(x) * x,cos(x),x1 * x2,x,nan,0.10000000149011612
+13,"max(cos(x), exp(x))",cos(x),"max(x1, x2)",exp(x),sinc(x) * sin(x),sinc(x),x1 * x2,sin(x),x**3 * sinh(x),x**3,x1 * x2,sinh(x),1.4820224046707153,0.4984000027179718
+13,sqrt(x) * x**3,sqrt(x),x1 * x2,x**3,"max(x**2, x**3)",x**2,"max(x1, x2)",x**3,cos(x) - tanh(x),cos(x),x1 - x2,tanh(x),2.285367965698242,0.11760000139474869
+13,"x**3 / (max(x, 0) + err)",x**3,x1 / (x2 + err),"max(x, 0)","max(sinc(x), atanh(x))",sinc(x),"max(x1, x2)",atanh(x),"max(cosh(x), (1/(1 + exp(-x))))",cosh(x),"max(x1, x2)",(1/(1 + exp(-x))),2.302692174911499,0.10000000149011612
+13,sinc(x) * x**3,sinc(x),x1 * x2,x**3,"min(0, asinh(x))",0,"min(x1, x2)",asinh(x),"max(exp(-x^2), min(x, 0))",exp(-x^2),"max(x1, x2)","min(x, 0)",1.1057244539260864,0.6186000108718872
+13,log(abs(x + err)) / (erf(x) + err),log(abs(x + err)),x1 / (x2 + err),erf(x),0 + exp(x),0,x1 + x2,exp(x),log(1 + exp(x)) + sinc(x),log(1 + exp(x)),x1 + x2,sinc(x),nan,0.10000000149011612
+13,(-x) + (1/(1 + exp(-x))),(-x),x1 + x2,(1/(1 + exp(-x))),"max(x, 0) + cos(x)","max(x, 0)",x1 + x2,cos(x),exp(-x^2) + asinh(x),exp(-x^2),x1 + x2,asinh(x),0.8593658208847046,0.6977999806404114
+14,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+14,exp(x) + 1,exp(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8146424889564514,0.7196000218391418
+14,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(max(x, 0), abs(x))","max(x, 0)","min(x1, x2)",abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8405894637107849,0.7026000022888184
+14,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),tanh(x) + 1,tanh(x),x1 + x2,1,"min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.8286882638931274,0.7157999873161316
+14,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(erf(x), (1/(1 + exp(-x))))",erf(x),"max(x1, x2)",(1/(1 + exp(-x))),0.7986942529678345,0.7215999960899353
+14,"min(max(x, 0), max(x, 0))","max(x, 0)","min(x1, x2)","max(x, 0)","min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"min(1, min(x, 0))",1,"min(x1, x2)","min(x, 0)",0.8826990127563477,0.6854000091552734
+14,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(log(abs(x + err)), asinh(x))",log(abs(x + err)),"min(x1, x2)",asinh(x),nan,0.10000000149011612
+14,tanh(x) * asinh(x),tanh(x),x1 * x2,asinh(x),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),asinh(x) + 1,asinh(x),x1 + x2,1,0.8398990035057068,0.704800009727478
+14,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(erf(x), x)",erf(x),"min(x1, x2)",x,erf(x) * cos(x),erf(x),x1 * x2,cos(x),0.9718756079673767,0.6567999720573425
+14,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,"min(x, 0) + x","min(x, 0)",x1 + x2,x,0.9228437542915344,0.6714000105857849
+14,"min((1/(1 + exp(-x))), max(x, 0))",(1/(1 + exp(-x))),"min(x1, x2)","max(x, 0)","max(atanh(x), sinc(x))",atanh(x),"max(x1, x2)",sinc(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),nan,0.10000000149011612
+14,"max(cos(x), exp(x))",cos(x),"max(x1, x2)",exp(x),"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"max(sinh(x), abs(x))",sinh(x),"max(x1, x2)",abs(x),nan,0.10000000149011612
+14,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max((-x), sinc(x))",(-x),"max(x1, x2)",sinc(x),log(1 + exp(x)) - x**3,log(1 + exp(x)),x1 - x2,x**3,nan,0.10000000149011612
+14,"min(x, 0) - (1/(1 + exp(-x)))","min(x, 0)",x1 - x2,(1/(1 + exp(-x))),"min(abs(x), 1)",abs(x),"min(x1, x2)",1,sqrt(x) + log(abs(x + err)),sqrt(x),x1 + x2,log(abs(x + err)),nan,0.10000000149011612
+14,atanh(x) + asinh(x),atanh(x),x1 + x2,asinh(x),tanh(x) * 1,tanh(x),x1 * x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),nan,0.10000000149011612
+14,sinc(x) + x,sinc(x),x1 + x2,x,"min(cosh(x), asinh(x))",cosh(x),"min(x1, x2)",asinh(x),"min(1, max(x, 0))",1,"min(x1, x2)","max(x, 0)",8.602083206176758,0.10159999877214432
+14,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"min(asinh(x), 0)",asinh(x),"min(x1, x2)",0,cosh(x) - 0,cosh(x),x1 - x2,0,0.8477203249931335,0.70660001039505
+14,exp(x) * (1/(1 + exp(-x))),exp(x),x1 * x2,(1/(1 + exp(-x))),"max(asinh(x), erf(x))",asinh(x),"max(x1, x2)",erf(x),"max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),0.9549310803413391,0.6669999957084656
+14,abs(x) / (x**2 + err),abs(x),x1 / (x2 + err),x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,2.3031301498413086,0.10000000149011612
+14,"max(abs(x), (1/(1 + exp(-x))))",abs(x),"max(x1, x2)",(1/(1 + exp(-x))),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),exp(x) + 1,exp(x),x1 + x2,1,nan,0.10000000149011612
+14,tanh(x) * asinh(x),tanh(x),x1 * x2,asinh(x),(-x) * (-x),(-x),x1 * x2,(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.053250789642334,0.6222000122070312
+14,(-x) + (1/(1 + exp(-x))),(-x),x1 + x2,(1/(1 + exp(-x))),"min(exp(-x^2), min(x, 0))",exp(-x^2),"min(x1, x2)","min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.9171717762947083,0.6791999936103821
+14,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(x**3, (1/(1 + exp(-x))))",x**3,"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,nan,0.10000000149011612
+14,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),"max((-x), x**3)",(-x),"max(x1, x2)",x**3,1 + x,1,x1 + x2,x,1.124715805053711,0.6111999750137329
+14,abs(x) * asinh(x),abs(x),x1 * x2,asinh(x),"max((-x), sinc(x))",(-x),"max(x1, x2)",sinc(x),erf(x) / (tanh(x) + err),erf(x),x1 / (x2 + err),tanh(x),0.9091527462005615,0.6844000220298767
+14,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),(-x) + (-x),(-x),x1 + x2,(-x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,1.0018686056137085,0.6453999876976013
+14,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min((1/(1 + exp(-x))), asinh(x))",(1/(1 + exp(-x))),"min(x1, x2)",asinh(x),0.8282524347305298,0.7161999940872192
+14,"min(x, 0) - (1/(1 + exp(-x)))","min(x, 0)",x1 - x2,(1/(1 + exp(-x))),"max(sinh(x), (1/(1 + exp(-x))))",sinh(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,nan,0.10000000149011612
+14,abs(x) + atanh(x),abs(x),x1 + x2,atanh(x),"max(asinh(x), 0)",asinh(x),"max(x1, x2)",0,cosh(x) - 0,cosh(x),x1 - x2,0,nan,0.10000000149011612
+14,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),"max(exp(-x^2), x**3)",exp(-x^2),"max(x1, x2)",x**3,"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),1.9591866731643677,0.2858000099658966
+14,sqrt(x) * x**3,sqrt(x),x1 * x2,x**3,x**2 / (x**3 + err),x**2,x1 / (x2 + err),x**3,"min(sqrt(x), abs(x))",sqrt(x),"min(x1, x2)",abs(x),nan,0.10000000149011612
+14,abs(x) * (1/(1 + exp(-x))),abs(x),x1 * x2,(1/(1 + exp(-x))),"max(exp(-x^2), abs(x))",exp(-x^2),"max(x1, x2)",abs(x),"min(sqrt(x), exp(x))",sqrt(x),"min(x1, x2)",exp(x),nan,0.10000000149011612
+14,sin(x) * (1/(1 + exp(-x))),sin(x),x1 * x2,(1/(1 + exp(-x))),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - sinh(x)","min(x, 0)",x1 - x2,sinh(x),0.8923523426055908,0.6890000104904175
+14,asinh(x) * (1/(1 + exp(-x))),asinh(x),x1 * x2,(1/(1 + exp(-x))),"max(x, 0) - abs(x)","max(x, 0)",x1 - x2,abs(x),"min(x, 0) - sinh(x)","min(x, 0)",x1 - x2,sinh(x),0.9909917712211609,0.6564000248908997
+14,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(max(x, 0), abs(x))","max(x, 0)","min(x1, x2)",abs(x),exp(-x^2) + cos(x),exp(-x^2),x1 + x2,cos(x),1.073354959487915,0.6212000250816345
+14,(-x) + 1,(-x),x1 + x2,1,tanh(x) + 1,tanh(x),x1 + x2,1,"min(x, 0) + erf(x)","min(x, 0)",x1 + x2,erf(x),0.8767398595809937,0.6895999908447266
+14,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"max(sqrt(x), (1/(1 + exp(-x))))",sqrt(x),"max(x1, x2)",(1/(1 + exp(-x))),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8484662175178528,0.6976000070571899
+14,(-x) / ((1/(1 + exp(-x))) + err),(-x),x1 / (x2 + err),(1/(1 + exp(-x))),tanh(x) * 1,tanh(x),x1 * x2,1,"min(x, 0) + asinh(x)","min(x, 0)",x1 + x2,asinh(x),0.924787700176239,0.6718000173568726
+14,sinc(x) * x**3,sinc(x),x1 * x2,x**3,"max(0, asinh(x))",0,"max(x1, x2)",asinh(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8993199467658997,0.675000011920929
+14,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),x - abs(x),x,x1 - x2,abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,1.02229642868042,0.6431999802589417
+14,exp(x) + sin(x),exp(x),x1 + x2,sin(x),"min(atanh(x), x)",atanh(x),"min(x1, x2)",x,"1 / (max(x, 0) + err)",1,x1 / (x2 + err),"max(x, 0)",nan,0.10000000149011612
+14,0 + cos(x),0,x1 + x2,cos(x),"max(exp(x), (1/(1 + exp(-x))))",exp(x),"max(x1, x2)",(1/(1 + exp(-x))),"min(min(x, 0), abs(x))","min(x, 0)","min(x1, x2)",abs(x),nan,0.10000000149011612
+14,"min(erf(x), log(1 + exp(x)))",erf(x),"min(x1, x2)",log(1 + exp(x)),tanh(x) + erf(x),tanh(x),x1 + x2,erf(x),1 + sin(x),1,x1 + x2,sin(x),0.8904203176498413,0.6881999969482422
+14,sqrt(x) + log(abs(x + err)),sqrt(x),x1 + x2,log(abs(x + err)),tanh(x) - 0,tanh(x),x1 - x2,0,cosh(x) / (atanh(x) + err),cosh(x),x1 / (x2 + err),atanh(x),nan,0.10000000149011612
+14,"cosh(x) / (max(x, 0) + err)",cosh(x),x1 / (x2 + err),"max(x, 0)","1 / (min(x, 0) + err)",1,x1 / (x2 + err),"min(x, 0)",x**3 * x**3,x**3,x1 * x2,x**3,nan,0.10000000149011612
+14,abs(x) - 0,abs(x),x1 - x2,0,"max(log(1 + exp(x)), x**3)",log(1 + exp(x)),"max(x1, x2)",x**3,"min(atanh(x), atanh(x))",atanh(x),"min(x1, x2)",atanh(x),nan,0.10000000149011612
+14,"max(sin(x), atanh(x))",sin(x),"max(x1, x2)",atanh(x),cosh(x) + sinc(x),cosh(x),x1 + x2,sinc(x),erf(x) * sinc(x),erf(x),x1 * x2,sinc(x),nan,0.10000000149011612
+14,cosh(x) + sinc(x),cosh(x),x1 + x2,sinc(x),sqrt(x) - sinc(x),sqrt(x),x1 - x2,sinc(x),sqrt(x) - 1,sqrt(x),x1 - x2,1,nan,0.10000000149011612
+14,"max(exp(-x^2), sinc(x))",exp(-x^2),"max(x1, x2)",sinc(x),"max((1/(1 + exp(-x))), log(1 + exp(x)))",(1/(1 + exp(-x))),"max(x1, x2)",log(1 + exp(x)),abs(x) - tanh(x),abs(x),x1 - x2,tanh(x),1.0352624654769897,0.6330000162124634
+14,log(abs(x + err)) / (exp(-x^2) + err),log(abs(x + err)),x1 / (x2 + err),exp(-x^2),"min(x, 0) * atanh(x)","min(x, 0)",x1 * x2,atanh(x),asinh(x) + sinh(x),asinh(x),x1 + x2,sinh(x),nan,0.10000000149011612
+15,exp(x) + 1,exp(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8146424889564514,0.7196000218391418
+15,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8090184330940247,0.7156000137329102
+15,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min((1/(1 + exp(-x))), asinh(x))",(1/(1 + exp(-x))),"min(x1, x2)",asinh(x),0.8282524347305298,0.7161999940872192
+15,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"max(erf(x), (1/(1 + exp(-x))))",erf(x),"max(x1, x2)",(1/(1 + exp(-x))),0.7986942529678345,0.7215999960899353
+15,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(max(x, 0), abs(x))","max(x, 0)","min(x1, x2)",abs(x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.8405894637107849,0.7026000022888184
+15,(-x) + 1,(-x),x1 + x2,1,"max(sqrt(x), asinh(x))",sqrt(x),"max(x1, x2)",asinh(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,nan,0.10000000149011612
+15,"min(erf(x), max(x, 0))",erf(x),"min(x1, x2)","max(x, 0)",tanh(x) + 1,tanh(x),x1 + x2,1,"min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.9073613286018372,0.6837999820709229
+15,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(erf(x), x)",erf(x),"min(x1, x2)",x,"max(cos(x), (1/(1 + exp(-x))))",cos(x),"max(x1, x2)",(1/(1 + exp(-x))),0.9191431403160095,0.6923999786376953
+15,exp(x) - 1,exp(x),x1 - x2,1,"min(exp(x), (1/(1 + exp(-x))))",exp(x),"min(x1, x2)",(1/(1 + exp(-x))),"min(1, min(x, 0))",1,"min(x1, x2)","min(x, 0)",nan,0.10000000149011612
+15,(-x) + asinh(x),(-x),x1 + x2,asinh(x),"max(0, asinh(x))",0,"max(x1, x2)",asinh(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8585802912712097,0.694599986076355
+15,x**2 + (1/(1 + exp(-x))),x**2,x1 + x2,(1/(1 + exp(-x))),"max(exp(-x^2), x**3)",exp(-x^2),"max(x1, x2)",x**3,"min(sqrt(x), exp(x))",sqrt(x),"min(x1, x2)",exp(x),nan,0.10000000149011612
+15,exp(x) + cos(x),exp(x),x1 + x2,cos(x),"max((-x), (-x))",(-x),"max(x1, x2)",(-x),asinh(x) + 1,asinh(x),x1 + x2,1,0.9986692667007446,0.651199996471405
+15,"min(exp(x), exp(-x^2))",exp(x),"min(x1, x2)",exp(-x^2),x - abs(x),x,x1 - x2,abs(x),"asinh(x) + min(x, 0)",asinh(x),x1 + x2,"min(x, 0)",1.0637242794036865,0.6363999843597412
+15,tanh(x) * asinh(x),tanh(x),x1 * x2,asinh(x),"max((1/(1 + exp(-x))), log(1 + exp(x)))",(1/(1 + exp(-x))),"max(x1, x2)",log(1 + exp(x)),sqrt(x) - tanh(x),sqrt(x),x1 - x2,tanh(x),0.9505689740180969,0.6728000044822693
+15,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,"min(x, 0) + x**3","min(x, 0)",x1 + x2,x**3,1.067551612854004,0.6191999912261963
+15,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"min(exp(-x^2), 0)",exp(-x^2),"min(x1, x2)",0,"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),2.3029050827026367,0.10000000149011612
+15,abs(x) + x**2,abs(x),x1 + x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min(x, 0) - log(abs(x + err))","min(x, 0)",x1 - x2,log(abs(x + err)),1.8504220247268677,0.32739999890327454
+15,abs(x) - x**2,abs(x),x1 - x2,x**2,"min(abs(x), erf(x))",abs(x),"min(x1, x2)",erf(x),"min((1/(1 + exp(-x))), asinh(x))",(1/(1 + exp(-x))),"min(x1, x2)",asinh(x),1.0547996759414673,0.6291999816894531
+15,exp(x) * (1/(1 + exp(-x))),exp(x),x1 * x2,(1/(1 + exp(-x))),"min(log(1 + exp(x)), x)",log(1 + exp(x)),"min(x1, x2)",x,exp(x) + x,exp(x),x1 + x2,x,nan,0.10000000149011612
+15,exp(x) * (1/(1 + exp(-x))),exp(x),x1 * x2,(1/(1 + exp(-x))),"min(asinh(x), x)",asinh(x),"min(x1, x2)",x,"min(x, 0) + x","min(x, 0)",x1 + x2,x,0.9167876839637756,0.6832000017166138
+15,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(cos(x), abs(x))",cos(x),"min(x1, x2)",abs(x),"max(erf(x), (1/(1 + exp(-x))))",erf(x),"max(x1, x2)",(1/(1 + exp(-x))),1.7612320184707642,0.4147999882698059
+15,abs(x) + x,abs(x),x1 + x2,x,"max(0, asinh(x))",0,"max(x1, x2)",asinh(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.9455413818359375,0.675599992275238
+15,abs(x) * log(abs(x + err)),abs(x),x1 * x2,log(abs(x + err)),"min(abs(x), max(x, 0))",abs(x),"min(x1, x2)","max(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.8433607220649719,0.7057999968528748
+15,"min(abs(x), x**2)",abs(x),"min(x1, x2)",x**2,abs(x) - erf(x),abs(x),x1 - x2,erf(x),"min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.801142156124115,0.715399980545044
+15,exp(x) + 1,exp(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(x, 0) + x","min(x, 0)",x1 + x2,x,0.8334105610847473,0.7020000219345093
+15,(-x) + 1,(-x),x1 + x2,1,tanh(x) + (-x),tanh(x),x1 + x2,(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.9206873178482056,0.6764000058174133
+15,atanh(x) * asinh(x),atanh(x),x1 * x2,asinh(x),"max((-x), sinc(x))",(-x),"max(x1, x2)",sinc(x),erf(x) / (tanh(x) + err),erf(x),x1 / (x2 + err),tanh(x),nan,0.10000000149011612
+15,"min(tanh(x), asinh(x))",tanh(x),"min(x1, x2)",asinh(x),(-x) * (-x),(-x),x1 * x2,(-x),"min(x, 0) - 0","min(x, 0)",x1 - x2,0,0.900041401386261,0.6827999949455261
+15,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"min(asinh(x), 0)",asinh(x),"min(x1, x2)",0,x**3 - 0,x**3,x1 - x2,0,0.843795120716095,0.7016000151634216
+15,exp(x) * 1,exp(x),x1 * x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(min(x, 0), asinh(x))","min(x, 0)","min(x1, x2)",asinh(x),0.818397045135498,0.7138000130653381
+15,exp(x) + 1,exp(x),x1 + x2,1,"tanh(x) * min(x, 0)",tanh(x),x1 * x2,"min(x, 0)","min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.8570862412452698,0.6949999928474426
+15,exp(x) + 1,exp(x),x1 + x2,1,tanh(x) + (-x),tanh(x),x1 + x2,(-x),"min(abs(x), asinh(x))",abs(x),"min(x1, x2)",asinh(x),0.9038071036338806,0.6782000064849854
+15,abs(x) * erf(x),abs(x),x1 * x2,erf(x),"min(max(x, 0), abs(x))","max(x, 0)","min(x1, x2)",abs(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,0.8227286338806152,0.7098000049591064
+15,"min(erf(x), log(1 + exp(x)))",erf(x),"min(x1, x2)",log(1 + exp(x)),"min(tanh(x), erf(x))",tanh(x),"min(x1, x2)",erf(x),"max(x, 0) * 1","max(x, 0)",x1 * x2,1,1.0070927143096924,0.6481999754905701
+15,abs(x) + erf(x),abs(x),x1 + x2,erf(x),"min(erf(x), x)",erf(x),"min(x1, x2)",x,erf(x) * cos(x),erf(x),x1 * x2,cos(x),0.9486377239227295,0.6675999760627747
+15,abs(x) * sinc(x),abs(x),x1 * x2,sinc(x),"min(sin(x), x)",sin(x),"min(x1, x2)",x,erf(x) / (tanh(x) + err),erf(x),x1 / (x2 + err),tanh(x),1.3186904191970825,0.5424000024795532
+15,exp(x) + 1,exp(x),x1 + x2,1,"cosh(x) * min(x, 0)",cosh(x),x1 * x2,"min(x, 0)","max(erf(x), sqrt(x))",erf(x),"max(x1, x2)",sqrt(x),nan,0.10000000149011612
+15,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),"min((-x), 0)",(-x),"min(x1, x2)",0,1 + sin(x),1,x1 + x2,sin(x),0.9491185545921326,0.6754000186920166
+15,"min(erf(x), log(1 + exp(x)))",erf(x),"min(x1, x2)",log(1 + exp(x)),tanh(x) + erf(x),tanh(x),x1 + x2,erf(x),"min(1, min(x, 0))",1,"min(x1, x2)","min(x, 0)",0.9846301674842834,0.6510000228881836
+15,(-x) / ((1/(1 + exp(-x))) + err),(-x),x1 / (x2 + err),(1/(1 + exp(-x))),tanh(x) * 1,tanh(x),x1 * x2,1,"min(x, 0) * asinh(x)","min(x, 0)",x1 * x2,asinh(x),0.8875646591186523,0.6830000281333923
+15,"min(sin(x), min(x, 0))",sin(x),"min(x1, x2)","min(x, 0)",0 / (x**3 + err),0,x1 / (x2 + err),x**3,"atanh(x) - max(x, 0)",atanh(x),x1 - x2,"max(x, 0)",2.3025879859924316,0.10000000149011612
+15,cos(x) / (1 + err),cos(x),x1 / (x2 + err),1,cos(x) * sin(x),cos(x),x1 * x2,sin(x),x**3 - cosh(x),x**3,x1 - x2,cosh(x),2.3029215335845947,0.09799999743700027
+15,"min(atanh(x), cos(x))",atanh(x),"min(x1, x2)",cos(x),cosh(x) - 0,cosh(x),x1 - x2,0,"min(x**3, cos(x))",x**3,"min(x1, x2)",cos(x),nan,0.10000000149011612
+15,"min(sqrt(x), sqrt(x))",sqrt(x),"min(x1, x2)",sqrt(x),sinc(x) - (-x),sinc(x),x1 - x2,(-x),"x**3 + max(x, 0)",x**3,x1 + x2,"max(x, 0)",nan,0.10000000149011612
+15,tanh(x) * x**3,tanh(x),x1 * x2,x**3,atanh(x) + (1/(1 + exp(-x))),atanh(x),x1 + x2,(1/(1 + exp(-x))),"max(log(1 + exp(x)), max(x, 0))",log(1 + exp(x)),"max(x1, x2)","max(x, 0)",nan,0.10000000149011612
+15,sin(x) - asinh(x),sin(x),x1 - x2,asinh(x),(-x) / (exp(-x^2) + err),(-x),x1 / (x2 + err),exp(-x^2),sinc(x) + cos(x),sinc(x),x1 + x2,cos(x),nan,0.10000000149011612
+15,"max((1/(1 + exp(-x))), 1)",(1/(1 + exp(-x))),"max(x1, x2)",1,"max(log(abs(x + err)), erf(x))",log(abs(x + err)),"max(x1, x2)",erf(x),tanh(x) - tanh(x),tanh(x),x1 - x2,tanh(x),2.3025870323181152,0.10000000149011612
+15,0 + sin(x),0,x1 + x2,sin(x),"max(max(x, 0), sin(x))","max(x, 0)","max(x1, x2)",sin(x),(-x) / (exp(-x^2) + err),(-x),x1 / (x2 + err),exp(-x^2),nan,0.10000000149011612
+15,abs(x) * x**3,abs(x),x1 * x2,x**3,erf(x) * 0,erf(x),x1 * x2,0,1 + sqrt(x),1,x1 + x2,sqrt(x),nan,0.10000000149011612
+15,erf(x) + (1/(1 + exp(-x))),erf(x),x1 + x2,(1/(1 + exp(-x))),x**2 - atanh(x),x**2,x1 - x2,atanh(x),x**2 / (exp(x) + err),x**2,x1 / (x2 + err),exp(x),nan,0.10000000149011612
+Total time:,69571.48853373528
