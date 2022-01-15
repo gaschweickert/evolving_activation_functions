@@ -85,7 +85,7 @@ class GAS(SEARCH):
 
     # Two methods of crossover
     def crossover_and_mutate(self, parent1, parent2):
-        crossover_anywhere = False # if False crossover only happens between core units
+        crossover_anywhere = True # if False crossover only happens between core units
 
         parent1_gene = parent1.core_units # [core unit, core unit, ...]
         parent2_gene = parent2.core_units 

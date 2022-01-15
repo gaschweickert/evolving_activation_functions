@@ -36,6 +36,9 @@ class DATA:
             for entry in data:
                 entry_gen = int(entry[0])
                 if entry_gen != prev_gen:
+                    print(entry_gen)
+                    print(prev_gen)
+                    print()
                     gens.append(prev_gen)
                     gens_best_accuracy.append(gen_best_accuracy)
                     prev_gen = prev_gen + 1
@@ -43,15 +46,18 @@ class DATA:
                 entry_accuracy = float(entry[-1])
                 if entry_accuracy > gen_best_accuracy:
                     gen_best_accuracy = entry_accuracy
+            gens.append(prev_gen)
+            gens_best_accuracy.append(gen_best_accuracy)
             xpoints = np.array(gens)
+            print(gens)
             ypoints = np.array(gens_best_accuracy)
             plt.plot(xpoints, ypoints, label=self.filenames[i][33:])
 
 
         plt.ylim((0.65, 0.8)) 
 
-        plt.xlabel("Accuracy")
-        plt.ylabel("Generation #")
+        plt.ylabel("Accuracy")
+        plt.xlabel("Generation #")
         plt.title("ACCURACY vs GENERATIONS")
         plt.legend()
         plt.show()
