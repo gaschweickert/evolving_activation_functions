@@ -36,9 +36,6 @@ class DATA:
             for entry in data:
                 entry_gen = int(entry[0])
                 if entry_gen != prev_gen:
-                    print(entry_gen)
-                    print(prev_gen)
-                    print()
                     gens.append(prev_gen)
                     gens_best_accuracy.append(gen_best_accuracy)
                     prev_gen = prev_gen + 1
@@ -49,7 +46,6 @@ class DATA:
             gens.append(prev_gen)
             gens_best_accuracy.append(gen_best_accuracy)
             xpoints = np.array(gens)
-            print(gens)
             ypoints = np.array(gens_best_accuracy)
             plt.plot(xpoints, ypoints, label=self.filenames[i][33:])
 
@@ -72,7 +68,7 @@ class DATA:
     def get_n_top_candidates(self, n):
         data_n_top = []
         for i, data in enumerate(self.nan_removed_data):
-            sorted_data = sorted(data, key=itemgetter(-1))
+            sorted_data = sorted(data, key=itemgetter(-1), reverse=True)
             data_n_top.append([self.filenames[i], sorted_data[:n]])
         return data_n_top
         
