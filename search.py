@@ -98,16 +98,16 @@ class SEARCH:
         candidate.accuracy = val_results[1] # accuracy
 
     # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
-    def generate_candidate_solution_from_keys(self, list_of_keys):
+    def generate_candidate_solution_from_keys(self, list_of_keys, loss=nan, accuracy=0.0):
         core_units = []
         for keys in list_of_keys:
             unary_unit1_key, binary_unit_key, unary_unit2_key = keys
             elementary_units_keys = keys
             elementary_units_functions = [self.unary_units[unary_unit1_key], self.binary_units[binary_unit_key], self.unary_units[unary_unit2_key]]
             core_unit = CORE_UNIT(elementary_units_keys, elementary_units_functions)
-            assert core_unit.check_validity(), "Invalid unit keys provided for candidate solution generation"
+            #assert core_unit.check_validity(), "Invalid unit keys provided for candidate solution generation"
             core_units.append(core_unit)
-        return CANDIDATE(core_units, loss=0.0, accuracy=0.0)
+        return CANDIDATE(core_units, loss, accuracy)
 
         
     '''
@@ -130,14 +130,14 @@ class SEARCH:
 
     def check_same_candidate_solution(self, can1, can2):
         same_cu = 0
-        can1_cu_name = can1.get_candidate_name()
-        can2_cu_name = can2.get_candidate_name()
-        for i in range(self.C):
-            cu_i_can1_name = can1_cu_name[i]
-            cu_i_can2_name = can2_cu_name[i]
+        can1_cu_names = can1.get_candidate_name()
+        can2_cu_names = can2.get_candidate_name()
+        for i in range(len(can1_cu_names)):
+            cu_i_can1_name = can1_cu_names[i]
+            cu_i_can2_name = can2_cu_names[i]
             if cu_i_can1_name == cu_i_can2_name:
                 same_cu = same_cu + 1
-        return True if same_cu == self.C else False
+        return True if same_cu == len(can1_cu_names) else False
             
 
     def generate_n_unique_candidates(self, n):
