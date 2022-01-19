@@ -55,9 +55,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = dataset + "_final_test_top" + str(i + 1) + "_" + filename[12:35]
-            for j, cu in enumerate(candidate.core_units):
-                save_file_name = save_file_name + '_C'+ str(j + 1) + '=' + cu.get_name()
+            save_file_name = dataset + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
 
             fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
@@ -132,9 +130,9 @@ def main():
         split_name = filename.split("_")
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        test_candidates(filename=filename, candidate_list = exp_n_tops[-1:], dataset = 'cifar10', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-
+#REMEMEMMEMEMEEMMEMEMEMEMBER
 
 
 if __name__ == "__main__":
