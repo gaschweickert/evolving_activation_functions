@@ -28,7 +28,7 @@ from tensorflow.keras.datasets import cifar10, cifar100
 from tensorflow.keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooling2D, BatchNormalization, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import to_categorical
-from statistics import median
+from statistics import median, mean
 
 from tensorflow.keras.callbacks import TensorBoard
 
@@ -227,7 +227,7 @@ class CNN:
             if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             run_val_loss.append(max(hist.history['val_loss'])) # or hist.history['val_loss'][-1]
             run_val_acc.append(max(hist.history['val_accuracy']))
-        return final_epoch, median(run_val_loss), median(run_val_acc)
+        return final_epoch, median(run_val_loss), median(run_val_acc), mean(run_val_loss), mean(run_val_acc)
 
 
 

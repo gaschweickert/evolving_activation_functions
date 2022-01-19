@@ -33,6 +33,9 @@ class CANDIDATE:
                 name.append(self.core_units[i].get_name())
         return name
 
+    def get_candidate_complexity(self):
+        return len(self.core_units)
+
     def plot_candidate(self):
         custom1 = self.core_units[0]
         xpoints = range(-5, 6)

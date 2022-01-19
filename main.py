@@ -42,25 +42,20 @@ def random_search(dataset, generations, N, C, train_epochs, mode, number_of_bloc
         save_file_name = date_and_time + '_Random-search'+ '_' + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_mode=' + str(mode) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
         rs.save_data_log(save_file_name, total_time)
 
-def test_candidates(filename, candidate_entries, dataset, k, mode, no_blocks, no_epochs, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
-    ss = SEARCH('None', 0,0,0)
+# must all be from same original file
+def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_epochs, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn= CNN(dataset)
-    evaluated_candidates = []
-    completed_epochs = []
-    for entry in candidate_entries:
-        candidate_keys = [x for i, x in enumerate(entry[1:-2]) if i % 4]
-        C = len(candidate_keys)//3
-        candidate_keys=np.reshape(candidate_keys, (C, 3))
-        candidate = ss.generate_candidate_solution_from_keys(candidate_keys)
+    results = []
+    C = candidate_list[0].get_candidate_complexity()
+    if verbose: print(filename)
+    for candidate in candidate_list:
         candidate.print_candidate_name()
         mode = 1 if C == 1 else 3 #is not compatbile with layer-wise
-        epochs, candidate.loss, candidate.accuracy = cnn.final_test(k, mode, candidate.core_units, no_blocks, no_epochs, verbosity, save_model, visualize, tensorboard_log)
-        evaluated_candidates.append(candidate)
-        completed_epochs.append(epochs)
-        candidate.print_candidate_results()
+        results.append(cnn.final_test(k, mode, candidate.core_units, no_blocks, no_epochs, verbose, save_model, visualize, tensorboard_log))
+        print(results[-1])
 
     if save_results:
-        save_file_name = "final_test_top" + str(len(evaluated_candidates)) + "_" + filename[12:]
+        save_file_name = "final_test_top" + str(len(candidate_list)) + "_" + filename[12:]
 
         fields = ['Top']
         for i in range(1, C + 1):
@@ -68,19 +63,20 @@ def test_candidates(filename, candidate_entries, dataset, k, mode, no_blocks, no
             fields.append('C'+ str(i) + '_unary1_key')
             fields.append('C'+ str(i) + '_binary_key')
             fields.append('C'+ str(i) + '_unary2_key')
-        fields.extend(['Epochs_Completed', 'Final_Loss', 'Final_Accuracy'])
+        fields.extend(['Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Final_Mean_Loss', 'Final_Mean_Accuracy'])
 
         filepath = os.path.join('./', 'test_data', save_file_name + '.csv')
         with open(filepath, 'w') as f:
             # using csv.writer method from CSV package
             write = csv.writer(f)   
             write.writerow(fields)
-            for i, candidate in enumerate(evaluated_candidates):
+            for i, candidate in enumerate(candidate_list):
                 entry = [i + 1]
                 for cu in candidate.core_units:
                     entry.append(cu.get_name())
                     entry.extend(cu.get_elementary_units_keys())
-                entry.extend([completed_epochs[i], candidate.loss, candidate.accuracy])
+                epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy = results[i]
+                entry.extend([epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy])
                 write.writerow(entry)
 
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
@@ -93,7 +89,7 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
     if save_results:
         save_file_name = "final_test_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
-        fields = ['Name', 'Epochs_Completed', 'Final_Loss', 'Final_Accuracy']
+        fields = ['Name', 'Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Final_Mean_Loss', 'Final_Mean_Accuracy']
 
         filepath = os.path.join('./', 'benchmark_data', save_file_name + '.csv')
         with open(filepath, 'w') as f:
@@ -101,8 +97,8 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
             write = csv.writer(f)
             write.writerow(fields)
             for i in range(len(benchmarks)):
-                epochs_completed, loss, accuracy = results[i]
-                entry = [benchmarks[i], epochs_completed, loss, accuracy]
+                epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy = results[i]
+                entry = [benchmarks[i], epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy]
                 write.writerow(entry)
 
 
@@ -118,8 +114,9 @@ def load_data(data):
     #data.collect_data_from_file("search_data/11-Jan-2022_15:42:02_Random-search_cifar10_G=10_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
     #data.collect_data_from_file("search_data/13-Jan-2022_00:03:32_GA-search_loss-based_cifar10_G=10_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
     #data.collect_data_from_file("search_data/14-Jan-2022_16:36:36_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
     data.collect_data_from_file("search_data/16-Jan-2022_14:05:33_GA-search_loss-based_cifar10_G=15_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/18-Jan-2022_10:53:37_Random-search_cifar10_G=15_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
 
 
 
@@ -139,29 +136,28 @@ def main():
     # number of layers = number of blocks * 2 + 1
     # train_epochs = number of training epochs
 
-
     #ga_search(dataset = 'cifar10', generations=15, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     
-    random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
+    #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
     #test_benchmarks(dataset='cifar10', k=1, no_blocks=2, no_epochs=2, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    '''
+    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
-    data.plot_gen_vs_accuracy()
-    data.get_n_top_candidates(3, verbose=1)
+    #data.plot_gen_vs_accuracy()
+    data_n_tops = data.get_n_top_candidates(3, verbose=1)
 
-
-    data.plot_gen_vs_accuracy()
-    data_n_tops = data.get_n_top_candidates(3)
-    
-    for d in data_n_tops:
-        test_candidates(filename=d[0], candidate_entries=d[1], dataset = 'cifar10', k = 1, mode=3, no_blocks=2, no_epochs=1, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    '''
-
+    for i, exp_n_tops in enumerate(data_n_tops):
+        filename = data.filenames[i]
+        split_name = filename.split("_")
+        dataset = split_name[5] if split_name[3] == 'GA-search' else split_name[4]
+        no_blocks = int(split_name[-1][-5])
+        mode = int(split_name[-3][-1])
+        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = dataset, k = 1, mode=mode, no_blocks=no_blocks, no_epochs=2, verbose=1, save_model=False, visualize=True, tensorboard_log=False, save_results=True)
+    """
 
     
 

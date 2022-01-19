@@ -35,7 +35,7 @@ class DATA:
         self.data.append(exp_data)
     
     def convert_and_order(self):
-        accuracy = lambda x: float(-0.0) if math.isnan(float(x[-1])) else float(x[-1])
+        accuracy = lambda x: float('-inf') if math.isnan(float(x[-1])) else float(x[-1])
         ss = SEARCH('None', 0,0,0)
         for exp_data in self.data:
             converted_exp_data = []

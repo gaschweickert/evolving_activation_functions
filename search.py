@@ -157,6 +157,13 @@ class SEARCH:
         return candidate_list
         
     def get_search_top_candidates(self, no_candidates, evaluation_metric):
+        assert evaluation_metric in (1,2), 'Invalid evaluation metric'
+        if evaluation_metric == 1:
+            fitness = lambda x: float('inf') if math.isnan(x.loss) else x.loss
+        else:
+            fitness = lambda x: float('-inf') if math.isnan(x.accuracy) else x.accuracy
+
+        '''
         fitness = lambda x: x.loss if evaluation_metric == 1 else lambda x: x.accuracy
         
         # selecting top no candidates to keep in population without mutation or crossover
@@ -171,6 +178,12 @@ class SEARCH:
         nan_removed_ordered_population = sorted(nan_removed_population, key=fitness, reverse=False if evaluation_metric == 1 else True)
         ordered_population = nan_removed_ordered_population + nan_population
         return ordered_population[:no_candidates]
+        '''
+        ordered_population = sorted(self.population, key=fitness, reverse=False if evaluation_metric == 1 else True)
+        return ordered_population[:no_candidates]
+
+        
+
 
 
     def save_data_log(self, save_file_name, time_taken=0):
