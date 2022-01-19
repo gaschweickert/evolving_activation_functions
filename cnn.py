@@ -213,6 +213,7 @@ class CNN:
         test_data = self.format_data(self.x_test, self.y_test)
         val_data = self.format_data(self.x_val, self.y_val)
 
+        run_final_epoch = []
         run_val_loss = []
         run_val_acc = []
         for run_i in range(k):
@@ -223,12 +224,12 @@ class CNN:
                 if tensorboard_log: callbacks.append(callback_tensorboard) 
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
-            hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-            final_epoch = len(hist.history['loss'])
-            if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
+            hist = self.model.fit(train_data + val_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+            run_final_epoch.append(len(hist.history['loss']))
+            if verbosity and (run_final_epoch[-1] < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             run_val_loss.append(hist.history['val_loss'][-1 * patience]) # or max(hist.history['val_loss'] hist.history['val_loss'][-1]
             run_val_acc.append(hist.history['val_accuracy'][-1 * patience])
-        return final_epoch, median(run_val_loss), median(run_val_acc), mean(run_val_loss), mean(run_val_acc)
+        return median(run_final_epoch), median(run_val_loss), median(run_val_acc), mean(run_final_epoch), mean(run_val_loss), mean(run_val_acc)
 
 
 

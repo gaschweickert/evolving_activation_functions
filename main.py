@@ -63,7 +63,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
             fields.append('C'+ str(i) + '_unary1_key')
             fields.append('C'+ str(i) + '_binary_key')
             fields.append('C'+ str(i) + '_unary2_key')
-        fields.extend(['Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Final_Mean_Loss', 'Final_Mean_Accuracy'])
+        fields.extend(['Median_Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Mean_Epochs_Completed', 'Final_Mean_Loss', 'Final_Mean_Accuracy'])
 
         filepath = os.path.join('./', 'test_data', save_file_name + '.csv')
         with open(filepath, 'w') as f:
@@ -75,8 +75,8 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
                 for cu in candidate.core_units:
                     entry.append(cu.get_name())
                     entry.extend(cu.get_elementary_units_keys())
-                epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy = results[i]
-                entry.extend([epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy])
+                median_epochs_completed, median_loss, median_accuracy,mean_epochs_completed, mean_loss, mean_accuracy = results[i]
+                entry.extend([median_epochs_completed, median_loss, median_accuracy, mean_epochs_completed, mean_loss, mean_accuracy])
                 write.writerow(entry)
 
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
@@ -89,7 +89,7 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
     if save_results:
         save_file_name = "final_test_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
-        fields = ['Name', 'Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Final_Mean_Loss', 'Final_Mean_Accuracy']
+        fields = ['Name', 'Median_Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Mean_Epochs_Completed', 'Final_Mean_Loss', 'Final_Mean_Accuracy']
 
         filepath = os.path.join('./', 'benchmark_data', save_file_name + '.csv')
         with open(filepath, 'w') as f:
@@ -97,8 +97,8 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
             write = csv.writer(f)
             write.writerow(fields)
             for i in range(len(benchmarks)):
-                epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy = results[i]
-                entry = [benchmarks[i], epochs_completed, median_loss, median_accuracy, mean_loss, mean_accuracy]
+                median_epochs_completed, median_loss, median_accuracy, mean_epochs_completed, mean_loss, mean_accuracy = results[i]
+                entry = [benchmarks[i], median_epochs_completed, median_loss, mean_epochs_completed, median_accuracy, mean_loss, mean_accuracy]
                 write.writerow(entry)
 
 
@@ -141,8 +141,9 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    #test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
+    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
@@ -156,7 +157,7 @@ def main():
         mode = int(split_name[-3][-1])
         test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = dataset, k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    
+    """
 
 
 
