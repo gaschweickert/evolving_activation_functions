@@ -227,7 +227,7 @@ class CNN:
                 if visualize: self.visualize()
             hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
             run_val_loss = hist.history['val_loss'][-1 * patience] # or max(hist.history['val_loss'] or hist.history['val_loss'][-1]
-            run_val_acc = hist.history['accuracy'][-1*patience]
+            run_val_acc = hist.history['accuracy'][-1 * patience]
             final_epoch = len(hist.history['loss'])
             if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             results.append([run_i+1, final_epoch, run_val_loss, run_val_acc])

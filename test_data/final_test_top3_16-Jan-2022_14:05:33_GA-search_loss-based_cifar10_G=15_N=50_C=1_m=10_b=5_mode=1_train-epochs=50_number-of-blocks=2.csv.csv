@@ -1,4 +1,0 @@
-Top,C1_name,C1_unary1_key,C1_binary_key,C1_unary2_key,Epochs_Completed,Final_Median_Loss,Final_Median_Accuracy,Final_Mean_Loss,Final_Mean_Accuracy
-1,abs(x) - asinh(x),abs(x),x1 - x2,asinh(x),2,1.814149260520935,0.3977999985218048,1.814149260520935,0.3977999985218048
-2,abs(x) + asinh(x),abs(x),x1 + x2,asinh(x),2,1.7802398204803467,0.46070000529289246,1.7802398204803467,0.46070000529289246
-3,abs(x) - erf(x),abs(x),x1 - x2,erf(x),2,1.8092443943023682,0.427700012922287,1.8092443943023682,0.427700012922287

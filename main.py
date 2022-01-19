@@ -45,49 +45,44 @@ def random_search(dataset, generations, N, C, train_epochs, mode, number_of_bloc
 # must all be from same original file
 def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_epochs, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn= CNN(dataset)
-    results = []
+    candidate_results = []
     C = candidate_list[0].get_candidate_complexity()
     if verbose: print(filename)
     for candidate in candidate_list:
         candidate.print_candidate_name()
         mode = 1 if C == 1 else 3 #is not compatbile with layer-wise
-        results.append(cnn.final_test(k, mode, candidate.core_units, no_blocks, no_epochs, verbose, save_model, visualize, tensorboard_log))
-        print(results[-1])
+        candidate_results.append(cnn.final_test(k, mode, candidate.core_units, no_blocks, no_epochs, verbose, save_model, visualize, tensorboard_log))
 
     if save_results:
-        save_file_name = "final_test_top" + str(len(candidate_list)) + "_" + filename[12:]
+        for i, candidate in enumerate(candidate_list):
+            save_file_name = "final_test_top" + str(i + 1) + "_" + filename[12:]
+            for j, cu in enumerate(candidate.core_units):
+                save_file_name + '_C'+ str(j) + '_name=' + cu.get_name()
+                uk1, bk, uk2 = cu.get_elementary_units_keys()
+                save_file_name + '_C'+ str(j) + '_u1key=' + str(uk1)
+                save_file_name + '_C'+ str(j) + '_bkey=' + str(bk)
+                save_file_name + '_C'+ str(j) + '_u2key='+ str(uk2)
 
-        fields = ['Top']
-        for i in range(1, C + 1):
-            fields.append('C'+ str(i) + '_name')
-            fields.append('C'+ str(i) + '_unary1_key')
-            fields.append('C'+ str(i) + '_binary_key')
-            fields.append('C'+ str(i) + '_unary2_key')
-        fields.extend(['Median_Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Mean_Epochs_Completed', 'Final_Mean_Loss', 'Final_Mean_Accuracy'])
+            fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
-        filepath = os.path.join('./', 'test_data', save_file_name + '.csv')
-        with open(filepath, 'w') as f:
-            # using csv.writer method from CSV package
-            write = csv.writer(f)   
-            write.writerow(fields)
-            for i, candidate in enumerate(candidate_list):
-                entry = [i + 1]
-                for cu in candidate.core_units:
-                    entry.append(cu.get_name())
-                    entry.extend(cu.get_elementary_units_keys())
-                median_epochs_completed, median_loss, median_accuracy,mean_epochs_completed, mean_loss, mean_accuracy = results[i]
-                entry.extend([median_epochs_completed, median_loss, median_accuracy, mean_epochs_completed, mean_loss, mean_accuracy])
-                write.writerow(entry)
+            filepath = os.path.join('./', 'test_data', save_file_name + '.csv')
+            with open(filepath, 'w') as f:
+                # using csv.writer method from CSV package
+                write = csv.writer(f)   
+                write.writerow(fields)
+                for r in candidate_results[i]:
+                    write.writerow(r)
 
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn = CNN(dataset)
     benchmarks = ["relu", "swish"]
     benchmarks_results = []
     for benchmark_activation in benchmarks:
+        print(benchmark_activation)
         benchmarks_results.append(cnn.final_test(k, 1, benchmark_activation, no_blocks, no_epochs, verbosity, save_model, visualize, tensorboard_log))
     
     if save_results:
-        for i, results in enumerate(benchmarks_results):
+        for i, k_results in enumerate(benchmarks_results):
             save_file_name = "final_test_" + str(benchmarks[i]) +"_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
             fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
@@ -97,15 +92,9 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
                 # using csv.writer method from CSV package
                 write = csv.writer(f)
                 write.writerow(fields)
-                for k_result in results:
-                    write.writerow(k_result)
+                for r in k_results:
+                    write.writerow(r)
 
-
-
-
-#EARLY STOPPAGE AT EPOCH 148/200 (256 batch c1 gasearch jan 8) --> 1 gpu
-#custom1: max(max(x, 0), log(abs(x + err)))
-#Loss: 2.744981050491333; Accuracy: 0.7875999808311462
 
 def load_data(data):
     #data.collect_data_from_file("search_data/09-Jan-2022_15:33:45_Random-search_cifar10_G=10_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
@@ -155,7 +144,6 @@ def main():
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
         test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = dataset, k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-
     """
 
 
