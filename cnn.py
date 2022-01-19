@@ -204,7 +204,8 @@ class CNN:
 
     def final_test(self, k, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
         # Early stoppage when there is no improvement in test accuracy
-        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, mode='min')
+        patience = 10
+        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=patience, mode='min')
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
         callbacks = [callback_test_acc] 
 
@@ -225,8 +226,8 @@ class CNN:
             hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
             final_epoch = len(hist.history['loss'])
             if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
-            run_val_loss.append(max(hist.history['val_loss'])) # or hist.history['val_loss'][-1]
-            run_val_acc.append(max(hist.history['val_accuracy']))
+            run_val_loss.append(hist.history['val_loss'][-1 * patience]) # or max(hist.history['val_loss'] hist.history['val_loss'][-1]
+            run_val_acc.append(hist.history['val_accuracy'][-1 * patience])
         return final_epoch, median(run_val_loss), median(run_val_acc), mean(run_val_loss), mean(run_val_acc)
 
 
