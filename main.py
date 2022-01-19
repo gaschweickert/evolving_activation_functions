@@ -82,24 +82,23 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn = CNN(dataset)
     benchmarks = ["relu", "swish"]
-    results = []
+    benchmarks_results = []
     for benchmark_activation in benchmarks:
-        results.append(cnn.final_test(k, 1, benchmark_activation, no_blocks, no_epochs, verbosity, save_model, visualize, tensorboard_log))
+        benchmarks_results.append(cnn.final_test(k, 1, benchmark_activation, no_blocks, no_epochs, verbosity, save_model, visualize, tensorboard_log))
     
     if save_results:
-        save_file_name = "final_test_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
+        for i, results in enumerate(benchmarks_results):
+            save_file_name = "final_test_" + str(benchmarks[i]) +"_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
-        fields = ['Name', 'Median_Epochs_Completed', 'Final_Median_Loss', 'Final_Median_Accuracy', 'Mean_Epochs_Completed', 'Final_Mean_Loss', 'Final_Mean_Accuracy']
+            fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
-        filepath = os.path.join('./', 'benchmark_data', save_file_name + '.csv')
-        with open(filepath, 'w') as f:
-            # using csv.writer method from CSV package
-            write = csv.writer(f)
-            write.writerow(fields)
-            for i in range(len(benchmarks)):
-                median_epochs_completed, median_loss, median_accuracy, mean_epochs_completed, mean_loss, mean_accuracy = results[i]
-                entry = [benchmarks[i], median_epochs_completed, median_loss, mean_epochs_completed, median_accuracy, mean_loss, mean_accuracy]
-                write.writerow(entry)
+            filepath = os.path.join('./', 'benchmark_data', save_file_name + '.csv')
+            with open(filepath, 'w') as f:
+                # using csv.writer method from CSV package
+                write = csv.writer(f)
+                write.writerow(fields)
+                for k_result in results:
+                    write.writerow(k_result)
 
 
 
@@ -141,7 +140,7 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=2, no_blocks=2, no_epochs=2, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
     """
     data = DATA()

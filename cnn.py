@@ -216,9 +216,7 @@ class CNN:
         train_data = self.format_data(x_train, y_train)
         test_data = self.format_data(self.x_test, self.y_test)
 
-        run_final_epoch = []
-        run_val_loss = []
-        run_val_acc = []
+        results = []
         for run_i in range(k):
             print('Run: ' + str(run_i + 1) + '/' + str(k))
             self.build_and_compile(mode, candidate_activation, no_blocks)
@@ -228,11 +226,12 @@ class CNN:
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
             hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-            run_final_epoch.append(len(hist.history['loss']))
-            if verbosity and (run_final_epoch[-1] < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
-            run_val_loss.append(hist.history['val_loss'][-1 * patience]) # or max(hist.history['val_loss'] hist.history['val_loss'][-1]
-            run_val_acc.append(hist.history['val_accuracy'][-1 * patience])
-        return median(run_final_epoch), median(run_val_loss), median(run_val_acc), mean(run_final_epoch), mean(run_val_loss), mean(run_val_acc)
+            run_val_loss = hist.history['val_loss'][-1 * patience] # or max(hist.history['val_loss'] or hist.history['val_loss'][-1]
+            run_val_acc = hist.history['accuracy'][-1*patience]
+            final_epoch = len(hist.history['loss'])
+            if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
+            results.append([run_i+1, final_epoch, run_val_loss, run_val_acc])
+        return results
 
 
 
