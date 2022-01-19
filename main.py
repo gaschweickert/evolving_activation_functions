@@ -132,7 +132,7 @@ def main():
         split_name = filename.split("_")
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 2, mode=mode, no_blocks=no_blocks, no_epochs=11, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 
