@@ -55,13 +55,9 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = "final_test_top" + str(i + 1) + "_" + filename[12:-5] + "_" + dataset
+            save_file_name = dataset + "_final_test_top" + str(i + 1) + "_" + filename[12:35]
             for j, cu in enumerate(candidate.core_units):
-                save_file_name + '_C'+ str(j) + '_name=' + cu.get_name()
-                uk1, bk, uk2 = cu.get_elementary_units_keys()
-                save_file_name + '_C'+ str(j) + '_u1key=' + str(uk1)
-                save_file_name + '_C'+ str(j) + '_bkey=' + str(bk)
-                save_file_name + '_C'+ str(j) + '_u2key='+ str(uk2)
+                save_file_name = save_file_name + '_C'+ str(j + 1) + '=' + cu.get_name()
 
             fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
@@ -134,10 +130,9 @@ def main():
     for i, exp_n_tops in enumerate(data_n_tops):
         filename = data.filenames[i]
         split_name = filename.split("_")
-        dataset = split_name[5] if split_name[3] == 'GA-search' else split_name[4]
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = dataset, k = 2, mode=mode, no_blocks=no_blocks, no_epochs=11, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 2, mode=mode, no_blocks=no_blocks, no_epochs=11, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 
