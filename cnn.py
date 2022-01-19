@@ -209,9 +209,9 @@ class CNN:
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
         callbacks = [callback_test_acc] 
 
-        train_data = self.format_data(self.x_train, self.y_train)
+        #validation data added to train data
+        train_data = self.format_data(self.x_train + self.x_val, self.y_train + self.y_val)
         test_data = self.format_data(self.x_test, self.y_test)
-        val_data = self.format_data(self.x_val, self.y_val)
 
         run_final_epoch = []
         run_val_loss = []
