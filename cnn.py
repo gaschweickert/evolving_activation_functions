@@ -210,7 +210,10 @@ class CNN:
         callbacks = [callback_test_acc] 
 
         #validation data added to train data
-        train_data = self.format_data(self.x_train + self.x_val, self.y_train + self.y_val)
+        x_train = np.concatenate((self.x_train, self.x_val), axis=0)
+        y_train = np.concatenate((self.y_train, self.y_val), axis=0)
+        
+        train_data = self.format_data(x_train, y_train)
         test_data = self.format_data(self.x_test, self.y_test)
 
         run_final_epoch = []
@@ -224,7 +227,7 @@ class CNN:
                 if tensorboard_log: callbacks.append(callback_tensorboard) 
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
-            hist = self.model.fit(train_data + val_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
+            hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
             run_final_epoch.append(len(hist.history['loss']))
             if verbosity and (run_final_epoch[-1] < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             run_val_loss.append(hist.history['val_loss'][-1 * patience]) # or max(hist.history['val_loss'] hist.history['val_loss'][-1]
