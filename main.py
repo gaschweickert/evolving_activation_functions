@@ -55,7 +55,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = "final_test_top" + str(i + 1) + "_" + filename[12:]
+            save_file_name = "final_test_top" + str(i + 1) + "_" + filename[12:] + "_" + dataset
             for j, cu in enumerate(candidate.core_units):
                 save_file_name + '_C'+ str(j) + '_name=' + cu.get_name()
                 uk1, bk, uk2 = cu.get_elementary_units_keys()
@@ -83,7 +83,7 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
     
     if save_results:
         for i, k_results in enumerate(benchmarks_results):
-            save_file_name = "final_test_" + str(benchmarks[i]) +"_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
+            save_file_name = "final_test_" + str(benchmarks[i]) + "_" + dataset + "_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
             fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
