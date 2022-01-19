@@ -91,10 +91,10 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
 
 
 def load_data(data):
-    data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
-    #data.collect_data_from_file("search_data/16-Jan-2022_14:05:33_GA-search_loss-based_cifar10_G=15_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
-    #data.collect_data_from_file("search_data/18-Jan-2022_10:53:37_Random-search_cifar10_G=15_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
-    #data.collect_data_from_file("search_data/18-Jan-2022_19:03:17_Random-search_cifar10_G=15_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    data.collect_data_from_file("search_data/16-Jan-2022_14:05:33_GA-search_loss-based_cifar10_G=15_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    data.collect_data_from_file("search_data/18-Jan-2022_10:53:37_Random-search_cifar10_G=15_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    data.collect_data_from_file("search_data/18-Jan-2022_19:03:17_Random-search_cifar10_G=15_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
 
 
 def main():
@@ -130,9 +130,8 @@ def main():
         split_name = filename.split("_")
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops[-1:], dataset = 'cifar10', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-#REMEMEMMEMEMEEMMEMEMEMEMBER
 
 
 if __name__ == "__main__":
