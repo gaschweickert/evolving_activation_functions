@@ -43,14 +43,18 @@ def random_search(dataset, generations, N, C, train_epochs, mode, number_of_bloc
         rs.save_data_log(save_file_name, total_time)
 
 # must all be from same original file
-def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_epochs, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
+def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_epochs, big_nn_transfer=False, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
+    assert mode in (1,3), "Test_candidates not compatible with mode 2"
     cnn= CNN(dataset)
     candidate_results = []
     C = candidate_list[0].get_candidate_complexity()
     if verbose: print(filename)
     for candidate in candidate_list:
         candidate.print_candidate_name()
-        mode = 1 if C == 1 else 3 #is not compatbile with layer-wise
+        if not no_blocks == C - 1 and mode == 3: #incompatible with layer mode (2)
+            print("SOLUTION TRANSFERED TO")
+            candidate.enlarge(no_blocks)
+            candidate.print_candidate_name()
         candidate_results.append(cnn.final_test(k, mode, candidate.core_units, no_blocks, no_epochs, verbose, save_model, visualize, tensorboard_log))
 
     if save_results:
@@ -130,7 +134,7 @@ def main():
         split_name = filename.split("_")
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar100', k = 5, mode=mode, no_blocks=no_blocks, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 5, mode=mode, no_blocks=4, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 if __name__ == "__main__":

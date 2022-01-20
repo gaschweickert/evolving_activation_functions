@@ -132,9 +132,11 @@ class CNN:
         if mode == 1:
             return "custom1"
         elif mode == 2:
-            return "custom"+ str(layer_num)
+            return "custom" + str(layer_num)
         elif mode == 3:
-            return "custom"+ str(block_num)
+            return "custom" + str(block_num)
+        elif mode == 4:
+            return "custom" + str(block_num//2 + 1)
         else:
             return None
 
@@ -221,7 +223,7 @@ class CNN:
             print('Run: ' + str(run_i + 1) + '/' + str(k))
             self.build_and_compile(mode, candidate_activation, no_blocks)
             # Only save architecture and log last run
-            if run_i == (k - 1): 
+            if run_i == 0: 
                 if tensorboard_log: callbacks.append(callback_tensorboard) 
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()

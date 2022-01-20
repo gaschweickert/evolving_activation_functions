@@ -36,6 +36,20 @@ class CANDIDATE:
     def get_candidate_complexity(self):
         return len(self.core_units)
 
+    def enlarge(self, no_blocks):
+        assert not no_blocks % (self.get_candidate_complexity() - 1), "Invalid transfer attempt, check solution complexity and cnn no_blocks"
+        assert self.get_candidate_complexity() > 1, "Invalid transfer attempt, must be heterogeneous solution"
+        new_core_units = []
+        scaling_factor = no_blocks // (self.get_candidate_complexity() - 1)
+        for cu in self.core_units[:-1]:
+            for i in range(scaling_factor):
+                new_core_units.append(cu)
+        new_core_units.append(self.core_units[-1])
+        self.core_units = new_core_units
+
+
+
+
     def plot_candidate(self):
         custom1 = self.core_units[0]
         xpoints = range(-5, 6)
@@ -44,4 +58,5 @@ class CANDIDATE:
             ypoints.append(custom1.evaluate_function(float(x)))
         plt.plot(xpoints, ypoints)
         plt.show()
+
 
