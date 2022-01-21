@@ -124,7 +124,7 @@ def main():
     
     test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    
+    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
@@ -136,6 +136,7 @@ def main():
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
         test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-
+    """
+    
 if __name__ == "__main__":
     main()
