@@ -59,7 +59,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = dataset + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
+            save_file_name = dataset + "no_block" + str(no_blocks) + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
 
             fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
 
@@ -122,7 +122,7 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    test_benchmarks(dataset='cifar10', k=5, no_blocks=4, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=20, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
     """
     data = DATA()

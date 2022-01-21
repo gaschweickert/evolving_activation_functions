@@ -1,0 +1,2 @@
+k,epochs_completed,val_loss,val_accuracy
+1,200,0.8280956149101257,0.7533400058746338

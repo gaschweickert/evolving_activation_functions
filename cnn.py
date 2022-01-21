@@ -135,8 +135,6 @@ class CNN:
             return "custom" + str(layer_num)
         elif mode == 3:
             return "custom" + str(block_num)
-        elif mode == 4:
-            return "custom" + str(block_num//2 + 1)
         else:
             return None
 
