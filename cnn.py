@@ -161,11 +161,10 @@ class CNN:
     def train(self, train_inputs, train_targets, no_epochs, verbosity, tensorboard_log=0):
         train_data = self.format_data(train_inputs, train_targets)
  
-        # These callback will stop the training when there is no improvement in
-        # the loss  for three consecutive epochs (NaN scenario)
-        callback_loss = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.0, patience=3)
+        # These callback will stop the training when there is NaN loss
+        callback_nan = tf.keras.callbacks.TerminateOnNaN()
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
-        callbacks = [callback_loss]
+        callbacks = [callback_nan]
         if tensorboard_log: callbacks.append(callback_tensorboard)
         
         #train the model
@@ -203,11 +202,10 @@ class CNN:
         return val_results
 
     def final_test(self, k, mode, candidate_activation, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False):
-        # Early stoppage when there is no improvement in test accuracy
-        patience = 10
-        callback_test_acc = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=patience, mode='min')
+        # Early stoppage when there is NaN loss
+        callback_nan = tf.keras.callbacks.TerminateOnNaN()
         callback_tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1, write_images=True)
-        callbacks = [callback_test_acc] 
+        callbacks = [callback_nan] 
 
         #validation data added to train data
         x_train = np.concatenate((self.x_train, self.x_val), axis=0)
@@ -220,17 +218,18 @@ class CNN:
         for run_i in range(k):
             print('Run: ' + str(run_i + 1) + '/' + str(k))
             self.build_and_compile(mode, candidate_activation, no_blocks)
-            # Only save architecture and log last run
+            # Only save architecture and log first run
             if run_i == 0: 
                 if tensorboard_log: callbacks.append(callback_tensorboard) 
                 if save_model: self.model.save('architecture.h5')
                 if visualize: self.visualize()
             hist = self.model.fit(train_data, validation_data=test_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-            run_val_loss = hist.history['val_loss'][-1 * patience] # or max(hist.history['val_loss'] or hist.history['val_loss'][-1]
-            run_val_acc = hist.history['accuracy'][-1 * patience]
+            run_max_val_acc = max(hist.history['val_accuracy'])
+            run_max_val_acc_index = hist.history['val_accuracy'].index(run_max_val_acc)
+            run_final_val_acc = hist.history['val_accuracy'][-1]
             final_epoch = len(hist.history['loss'])
             if verbosity and (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
-            results.append([run_i+1, final_epoch, run_val_loss, run_val_acc])
+            results.append([run_i+1, run_max_val_acc_index, run_max_val_acc, run_final_val_acc])
         return results
 
 

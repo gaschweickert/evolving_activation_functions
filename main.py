@@ -59,9 +59,9 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = dataset + "no_block" + str(no_blocks) + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
+            save_file_name = dataset + "_no-block_" + str(no_blocks) + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
 
-            fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
+            fields = ["k", "run_max_val_acc_index", "run_max_val_acc", "run_final_val_acc"]
 
             filepath = os.path.join('./', 'test_data', save_file_name + '.csv')
             with open(filepath, 'w') as f:
@@ -81,9 +81,9 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
     
     if save_results:
         for i, k_results in enumerate(benchmarks_results):
-            save_file_name = "final_test_" + str(benchmarks[i]) + "_" + dataset + "_k=" + str(k)+ "_no_blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
+            save_file_name = "final_test_" + str(benchmarks[i]) + "_" + dataset + "_k=" + str(k)+ "_no-blocks=" + str(no_blocks) + "_no_epochs=" + str(no_epochs)
 
-            fields = ["k", "epochs_completed", "val_loss", "val_accuracy"]
+            fields = ["k", "run_max_val_acc_index", "run_max_val_acc", "run_final_val_acc"]
 
             filepath = os.path.join('./', 'benchmark_data', save_file_name + '.csv')
             with open(filepath, 'w') as f:
@@ -122,9 +122,9 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    test_benchmarks(dataset='cifar10', k=20, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    """
+    
     data = DATA()
     load_data(data)
     data.convert_and_order()
@@ -135,8 +135,7 @@ def main():
         split_name = filename.split("_")
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
-        test_candidates(filename=filename, candidate_list = exp_n_tops, dataset = 'cifar10', k = 5, mode=mode, no_blocks=4, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    """
+        test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 if __name__ == "__main__":
     main()
