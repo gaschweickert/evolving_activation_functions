@@ -117,13 +117,14 @@ def main():
     # number of layers = number of blocks * 2 + 1
     # train_epochs = number of training epochs
 
-    #ga_search(dataset = 'cifar10', generations=15, N=50, C=1, m=10, b=5, fitness_metric=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
+    ga_search(dataset = 'cifar10', generations=15, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
     
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    test_benchmarks(dataset='cifar100', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    #test_benchmarks(dataset='cifar100', k=1, no_blocks=2, no_epochs=2, verbosity=0, save_model=False, visualize=True, tensorboard_log=False, save_results=True)
 
+    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
@@ -135,6 +136,7 @@ def main():
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
         test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    """
 
 if __name__ == "__main__":
     main()
