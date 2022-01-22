@@ -169,7 +169,6 @@ class CNN:
         
         #train the model
         history = self.model.fit(train_data, epochs=no_epochs, callbacks=callbacks, shuffle=True, verbose=verbosity)
-        if (len(history.history['loss']) < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(len(history.history['loss'])) + '/' + str(no_epochs)) 
 
 
     def validate(self, val_inputs, val_targets, verbosity):
@@ -228,7 +227,6 @@ class CNN:
             run_max_val_acc_index = hist.history['val_accuracy'].index(run_max_val_acc)
             run_final_val_acc = hist.history['val_accuracy'][-1]
             final_epoch = len(hist.history['loss'])
-            if (final_epoch < no_epochs): print('EARLY STOPPAGE AT EPOCH ' + str(final_epoch) + '/' + str(no_epochs))
             results.append([run_i+1, run_max_val_acc_index, run_max_val_acc, run_final_val_acc])
         return results
 
