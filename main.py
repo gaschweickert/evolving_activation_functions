@@ -141,8 +141,11 @@ def main():
         mode = int(split_name[-3][-1])
         #test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
         if i == 0:
-            exp_n_tops = [exp_n_tops[1]]
-            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+            exp_n_tops = [exp_n_tops[0]]
+            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+        #if i == 1:
+        #    exp_n_tops = [exp_n_tops[1]]
+        #    test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
     """
     selected_candidates = [data_n_tops[1][1]]
