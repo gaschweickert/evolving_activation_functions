@@ -74,7 +74,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn = CNN(dataset)
-    benchmarks = ["swish"] # relu
+    benchmarks = ["relu"] # swish
     benchmarks_results = []
     for benchmark_activation in benchmarks:
         print(benchmark_activation)
@@ -123,8 +123,8 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-    #test_benchmarks(dataset='cifar10', k=20, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    #test_benchmarks(dataset='cifar100', k=20, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=20, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar100', k=20, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
     
     data = DATA()
@@ -140,8 +140,8 @@ def main():
         no_blocks = int(split_name[-1][-5])
         mode = int(split_name[-3][-1])
         #test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-        if i == 0:
-            exp_n_tops = [exp_n_tops[0]]
+        if i == 1:
+            exp_n_tops = [exp_n_tops[1]]
             test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
         #if i == 1:
         #    exp_n_tops = [exp_n_tops[1]]
