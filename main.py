@@ -128,7 +128,7 @@ def main():
     load_data(data)
     data.convert_and_order()
 
-
+    """
     #data.plot_gen_vs_accuracy()
     data_n_tops = data.get_n_top_candidates(3, verbose=0)
     for i, exp_n_tops in enumerate(data_n_tops):
@@ -143,7 +143,7 @@ def main():
         if i == 0:
             exp_n_tops = [exp_n_tops[0]]
             test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-
+    """
     test_benchmarks(dataset='cifar10', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
     test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
