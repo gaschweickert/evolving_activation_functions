@@ -74,7 +74,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn = CNN(dataset)
-    benchmarks = ["relu"] # swish
+    benchmarks = ["relu", "swish"] # swish
     benchmarks_results = []
     for benchmark_activation in benchmarks:
         print(benchmark_activation)
@@ -124,7 +124,6 @@ def main():
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
 
-    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
@@ -140,15 +139,13 @@ def main():
         #test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
         if i == 3:
             exp_n_tops = [exp_n_tops[1]]
-            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
         if i == 0:
             exp_n_tops = [exp_n_tops[0]]
-            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=20, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    
-    """
+            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    test_benchmarks(dataset='cifar10', k=20, no_blocks=4, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    test_benchmarks(dataset='cifar100', k=20, no_blocks=4, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 
