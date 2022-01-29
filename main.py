@@ -59,7 +59,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
 
     if save_results:
         for i, candidate in enumerate(candidate_list):
-            save_file_name = dataset + "_no-block_" + str(no_blocks) + "_final_test_top" + str(i + 1) + "_" + filename[12:-4]
+            save_file_name = dataset + "_no-block_" + str(no_blocks) + "_final_test_top" + str(i + 1) + "_k=" + str(k) + '_' + filename[12:-4]
 
             fields = ["k", "run_max_val_acc_index", "run_max_val_acc", "run_final_val_acc"]
 
@@ -123,12 +123,19 @@ def main():
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
     
-
+    """
     data = DATA()
     load_data(data)
     data.convert_and_order()
-
+    data_n_tops = data.get_n_top_candidates(3, verbose=0)
+    for can_list in data_n_tops:
+        for can in can_list:
+            for cu in can.core_units:
+                print(cu.get_elementary_units_keys())
+            print()
     """
+
+
     #data.plot_gen_vs_accuracy()
     data_n_tops = data.get_n_top_candidates(3, verbose=0)
     for i, exp_n_tops in enumerate(data_n_tops):
@@ -141,11 +148,11 @@ def main():
             exp_n_tops = [exp_n_tops[1]]
             test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
         if i == 0:
-            exp_n_tops = [exp_n_tops[0]]
-            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    """
+            exp_n_tops = [exp_n_tops[1]]
+            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+
     test_benchmarks(dataset='cifar10', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    #test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 

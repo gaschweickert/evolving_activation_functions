@@ -18,17 +18,14 @@ if gpus:
         print(e)
 
 import matplotlib.pyplot as plt
-#from keras_visualizer import visualizer
 import numpy as np
 from keras.utils.generic_utils import get_custom_objects
-from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import train_test_split
 from tensorflow.keras import optimizers
 from tensorflow.keras.datasets import cifar10, cifar100
 from tensorflow.keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooling2D, BatchNormalization, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import to_categorical
-from statistics import median, mean
 
 from tensorflow.keras.callbacks import TensorBoard
 
