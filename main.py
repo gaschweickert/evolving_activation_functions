@@ -151,8 +151,8 @@ def main():
             exp_n_tops = [exp_n_tops[1]]
             test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=10, mode=mode, no_blocks=2, no_epochs=200, verbose=1, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-    #test_benchmarks(dataset='cifar10', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    #test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar10', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
+    test_benchmarks(dataset='cifar100', k=10, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
 
 
