@@ -3,6 +3,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 from operator import itemgetter
+import tensorflow as tf
 
 from search import SEARCH
 
@@ -55,16 +56,21 @@ class DATA:
         assert self.ordered_converted_data, "must convert and order data first"
         accuracy = lambda x: x.accuracy
 
+        line_labels = ["Heterogeneous Evolution", "Homogeneous Evolution", "Heterogenous Random Search", "Homogeneous Random Search"]
+        line_styles = ['-', '--', '-.', ':']
+
         for i, exp_data in enumerate(self.ordered_converted_data):
             xpoints = np.array([gen for gen in range(1, len(exp_data) + 1)])
             ypoints = np.array([float(accuracy(gen[0])) for gen in exp_data])
-            plt.plot(xpoints, ypoints, label=self.filenames[i][33:])
+            plt.plot(xpoints, ypoints, line_styles[i], label=line_labels[i], linewidth=2.5) #self.filenames[i][33:]
 
-        plt.ylim((0.65, 0.8)) 
-        plt.ylabel("Accuracy")
-        plt.xlabel("Generation #")
-        plt.title("ACCURACY vs GENERATIONS")
-        plt.legend()
+        plt.ylim((0.65, 0.78)) 
+        plt.ylabel("Top Candidate Validation Accuracy (%)", fontsize=12)
+        plt.xlabel("Generation", fontsize=12)
+        plt.xticks(fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.legend(fontsize=12)
+        #plt.title("CIFAR-10 Searches Results")
         plt.show()
 
 
@@ -87,6 +93,87 @@ class DATA:
                 for can in exp_top_n:
                     can.print_candidate_name_and_results()        
         return data_n_tops
+
+    def plot_af_batch(self, search_name, candidates, save=False):
+        colors = ['b', 'g', 'r']
+        complexity = len((candidates[0]).core_units)
+        for c in range(complexity):
+            for i, can in enumerate(candidates):
+                xpoints = np.arange(-5, 5.01, 0.01, dtype=np.float64)
+                ypoints = []
+                print(can.core_units[c].get_name())
+                for x in xpoints:
+                    ypoints.append(can.core_units[c].evaluate_function(float(x)))
+                plt.plot(xpoints, ypoints, color=colors[i], linewidth=4)
+            
+            plt.axhline(0,color='gray', linewidth=2) # x = 0
+            plt.axvline(0,color='gray', linewidth=2) # y = 0
+            plt.gca().spines[:].set_linewidth(3)
+            plt.xticks([])
+            plt.yticks([])
+            plt.tight_layout()
+            if save: 
+                plt.savefig('comp_af_plots/' + search_name[33:35] + '_C' + str(complexity) + '_customs' + str(c+1) + '.png')
+            #plt.show()
+            plt.clf()
+
+    def plot_benchmarks_batch(self, save=False):
+        colors = ['b', 'g']
+        benchmarks = ['relu', 'swish']
+        for i, b in enumerate(benchmarks):
+            xpoints = np.arange(-5, 5.01, 0.01, dtype=np.float64)
+            ypoints = []
+            for x in xpoints:
+                if b == 'relu':
+                    ypoints.append(tf.keras.activations.relu(x))
+                else:
+                    ypoints.append(tf.keras.activations.swish(x))
+            plt.plot(xpoints, ypoints, color=colors[i], linewidth=4)
+            
+        plt.axhline(0,color='gray', linewidth=2) # x = 0
+        plt.axvline(0,color='gray', linewidth=2) # y = 0
+        plt.gca().spines[:].set_linewidth(3)
+        plt.xticks([])
+        plt.yticks([])
+        plt.tight_layout()
+        if save: 
+            plt.savefig('comp_af_plots/benchmarks.png')
+        plt.show()
+        plt.clf()
+
+    def plot_benchmarks(self, save=False):
+        colors = ['b', 'g']
+        benchmarks = ['relu', 'swish']
+        for i, b in enumerate(benchmarks):
+            xpoints = np.arange(-5, 5.01, 0.01, dtype=np.float64)
+            ypoints = []
+            for x in xpoints:
+                if b == 'relu':
+                    ypoints.append(tf.keras.activations.relu(x))
+                else:
+                    ypoints.append(tf.keras.activations.swish(x))
+            
+            plt.axhline(0,color='gray', linewidth=7, linestyle='--') # x = 0
+            plt.axvline(0,color='gray', linewidth=7, linestyle='--') # y = 0
+            plt.plot(xpoints, ypoints, color=colors[i], linewidth=9)
+
+            plt.gca().spines[:].set_linewidth(7)
+            plt.xticks([])
+            plt.yticks([])
+            plt.tight_layout()
+            if save: 
+                plt.savefig('af_plots/' + b + '.png')
+            plt.show()
+            plt.clf()
+            
+
+
+
+
+
+
+
+
 
     
 

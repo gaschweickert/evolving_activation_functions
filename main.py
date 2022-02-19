@@ -118,23 +118,33 @@ def main():
     # number of layers = number of blocks * 2 + 1
     # train_epochs = number of training epochs
 
-    #ga_search(dataset = 'cifar10', generations=15, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
+    ga_search(dataset = 'cifar10', generations=30, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
     
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
     #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
-    
+    '''
     data = DATA()
     load_data(data)
     data.convert_and_order()
-    data_n_tops = data.get_n_top_candidates(3, verbose=0)
-    """
-    for can_list in data_n_tops:
-        for can in can_list:
-            for cu in can.core_units:
-                print(cu.get_elementary_units_keys())
-            print()
-    """
+    data.plot_gen_vs_accuracy()
+    #data.plot_benchmarks(save=True)
+    #data.plot_benchmarks(save=True)
 
+
+    data_n_tops = data.get_n_top_candidates(3, verbose=1)
+    #for search_i, search_top_can in enumerate(data_n_tops):
+    #    data.plot_af_batch(data.filenames[search_i], search_top_can, save=True)
+
+
+    for  f_i, can_list in enumerate(data_n_tops):
+        for top_i, can in enumerate(can_list):
+            can.plot_candidate(top_i, data.filenames[f_i], True)
+
+            print()
+    '''
+
+
+    '''
 
     #data.plot_gen_vs_accuracy()
     data_n_tops = data.get_n_top_candidates(3, verbose=0)
@@ -154,7 +164,7 @@ def main():
     #test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
     #test_benchmarks(dataset='cifar100', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
 
-
+    '''
 
 
 

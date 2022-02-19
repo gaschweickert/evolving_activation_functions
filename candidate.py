@@ -48,15 +48,38 @@ class CANDIDATE:
         self.core_units = new_core_units
 
 
+    def plot_candidate(self, top_i, search_name, save=False):
+        
+        colors = ['b', 'g', 'r']
+        for j, cu in enumerate(self.core_units):
+            filename = cu.get_name().replace('/', chr(247))
+            filename = filename.replace(' ', '')
+            filename = filename.replace('*', chr(215))
+            print('af_plots/'+ search_name[33:35] +'_top' + str(top_i+1) + '_custom' + str(j+1) + '_' + filename +'.png')
 
+            xpoints = np.arange(-5, 5.01, 0.01)
+            ypoints = []
+            for x in xpoints:
+                    ypoints.append(cu.evaluate_function(float(x)))
+            plt.axhline(0,color='gray', linewidth=7, linestyle='--') # x = 0
+            plt.axvline(0,color='gray', linewidth=7, linestyle='--') # y = 0
+            plt.plot(xpoints, ypoints, color=colors[top_i], linewidth=9)
+            plt.gca().spines[:].set_linewidth(7)
+            plt.xticks([])
+            plt.yticks([])
 
-    def plot_candidate(self):
-        custom1 = self.core_units[0]
-        xpoints = range(-5, 6)
-        ypoints = []
-        for x in xpoints:
-            ypoints.append(custom1.evaluate_function(float(x)))
-        plt.plot(xpoints, ypoints)
-        plt.show()
+            plt.xlim(-5, 5)
+            plt.tight_layout()
+            
+            if save: plt.savefig('af_plots/'+ search_name[33:35] +'_top' + str(top_i+1) + '_custom' + str(j+1) + '_' + filename +'.png')
+            #plt.show()
+            plt. clf() 
 
+    
 
+'''for x in xpoints:
+                if j==1 and top_i == 0:
+                    ypoints.append(None if x < 0 else cu.evaluate_function(float(x)))
+                else:
+                    ypoints.append(cu.evaluate_function(float(x)))
+'''
