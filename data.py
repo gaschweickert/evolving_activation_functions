@@ -7,6 +7,10 @@ import tensorflow as tf
 
 from search import SEARCH
 
+'''
+The data class is used exclusively for loading, plotting, and manipulating the (.csv) saved data
+from the experiments run.
+'''
 class DATA:
     def __init__(self):
         self.filenames = []
@@ -15,7 +19,7 @@ class DATA:
         self.header = []
         self.time_taken = []
 
-
+    # All data from the search (csv) save file is loaded appropriately
     def collect_data_from_file(self, filename):
         self.filenames.append(filename)
         file = open(filename)
@@ -35,6 +39,8 @@ class DATA:
         exp_data.append(gen_data)
         self.data.append(exp_data)
     
+    # Here the string representing the candidate solutions and their results are converted
+    # back into candidate objects and ordered according to their accuracy
     def convert_and_order(self):
         accuracy = lambda x: float('-inf') if math.isnan(float(x[-1])) else float(x[-1])
         ss = SEARCH('None', 0,0,0)
@@ -52,6 +58,8 @@ class DATA:
                 converted_exp_data.append(converted_gen_data)
             self.ordered_converted_data.append(converted_exp_data)
 
+    # Used to plot top validation accuracy reached by a candidate in the population per generation. This
+    # can be done for multiple searches.
     def plot_gen_vs_accuracy(self):
         assert self.ordered_converted_data, "must convert and order data first"
         accuracy = lambda x: x.accuracy
@@ -70,11 +78,10 @@ class DATA:
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=12)
         plt.legend(fontsize=12)
-        #plt.title("CIFAR-10 Searches Results")
         plt.show()
 
 
-    # unique
+    # Return top n search candidates for every loaded search
     def get_n_top_candidates(self, n, verbose=0):
         ss = SEARCH('None', 0,0,0)
         data_n_tops = []
@@ -94,29 +101,7 @@ class DATA:
                     can.print_candidate_name_and_results()        
         return data_n_tops
 
-    def plot_af_batch(self, search_name, candidates, save=False):
-        colors = ['b', 'g', 'r']
-        complexity = len((candidates[0]).core_units)
-        for c in range(complexity):
-            for i, can in enumerate(candidates):
-                xpoints = np.arange(-5, 5.01, 0.01, dtype=np.float64)
-                ypoints = []
-                print(can.core_units[c].get_name())
-                for x in xpoints:
-                    ypoints.append(can.core_units[c].evaluate_function(float(x)))
-                plt.plot(xpoints, ypoints, color=colors[i], linewidth=4)
-            
-            plt.axhline(0,color='gray', linewidth=2) # x = 0
-            plt.axvline(0,color='gray', linewidth=2) # y = 0
-            plt.gca().spines[:].set_linewidth(3)
-            plt.xticks([])
-            plt.yticks([])
-            plt.tight_layout()
-            if save: 
-                plt.savefig('comp_af_plots/' + search_name[33:35] + '_C' + str(complexity) + '_customs' + str(c+1) + '.png')
-            #plt.show()
-            plt.clf()
-
+    # Plots and saves benchmark AF (ReLU and Swish) in the same chart/file
     def plot_benchmarks_batch(self, save=False):
         colors = ['b', 'g']
         benchmarks = ['relu', 'swish']
@@ -141,6 +126,7 @@ class DATA:
         plt.show()
         plt.clf()
 
+    # Plots and saves benchmark AF (ReLU and Swish) seperately
     def plot_benchmarks(self, save=False):
         colors = ['b', 'g']
         benchmarks = ['relu', 'swish']

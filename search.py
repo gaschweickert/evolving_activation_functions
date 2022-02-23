@@ -9,8 +9,12 @@ import os
 from core_unit import CORE_UNIT
 from candidate import CANDIDATE
 
+'''
+The SEARCH class defines the search space and basic characteristic of how it is conducted.
+It is only used as a superclass to random and genetic algorithm search. Furthermore, it holds
+methods for saving the search results.
+'''
 class SEARCH:
-
     def __init__(self, search_type, generations, N, C):
         self.search_type = search_type
         self.generations = generations
@@ -19,8 +23,10 @@ class SEARCH:
 
         self.population = []
 
+        # The error term
         self.err = 0.0000000000000000000000000001
 
+        # All unary units/operators
         self.unary_units = {
             '0': 0.0, 
             '1': 1.0, 
@@ -48,6 +54,7 @@ class SEARCH:
             'sinc(x)' : lambda x:K.sin(x)/(x + self.err) #sinc
         }
 
+        # All binary units/operators
         self.binary_units = {
             'x1 + x2' : lambda x1, x2:x1 + x2, 
             'x1 - x2' : lambda x1, x2:x1 - x2, 
@@ -61,15 +68,17 @@ class SEARCH:
         self.all_evaluated_candidate_solutions = []
 
 
-
+    # Returns candidate at a particular index
     def get_candidate_at_idx(self, candidate_idx):
         return self.population[candidate_idx]
 
+    # Prints N candidates' names and results, which form the population
     def print_population(self):
         print("Entire Population:\n")
         for can in self.population:
             self.print_candidate_name_and_results(can)
 
+    # Returns single best candidate according to the evaluation metric (loss or accuracy)
     def get_population_best_candidate(self, evaluation_metric):
         if evaluation_metric == 1:
             valence = -1
@@ -84,11 +93,10 @@ class SEARCH:
         return best_candidate
 
 
-    '''
-    Evaluates the candidate at given index through k-fold crossvalidation
-    fitness_base = 0 (loss-based), 1 (accuracy_based)
-    mode = 0 (homogenous relu), 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    '''
+    
+    # Evaluates a given candidate by calling on the training and validation cycle. Only used 
+    # within the searches.
+    # Note: fitness_base = 0 (loss-based), 1 (accuracy_based)
     def evaluate_candidate(self, candidate, train_epochs, model, mode, no_blocks, verbosity=0):
         if candidate.check_validity():        
             val_results = model.search_test(candidate.core_units, train_epochs, mode, no_blocks, verbosity)
@@ -97,7 +105,9 @@ class SEARCH:
         candidate.loss = val_results[0] # loss
         candidate.accuracy = val_results[1] # accuracy
 
-    # list of keys input should be in the following format: [[unary_key, binary_key, unary_key], ...]
+    # Generates an object from candidate class using a list of unit keys. Can be used to construct any 
+    # candidate solutions manually Note: list of keys input should be in the following format: 
+    # [[unary_key, binary_key, unary_key], ...]
     def generate_candidate_solution_from_keys(self, list_of_keys, loss=nan, accuracy=0.0):
         core_units = []
         for keys in list_of_keys:
@@ -110,9 +120,7 @@ class SEARCH:
         return CANDIDATE(core_units, loss, accuracy)
 
         
-    '''
-    Generates random candidate solution of complexity C
-    '''
+    # Creates new random candidate solution of complexity/heterogeneity = self.C
     def generate_random_new_candidate_solution(self):
         core_units = []
         i = self.C
@@ -128,6 +136,7 @@ class SEARCH:
                 i = i - 1
         return CANDIDATE(core_units, loss=0.0, accuracy=0.0)
 
+    # Verifies whether two given candidate solutions are identical
     def check_same_candidate_solution(self, can1, can2):
         same_cu = 0
         can1_cu_names = can1.get_candidate_name()
@@ -139,9 +148,9 @@ class SEARCH:
                 same_cu = same_cu + 1
         return True if same_cu == len(can1_cu_names) else False
             
-
+    # Creates population of n unique generated random candidates
     def generate_n_unique_candidates(self, n):
-        # creating population from unique random candidate solutons
+        # Creating population from unique random candidate solutons
         candidate_list = []
         while n:
             new = 1
@@ -155,37 +164,18 @@ class SEARCH:
                 candidate_list.append(new_candidate)
                 n = n-1
         return candidate_list
-        
-    def get_search_top_candidates(self, no_candidates, evaluation_metric):
+    
+    # Returns top no_candidates from current population. Primarily used for selecting the solutions for evolution
+    def get_population_top_candidates(self, no_candidates, evaluation_metric):
         assert evaluation_metric in (1,2), 'Invalid evaluation metric'
         if evaluation_metric == 1:
             fitness = lambda x: float('inf') if math.isnan(x.loss) else x.loss
         else:
             fitness = lambda x: float('-inf') if math.isnan(x.accuracy) else x.accuracy
-
-        '''
-        fitness = lambda x: x.loss if evaluation_metric == 1 else lambda x: x.accuracy
-        
-        # selecting top no candidates to keep in population without mutation or crossover
-        # arr[np.argsort(arr[:,1])]
-        nan_removed_population = []
-        nan_population = []
-        for candidate in self.population:
-            if not math.isnan(fitness(candidate)):
-                nan_removed_population.append(candidate)
-            else:
-                nan_population.append(candidate)
-        nan_removed_ordered_population = sorted(nan_removed_population, key=fitness, reverse=False if evaluation_metric == 1 else True)
-        ordered_population = nan_removed_ordered_population + nan_population
-        return ordered_population[:no_candidates]
-        '''
         ordered_population = sorted(self.population, key=fitness, reverse=False if evaluation_metric == 1 else True)
         return ordered_population[:no_candidates]
 
-        
-
-
-
+    # Creates save file, logs all search results, and records the time taken to complete it
     def save_data_log(self, save_file_name, time_taken=0):
         assert self.all_evaluated_candidate_solutions, "Evaluated candidate solutions list is empty"
         fields = ['Gen']

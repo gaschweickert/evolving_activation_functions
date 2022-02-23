@@ -1,9 +1,13 @@
 from search import SEARCH
 
+'''
+RS class is used to initialize and run a "generation-based" random search. It is a subclass of search.
+'''
 class RS(SEARCH):
     def __init__(self, generations, N, C):
         super().__init__("RANDOM SEARCH", generations, N, C)
 
+    # Runs search for the given number of generations using a desired architecture and training regminent
     def run(self, train_epochs, cnn, mode, number_of_blocks, verbosity):
         all_candidates = self.generate_n_unique_candidates(n=self.N*self.generations)
         for gen in range(1, self.generations + 1):

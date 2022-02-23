@@ -9,6 +9,7 @@ from data import DATA
 import datetime
 import numpy as np
 
+# Genetic algorithm search experiment setup and results saving method
 def ga_search(dataset, generations, N, C, m, b, fitness_metric, train_epochs, mode, number_of_blocks, verbosity=0, save=True):
     date_and_time = datetime.datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
     t0 = time.time()
@@ -26,7 +27,7 @@ def ga_search(dataset, generations, N, C, m, b, fitness_metric, train_epochs, mo
         gas.save_data_log(save_file_name, total_time)
 
     
-
+# Random search experiment setup and results saving method
 def random_search(dataset, generations, N, C, train_epochs, mode, number_of_blocks, verbosity=0, save=True):
     date_and_time = datetime.datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
     t0 = time.time()
@@ -42,7 +43,7 @@ def random_search(dataset, generations, N, C, train_epochs, mode, number_of_bloc
         save_file_name = date_and_time + '_Random-search'+ '_' + dataset + '_G=' + str(generations) + '_N=' + str(N) + '_C=' + str(C) + '_mode=' + str(mode) + '_train-epochs=' + str(train_epochs) + '_number-of-blocks=' + str(number_of_blocks)
         rs.save_data_log(save_file_name, total_time)
 
-# must all be from same original file
+# Testing and transfer experiment setup and saving method (Note incompatbile with mode 2)
 def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_epochs, big_nn_transfer=False, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     assert mode in (1,3), "Test_candidates not compatible with mode 2"
     cnn= CNN(dataset)
@@ -72,6 +73,7 @@ def test_candidates(filename, candidate_list, dataset, k, mode, no_blocks, no_ep
                     write.writerow(r)
                 write.writerow(candidate.get_candidate_name())
 
+# Method for benchmark testing experiments + saving
 def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=False, visualize=False, tensorboard_log=False, save_results=False):
     cnn = CNN(dataset)
     benchmarks = ["relu", "swish"] # swish
@@ -94,77 +96,42 @@ def test_benchmarks(dataset, k, no_blocks, no_epochs, verbosity, save_model=Fals
                 for r in k_results:
                     write.writerow(r)
 
-
+# Used for loading search data from csv files
 def load_data(data):
-    data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/16-Jan-2022_14:05:33_GA-search_loss-based_cifar10_G=15_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/18-Jan-2022_10:53:37_Random-search_cifar10_G=15_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
-    data.collect_data_from_file("search_data/18-Jan-2022_19:03:17_Random-search_cifar10_G=15_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    data.collect_data_from_file("search_data/19-Feb-2022_20:13:02_GA-search_loss-based_cifar10_G=30_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    
+    #data.collect_data_from_file("search_data/15-Jan-2022_12:12:09_GA-search_loss-based_cifar10_G=15_N=50_C=3_m=10_b=5_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/16-Jan-2022_14:05:33_GA-search_loss-based_cifar10_G=15_N=50_C=1_m=10_b=5_mode=1_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/18-Jan-2022_10:53:37_Random-search_cifar10_G=15_N=50_C=3_mode=3_train-epochs=50_number-of-blocks=2.csv")
+    #data.collect_data_from_file("search_data/18-Jan-2022_19:03:17_Random-search_cifar10_G=15_N=50_C=1_mode=1_train-epochs=50_number-of-blocks=2.csv")
 
 
 def main():
-    # EXPERIMENT PARAMETERS
-    # generations = 1
-    # k = number of final test runs
+    # ALL MAIN EXPERIMENT PARAMETERS
+    # generations = generation cutoff point for searches
+    # k = number of final test runs/repeats
     # N = population size (N-m-b>=2 for crossover)
-    # C = search space complexity i.e. number of custom af (note: must match CNN arcchitecture)
+    # C = search space complexity/degree of heterogeneity i.e. number of custom af (note: must match CNN arcchitecture)
     # m = number of new candidates per generation
     # b = number of preserved best candidates per generation
     # fitness_metric = 1 (loss) or 2 (accuracy) for fitness base metric
 
-    # dataset = "cifar10" # 'cifar10' or 'cifar100'
+    # dataset = options are 'cifar10' or 'cifar100'
     # mode = 1 (homogenous custom) 2 (heterogenous per layer), 3 (heterogenous per block)
-    # number_of_blocks = number of VGG blocks
-    # number of layers = number of blocks * 2 + 1
+    # number_of_blocks = number of VGG blocks (Note: number of layers = number of blocks * 2 + 1)
     # train_epochs = number of training epochs
 
-    ga_search(dataset = 'cifar10', generations=30, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
-    
+    # Main searches CIFAR-10 VGG-HE-2 searches
+    #ga_search(dataset = 'cifar10', generations=30, N=50, C=3, m=10, b=5, fitness_metric=1, train_epochs=50, mode=3, number_of_blocks=2, verbosity=0, save=True)
     #random_search(dataset = 'cifar10', generations=15, N=50, C=1, train_epochs=50, mode=1, number_of_blocks=2, verbosity=0, save=True)
-    #test_candidate(dataset = 'cifar10', candidate_keys = [['max(x, 0)', 'max(x1, x2)', 'log(abs(x + err))']], k = 1, mode=1, no_blocks=2, no_epochs=200, verbosity=1, save_model=False, visualize=False, tensorboard_log=True)
-    '''
+    
     data = DATA()
     load_data(data)
     data.convert_and_order()
     data.plot_gen_vs_accuracy()
+    data.get_n_top_candidates(1)[0][0].print_candidate_name_and_results()
     #data.plot_benchmarks(save=True)
-    #data.plot_benchmarks(save=True)
 
-
-    data_n_tops = data.get_n_top_candidates(3, verbose=1)
-    #for search_i, search_top_can in enumerate(data_n_tops):
-    #    data.plot_af_batch(data.filenames[search_i], search_top_can, save=True)
-
-
-    for  f_i, can_list in enumerate(data_n_tops):
-        for top_i, can in enumerate(can_list):
-            can.plot_candidate(top_i, data.filenames[f_i], True)
-
-            print()
-    '''
-
-
-    '''
-
-    #data.plot_gen_vs_accuracy()
-    data_n_tops = data.get_n_top_candidates(3, verbose=0)
-    for i, exp_n_tops in enumerate(data_n_tops):
-        filename = data.filenames[i]
-        split_name = filename.split("_")
-        no_blocks = int(split_name[-1][-5])
-        mode = int(split_name[-3][-1])
-        #test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar100', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-        if i == 3:
-            exp_n_tops = [exp_n_tops[1]]
-            test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-        #if i == 0:
-            #exp_n_tops = [exp_n_tops[1]]
-            #test_candidates(filename=filename, candidate_list=exp_n_tops, dataset='cifar10', k=5, mode=mode, no_blocks=2, no_epochs=200, verbose=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-
-    #test_benchmarks(dataset='cifar10', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-    #test_benchmarks(dataset='cifar100', k=5, no_blocks=2, no_epochs=200, verbosity=0, save_model=False, visualize=False, tensorboard_log=False, save_results=True)
-
-    '''
 
 
 
