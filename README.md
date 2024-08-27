@@ -1,5 +1,8 @@
-# evolving_activation_functions
+## Evolutionary Optimization of activationfunctions in deep heterogeneous networks
+
 Gregory Schweickert
+
+Abstract: The effective use of deep neural networks often requires time consuming and expertisereliant manual design decisions. Existing meta-learning methods have come a long way toward alleviating these requirements and enabling end-to-end learning. However, one important yet often overlooked facet is the selection of activation functions. Although methods exist to optimize this process, the vast majority are only concerned with homogeneous networks. That is, optimizing a single activation function for all hidden units in a network. Conversely, heterogeneous networks employ a variety of activation functions throughout. In this work, an evolutionary search method for discovering well-performing homogeneous and heterogeneous activation function setups is presented. Using random search for baseline comparison, experiments show that the developed directed search method is well-suited for the task. Indeed, hand-engineered deep CNNs tested on CIFAR-10 using ReLU and Swish are outperformed by those using discovered solutions. Furthermore, the explored heterogeneous setups result in better performance than their homogeneous counterparts. Lastly, novel solutions of both types are shown to generalize to CIFAR-100. However, transfer to an up-scaled architecture is relatively less successful. The presented methods offer a promising new approach to meta-learning in the space of deep heterogeneous neural networks.
 
 RUNNING ACTIVATION FUNCTION CONFIGURATION SEARCHES ON FIX-TOPOLOGY NETURAL NETWORKS
 1. Choose between random and evolutionary search
